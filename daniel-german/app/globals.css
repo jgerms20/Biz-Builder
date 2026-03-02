@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-dg-black text-cream;
+    font-family: "DM Sans", system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: "Cormorant Garant", Georgia, serif;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .container-brand {
+    @apply max-w-content mx-auto px-5 md:px-8 lg:px-12;
+  }
+
+  .font-serif {
+    font-family: "Cormorant Garant", Georgia, serif;
+  }
+
+  .font-sans {
+    font-family: "DM Sans", system-ui, sans-serif;
+  }
+
+  .gold-text {
+    @apply text-gold;
+  }
+
+  .gold-underline {
+    @apply border-b border-gold/40;
+  }
+
+  .section-padding {
+    @apply py-section;
+  }
+
+  .section-padding-sm {
+    @apply py-section-sm;
+  }
+}
+
+/* Subtle gold shimmer animation for accents */
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2A2A2A;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3A3A3A;
+}
