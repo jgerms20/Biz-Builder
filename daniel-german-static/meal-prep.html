@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meal Prep Services | DG Creations</title>
+  <meta name="description" content="Chef-crafted, nutritionally balanced meal prep by Daniel German. Weekly and monthly plans starting from $250/week. Personalized to your dietary needs." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container-brand">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <span class="logo-main">DG Creations</span>
+          <span class="logo-sub">by Daniel German</span>
+        </a>
+        <nav class="desktop-nav">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="experiences.html">Experiences</a>
+          <a href="menus.html">Menus</a>
+          <a href="catering.html">Catering</a>
+          <a href="meal-prep.html">Meal Prep</a>
+          <a href="inquire.html">Inquire</a>
+        </nav>
+        <a href="inquire.html" class="btn-book">Book a Chef</a>
+        <button class="hamburger-btn" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="mobile-nav" id="mobile-nav">
+        <nav>
+          <a href="index.html" onclick="closeMobileNav()">Home</a>
+          <a href="about.html" onclick="closeMobileNav()">About</a>
+          <a href="experiences.html" onclick="closeMobileNav()">Experiences</a>
+          <a href="menus.html" onclick="closeMobileNav()">Menus</a>
+          <a href="catering.html" onclick="closeMobileNav()">Catering</a>
+          <a href="meal-prep.html" onclick="closeMobileNav()">Meal Prep</a>
+          <a href="inquire.html" onclick="closeMobileNav()">Inquire</a>
+        </nav>
+        <a href="inquire.html" class="btn-book-mobile" onclick="closeMobileNav()">Book a Chef</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero text-center">
+      <div class="container-brand">
+        <span class="eyebrow">Meal Preparation</span>
+        <h1>Chef-Crafted Meals,<br /><span class="gold-text">Delivered Weekly</span></h1>
+        <p class="lead">Nutrition meets artistry. Chef Daniel prepares personalized, restaurant-quality meals tailored to your dietary needs and taste preferences &mdash; delivered fresh to your door.</p>
+      </div>
+    </section>
+
+    <!-- GOLD DIVIDER -->
+    <div class="bg-dg-black" style="padding-top:0.5rem;padding-bottom:0.5rem;">
+      <div class="container-brand">
+        <div class="gold-divider">
+          <span class="line"></span>
+          <span class="diamond"></span>
+          <span class="line"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLANS -->
+    <section class="py-section bg-dg-black">
+      <div class="container-brand">
+        <div class="section-heading">
+          <span class="label">Weekly Plans</span>
+          <h2>Choose Your Plan</h2>
+          <p>Each plan is fully customizable. Dietary restrictions, flavor preferences, and nutritional goals are all considered.</p>
+        </div>
+
+        <div class="plans-grid">
+
+          <!-- Essential Plan -->
+          <div class="plan-card">
+            <div class="plan-header">
+              <h3>Essential</h3>
+              <p class="meals-label">4 meals per week</p>
+            </div>
+            <div class="plan-price">
+              <span class="amount">$250</span>
+              <span class="period">per week</span>
+            </div>
+            <p class="plan-desc">Perfect for supplementing your week with chef-quality meals. Ideal for busy professionals who want elevated lunches or dinners without the effort.</p>
+            <ul class="plan-includes">
+              <li><span class="dot"></span>4 individually portioned meals</li>
+              <li><span class="dot"></span>Rotating weekly menu</li>
+              <li><span class="dot"></span>Nutritional information provided</li>
+              <li><span class="dot"></span>Eco-friendly packaging</li>
+              <li><span class="dot"></span>Weekly delivery</li>
+            </ul>
+            <a href="inquire.html" class="btn-outline-gold" style="justify-content:center;">Get Started</a>
+          </div>
+
+          <!-- Standard Plan (Featured) -->
+          <div class="plan-card featured">
+            <span class="plan-badge">Most Popular</span>
+            <div class="plan-header">
+              <h3>Standard</h3>
+              <p class="meals-label">5 meals per week</p>
+            </div>
+            <div class="plan-price">
+              <span class="amount">$325</span>
+              <span class="period">per week</span>
+            </div>
+            <p class="plan-desc">The most popular plan. Five days of chef-prepared meals that cover your weekday dinners or a mix of lunch and dinner throughout the week.</p>
+            <ul class="plan-includes">
+              <li><span class="dot"></span>5 individually portioned meals</li>
+              <li><span class="dot"></span>Personalized menu preferences</li>
+              <li><span class="dot"></span>Macro-balanced options available</li>
+              <li><span class="dot"></span>Dietary restriction accommodation</li>
+              <li><span class="dot"></span>Flexible delivery scheduling</li>
+            </ul>
+            <a href="inquire.html" class="btn-gold" style="justify-content:center;">Get Started</a>
+          </div>
+
+          <!-- Premium Plan -->
+          <div class="plan-card">
+            <div class="plan-header">
+              <h3>Premium</h3>
+              <p class="meals-label">7 meals per week</p>
+            </div>
+            <div class="plan-price">
+              <span class="amount">$450</span>
+              <span class="period">per week</span>
+            </div>
+            <p class="plan-desc">Full-week coverage for those who want restaurant-quality food every single day. Complete nutritional optimization with variety and balance.</p>
+            <ul class="plan-includes">
+              <li><span class="dot"></span>7 individually portioned meals</li>
+              <li><span class="dot"></span>Full dietary customization</li>
+              <li><span class="dot"></span>Snack and side add-ons available</li>
+              <li><span class="dot"></span>Priority scheduling</li>
+              <li><span class="dot"></span>Direct communication with Chef Daniel</li>
+              <li><span class="dot"></span>Monthly menu consultation</li>
+            </ul>
+            <a href="inquire.html" class="btn-outline-gold" style="justify-content:center;">Get Started</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW MEAL PREP WORKS -->
+    <section class="py-section bg-dg-surface border-surface">
+      <div class="container-brand">
+        <div class="section-heading">
+          <span class="label">How It Works</span>
+          <h2>Your Weekly Meal Prep Process</h2>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step-item">
+            <span class="step-num">01</span>
+            <h3>Consult</h3>
+            <p>Share your dietary needs, preferences, allergies, and nutritional goals.</p>
+          </div>
+          <div class="step-item">
+            <span class="step-num">02</span>
+            <h3>Menu Design</h3>
+            <p>Chef Daniel designs a rotating weekly menu tailored to your profile.</p>
+          </div>
+          <div class="step-item">
+            <span class="step-num">03</span>
+            <h3>Preparation</h3>
+            <p>Meals are freshly prepared using premium ingredients, portioned and packaged.</p>
+          </div>
+          <div class="step-item">
+            <span class="step-num">04</span>
+            <h3>Delivery</h3>
+            <p>Fresh meals delivered to your door on your preferred day, ready to heat and enjoy.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE NUTRITIONAL EDGE -->
+    <section class="py-section bg-dg-black">
+      <div class="container-brand">
+        <div class="nutritional-grid">
+          <!-- Image -->
+          <div>
+            <div class="img-placeholder aspect-4-3">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+              </svg>
+              <span>Meal Prep Spread</span>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="nutritional-content">
+            <span class="eyebrow">The Nutritional Edge</span>
+            <h2>Flavor Meets Function</h2>
+            <div class="text-body">
+              <p>With a degree in Culinary Nutrition from Johnson &amp; Wales University, Chef Daniel brings a rare expertise to meal preparation. Every meal is designed to deliver optimal nutrition without sacrificing the flavors and textures that make food enjoyable.</p>
+              <p>Whether you are training for performance, managing a health condition, or simply want to eat better &mdash; DG Creations meal prep is crafted with your specific goals in mind.</p>
+            </div>
+            <div class="tags">
+              <span class="tag">Macro-Balanced</span>
+              <span class="tag">Allergen-Aware</span>
+              <span class="tag">Performance Nutrition</span>
+              <span class="tag">Weight Management</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-section cta-section">
+      <div class="container-brand">
+        <h2>Start Eating Better Today</h2>
+        <p>Tell us about your dietary needs and schedule, and we will design your personalized meal prep plan.</p>
+        <a href="inquire.html" class="btn-gold btn-gold-lg">Start Your Inquiry</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-main">
+      <div class="container-brand">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="logo" style="margin-bottom:1.5rem;">
+              <span class="logo-main">DG Creations</span>
+              <span class="logo-sub">by Daniel German</span>
+            </div>
+            <p>Elevated private dining experiences, bespoke catering, and personalized meal preparation. Every plate is a creation, every meal an experience.</p>
+          </div>
+          <div class="footer-col">
+            <h3>Services</h3>
+            <ul>
+              <li><a href="experiences.html">Private Dining</a></li>
+              <li><a href="catering.html">Catering</a></li>
+              <li><a href="meal-prep.html">Meal Prep</a></li>
+              <li><a href="menus.html">View Menus</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="about.html">About Chef Daniel</a></li>
+              <li><a href="inquire.html">Inquire</a></li>
+            </ul>
+          </div>
+          <div class="footer-contact">
+            <h3>Get in Touch</h3>
+            <p>Ready to create an unforgettable dining experience?</p>
+            <a href="inquire.html" class="btn-footer-inquiry">Start Your Inquiry</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container-brand">
+        <div class="footer-bottom-inner">
+          <p>&copy; 2026 DG Creations by Daniel German. All rights reserved.</p>
+          <p>Every plate, a creation.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    var hamburger = document.getElementById('hamburger');
+    var mobileNav = document.getElementById('mobile-nav');
+    hamburger.addEventListener('click', function () {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+    function closeMobileNav() {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+    }
+  </script>
+
+</body>
+</html>

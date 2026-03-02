@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inquire | DG Creations</title>
+  <meta name="description" content="Start your DG Creations experience. Submit an inquiry for private dining, catering, or meal prep services by Chef Daniel German." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container-brand">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <span class="logo-main">DG Creations</span>
+          <span class="logo-sub">by Daniel German</span>
+        </a>
+        <nav class="desktop-nav">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="experiences.html">Experiences</a>
+          <a href="menus.html">Menus</a>
+          <a href="catering.html">Catering</a>
+          <a href="meal-prep.html">Meal Prep</a>
+          <a href="inquire.html">Inquire</a>
+        </nav>
+        <a href="inquire.html" class="btn-book">Book a Chef</a>
+        <button class="hamburger-btn" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="mobile-nav" id="mobile-nav">
+        <nav>
+          <a href="index.html" onclick="closeMobileNav()">Home</a>
+          <a href="about.html" onclick="closeMobileNav()">About</a>
+          <a href="experiences.html" onclick="closeMobileNav()">Experiences</a>
+          <a href="menus.html" onclick="closeMobileNav()">Menus</a>
+          <a href="catering.html" onclick="closeMobileNav()">Catering</a>
+          <a href="meal-prep.html" onclick="closeMobileNav()">Meal Prep</a>
+          <a href="inquire.html" onclick="closeMobileNav()">Inquire</a>
+        </nav>
+        <a href="inquire.html" class="btn-book-mobile" onclick="closeMobileNav()">Book a Chef</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- PAGE HERO -->
+    <section class="inquire-hero">
+      <div class="container-brand">
+        <span class="eyebrow" style="display:inline-block;font-family:var(--font-sans);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.3em;color:var(--gold);margin-bottom:1rem;">Get Started</span>
+        <h1 style="font-family:var(--font-serif);font-size:var(--display-lg);font-weight:600;color:var(--cream);line-height:1.1;letter-spacing:-0.015em;margin-bottom:1.5rem;">
+          Begin Your<br /><span style="color:var(--gold);">Experience</span>
+        </h1>
+        <p style="font-family:var(--font-sans);font-size:1rem;color:rgba(200,192,180,0.7);max-width:42rem;margin:0 auto;line-height:1.7;">
+          Share the details of your vision. Chef Daniel will personally review your inquiry and reach out within 48 hours to begin planning your experience.
+        </p>
+      </div>
+    </section>
+
+    <!-- GOLD DIVIDER -->
+    <div class="bg-dg-black" style="padding-top:0.5rem;padding-bottom:0.5rem;">
+      <div class="container-brand">
+        <div class="gold-divider">
+          <span class="line"></span>
+          <span class="diamond"></span>
+          <span class="line"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM SECTION -->
+    <section class="py-section bg-dg-black">
+      <div class="container-brand">
+        <div class="form-wrapper">
+
+          <form class="inquiry-form" action="#" method="post">
+
+            <!-- Service Type -->
+            <div class="form-group">
+              <label class="form-label" for="serviceType">Service Type *</label>
+              <select class="form-select" id="serviceType" name="serviceType" required>
+                <option value="">Select a service</option>
+                <option value="private-dining-one-night">Private Dining &mdash; One Night</option>
+                <option value="private-dining-multi-weekend">Private Dining &mdash; Multi-Weekend</option>
+                <option value="private-dining-multi-day">Private Dining &mdash; Multi-Day</option>
+                <option value="catering">Catering</option>
+                <option value="meal-prep">Meal Prep</option>
+                <option value="other">Other / Not Sure Yet</option>
+              </select>
+            </div>
+
+            <!-- Name and Email -->
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="name">Full Name *</label>
+                <input class="form-input" type="text" id="name" name="name" required placeholder="Your name" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="email">Email Address *</label>
+                <input class="form-input" type="email" id="email" name="email" required placeholder="your@email.com" />
+              </div>
+            </div>
+
+            <!-- Phone and Event Date -->
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="phone">Phone Number *</label>
+                <input class="form-input" type="tel" id="phone" name="phone" required placeholder="(555) 555-5555" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="eventDate">Preferred Date(s)</label>
+                <input class="form-input" type="text" id="eventDate" name="eventDate" placeholder="e.g., March 15, 2026 or flexible" />
+              </div>
+            </div>
+
+            <!-- Guest Count and Budget -->
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="guestCount">Guest Count</label>
+                <select class="form-select" id="guestCount" name="guestCount">
+                  <option value="">Select guest count</option>
+                  <option value="2-4 guests">2-4 guests</option>
+                  <option value="5-10 guests">5-10 guests</option>
+                  <option value="11-25 guests">11-25 guests</option>
+                  <option value="26-50 guests">26-50 guests</option>
+                  <option value="51-100 guests">51-100 guests</option>
+                  <option value="100+ guests">100+ guests</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="budgetRange">Budget Range</label>
+                <select class="form-select" id="budgetRange" name="budgetRange">
+                  <option value="">Select budget range</option>
+                  <option value="Under $1,000">Under $1,000</option>
+                  <option value="$1,000 - $2,500">$1,000 &mdash; $2,500</option>
+                  <option value="$2,500 - $5,000">$2,500 &mdash; $5,000</option>
+                  <option value="$5,000 - $10,000">$5,000 &mdash; $10,000</option>
+                  <option value="$10,000+">$10,000+</option>
+                  <option value="Flexible / Not sure yet">Flexible / Not sure yet</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Location -->
+            <div class="form-group">
+              <label class="form-label" for="location">Event Location</label>
+              <input class="form-input" type="text" id="location" name="location" placeholder="City, state, or full address" />
+            </div>
+
+            <!-- Dietary Restrictions -->
+            <div class="form-group">
+              <label class="form-label" for="dietaryRestrictions">Dietary Restrictions / Allergies</label>
+              <input class="form-input" type="text" id="dietaryRestrictions" name="dietaryRestrictions" placeholder="e.g., gluten-free, nut allergy, vegan guests" />
+            </div>
+
+            <!-- Message / Vision -->
+            <div class="form-group">
+              <label class="form-label" for="message">Tell Us About Your Vision</label>
+              <textarea class="form-textarea" id="message" name="message" rows="5" placeholder="Describe the occasion, any special requests, themes, or anything else Chef Daniel should know..."></textarea>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="form-submit">Submit Inquiry</button>
+
+            <p class="form-disclaimer">
+              By submitting this form, you agree to be contacted regarding your inquiry. Your information will never be shared with third parties.
+            </p>
+
+          </form>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT INFO STRIP -->
+    <section class="py-section-sm contact-info-strip">
+      <div class="container-brand">
+        <p>Prefer to reach out directly?</p>
+        <p class="email-link">Email us at <a href="mailto:hello@dgcreations.com">hello@dgcreations.com</a></p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-main">
+      <div class="container-brand">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="logo" style="margin-bottom:1.5rem;">
+              <span class="logo-main">DG Creations</span>
+              <span class="logo-sub">by Daniel German</span>
+            </div>
+            <p>Elevated private dining experiences, bespoke catering, and personalized meal preparation. Every plate is a creation, every meal an experience.</p>
+          </div>
+          <div class="footer-col">
+            <h3>Services</h3>
+            <ul>
+              <li><a href="experiences.html">Private Dining</a></li>
+              <li><a href="catering.html">Catering</a></li>
+              <li><a href="meal-prep.html">Meal Prep</a></li>
+              <li><a href="menus.html">View Menus</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="about.html">About Chef Daniel</a></li>
+              <li><a href="inquire.html">Inquire</a></li>
+            </ul>
+          </div>
+          <div class="footer-contact">
+            <h3>Get in Touch</h3>
+            <p>Ready to create an unforgettable dining experience?</p>
+            <a href="inquire.html" class="btn-footer-inquiry">Start Your Inquiry</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container-brand">
+        <div class="footer-bottom-inner">
+          <p>&copy; 2026 DG Creations by Daniel German. All rights reserved.</p>
+          <p>Every plate, a creation.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    var hamburger = document.getElementById('hamburger');
+    var mobileNav = document.getElementById('mobile-nav');
+    hamburger.addEventListener('click', function () {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+    function closeMobileNav() {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+    }
+  </script>
+
+</body>
+</html>
