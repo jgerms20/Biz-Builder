@@ -24,6 +24,7 @@
           <a href="menus.html">Menus</a>
           <a href="catering.html">Catering</a>
           <a href="meal-prep.html">Meal Prep</a>
+          <a href="gallery.html">Gallery</a>
           <a href="inquire.html">Inquire</a>
         </nav>
         <a href="inquire.html" class="btn-book">Book a Chef</a>
@@ -41,6 +42,7 @@
           <a href="menus.html" onclick="closeMobileNav()">Menus</a>
           <a href="catering.html" onclick="closeMobileNav()">Catering</a>
           <a href="meal-prep.html" onclick="closeMobileNav()">Meal Prep</a>
+          <a href="gallery.html" onclick="closeMobileNav()">Gallery</a>
           <a href="inquire.html" onclick="closeMobileNav()">Inquire</a>
         </nav>
         <a href="inquire.html" class="btn-book-mobile" onclick="closeMobileNav()">Book a Chef</a>
@@ -67,12 +69,11 @@
 
           <!-- Portrait Image -->
           <div style="padding-top:2rem; padding-bottom:2rem;">
-            <div class="img-placeholder aspect-3-4">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
-              </svg>
-              <span>Chef Daniel German &mdash; Portrait</span>
+            <div class="kitchen-photo" style="aspect-ratio:3/4;overflow:hidden;background:#141414;">
+              <img src="images/daniel-portrait.jpg"
+                   alt="Chef Daniel German"
+                   style="width:100%;height:100%;object-fit:cover;object-position:center top;"
+                   onerror="this.style.display='none'" />
             </div>
           </div>
         </div>
@@ -101,7 +102,6 @@
 
         <div class="timeline">
 
-          <!-- Milestone 1 -->
           <div class="timeline-item">
             <div class="timeline-marker">
               <div class="timeline-dot"></div>
@@ -114,7 +114,6 @@
             </div>
           </div>
 
-          <!-- Milestone 2 -->
           <div class="timeline-item">
             <div class="timeline-marker">
               <div class="timeline-dot"></div>
@@ -127,7 +126,6 @@
             </div>
           </div>
 
-          <!-- Milestone 3 -->
           <div class="timeline-item">
             <div class="timeline-marker">
               <div class="timeline-dot"></div>
@@ -140,7 +138,6 @@
             </div>
           </div>
 
-          <!-- Milestone 4 (no line after last) -->
           <div class="timeline-item">
             <div class="timeline-marker">
               <div class="timeline-dot"></div>
@@ -156,7 +153,7 @@
       </div>
     </section>
 
-    <!-- VALUES -->
+    <!-- VALUES — 3 clean cards -->
     <section class="py-section bg-dg-surface border-surface">
       <div class="container-brand">
         <div class="section-heading">
@@ -165,7 +162,7 @@
           <p>The principles that define the DG Creations experience.</p>
         </div>
 
-        <div class="values-grid">
+        <div class="values-grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));">
           <div class="value-card">
             <h3>Ingredient Integrity</h3>
             <p>Every dish begins with sourcing the finest ingredients. Seasonal, local when possible, and always of the highest quality.</p>
@@ -176,17 +173,13 @@
           </div>
           <div class="value-card">
             <h3>Personal Connection</h3>
-            <p>Cooking for someone is an act of care. Understanding dietary needs, preferences, and desires is where the experience begins.</p>
-          </div>
-          <div class="value-card">
-            <h3>Nutritional Excellence</h3>
-            <p>With a degree in Culinary Nutrition, Daniel ensures that extraordinary flavor and optimal nutrition are never at odds.</p>
+            <p>Cooking for someone is an act of care. Understanding your tastes, your needs, and your vision is where the experience begins.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- BEHIND THE SCENES -->
+    <!-- BEHIND THE SCENES — real photos -->
     <section class="py-section bg-dg-black">
       <div class="container-brand">
         <div class="section-heading">
@@ -196,26 +189,23 @@
         </div>
 
         <div class="kitchen-grid">
-          <div class="img-placeholder aspect-4-5">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
-            </svg>
-            <span>Prep Work</span>
+          <div class="kitchen-photo" style="aspect-ratio:4/5;overflow:hidden;background:#141414;">
+            <img src="images/daniel-kitchen-prep.jpg"
+                 alt="Chef Daniel — prep work"
+                 loading="lazy"
+                 onerror="this.style.display='none'" />
           </div>
-          <div class="img-placeholder aspect-4-5">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
-            </svg>
-            <span>Plating</span>
+          <div class="kitchen-photo" style="aspect-ratio:4/5;overflow:hidden;background:#141414;">
+            <img src="images/daniel-plating.jpg"
+                 alt="Chef Daniel — plating"
+                 loading="lazy"
+                 onerror="this.style.display='none'" />
           </div>
-          <div class="img-placeholder aspect-4-5">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
-            </svg>
-            <span>Final Touch</span>
+          <div class="kitchen-photo" style="aspect-ratio:4/5;overflow:hidden;background:#141414;">
+            <img src="images/daniel-final-touch.jpg"
+                 alt="Chef Daniel — final touch"
+                 loading="lazy"
+                 onerror="this.style.display='none'" />
           </div>
         </div>
       </div>
@@ -257,6 +247,7 @@
             <h3>Company</h3>
             <ul>
               <li><a href="about.html">About Chef Daniel</a></li>
+              <li><a href="gallery.html">Gallery</a></li>
               <li><a href="inquire.html">Inquire</a></li>
             </ul>
           </div>

@@ -24,6 +24,7 @@
           <a href="menus.html">Menus</a>
           <a href="catering.html">Catering</a>
           <a href="meal-prep.html">Meal Prep</a>
+          <a href="gallery.html">Gallery</a>
           <a href="inquire.html">Inquire</a>
         </nav>
         <a href="inquire.html" class="btn-book">Book a Chef</a>
@@ -39,6 +40,7 @@
           <a href="menus.html" onclick="closeMobileNav()">Menus</a>
           <a href="catering.html" onclick="closeMobileNav()">Catering</a>
           <a href="meal-prep.html" onclick="closeMobileNav()">Meal Prep</a>
+          <a href="gallery.html" onclick="closeMobileNav()">Gallery</a>
           <a href="inquire.html" onclick="closeMobileNav()">Inquire</a>
         </nav>
         <a href="inquire.html" class="btn-book-mobile" onclick="closeMobileNav()">Book a Chef</a>
@@ -271,6 +273,75 @@
       </div>
     </section>
 
+    <!-- VIDEO SECTION -->
+    <section class="py-section bg-dg-black" id="videos">
+      <div class="container-brand">
+        <div class="section-heading">
+          <span class="label">Watch &amp; Experience</span>
+          <h2>Daniel in Action</h2>
+          <p>Get a feel for the craft, the energy, and the detail that goes into every DG Creations experience.</p>
+        </div>
+
+        <div class="video-grid">
+
+          <!-- Video 1 -->
+          <div class="video-card">
+            <div class="video-card-player">
+              <video id="vid1" preload="metadata" poster="images/gallery-03.jpg">
+                <source src="videos/video-1.mp4" type="video/mp4" />
+              </video>
+              <div class="video-play-overlay" onclick="playVideo('vid1', this)">
+                <div class="video-play-btn">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="video-card-body">
+              <h3>The DG Experience</h3>
+              <p>A look inside what it means to have Chef Daniel bring a full dining experience into your home.</p>
+            </div>
+          </div>
+
+          <!-- Video 2 -->
+          <div class="video-card">
+            <div class="video-card-player">
+              <video id="vid2" preload="metadata" poster="images/gallery-01.jpg">
+                <source src="videos/video-2.mp4" type="video/mp4" />
+              </video>
+              <div class="video-play-overlay" onclick="playVideo('vid2', this)">
+                <div class="video-play-btn">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="video-card-body">
+              <h3>Craft &amp; Technique</h3>
+              <p>Behind the scenes of the kitchen preparation, plating, and the precision that defines each creation.</p>
+            </div>
+          </div>
+
+          <!-- Video 3 -->
+          <div class="video-card">
+            <div class="video-card-player">
+              <video id="vid3" preload="metadata" poster="images/gallery-07.jpg">
+                <source src="videos/video-3.mp4" type="video/mp4" />
+              </video>
+              <div class="video-play-overlay" onclick="playVideo('vid3', this)">
+                <div class="video-play-btn">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="video-card-body">
+              <h3>Events &amp; Catering</h3>
+              <p>From intimate gatherings to large-scale events &mdash; the full DG Creations catering experience.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <!-- CTA -->
     <section class="py-section cta-section">
       <div class="container-brand">
@@ -338,6 +409,13 @@
     function closeMobileNav() {
       hamburger.classList.remove('open');
       mobileNav.classList.remove('open');
+    }
+
+    function playVideo(id, overlay) {
+      var vid = document.getElementById(id);
+      overlay.style.display = 'none';
+      vid.controls = true;
+      vid.play();
     }
   </script>
 

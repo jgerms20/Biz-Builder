@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery | DG Creations by Daniel German</title>
+  <meta name="description" content="Photo gallery showcasing DG Creations by Chef Daniel German — plated dishes, private dining events, behind-the-scenes kitchen moments, and more." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container-brand">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <span class="logo-main">DG Creations</span>
+          <span class="logo-sub">by Daniel German</span>
+        </a>
+        <nav class="desktop-nav">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="experiences.html">Experiences</a>
+          <a href="menus.html">Menus</a>
+          <a href="catering.html">Catering</a>
+          <a href="meal-prep.html">Meal Prep</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="inquire.html">Inquire</a>
+        </nav>
+        <a href="inquire.html" class="btn-book">Book a Chef</a>
+        <button class="hamburger-btn" id="hamburger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      <div class="mobile-nav" id="mobile-nav">
+        <nav>
+          <a href="index.html" onclick="closeMobileNav()">Home</a>
+          <a href="about.html" onclick="closeMobileNav()">About</a>
+          <a href="experiences.html" onclick="closeMobileNav()">Experiences</a>
+          <a href="menus.html" onclick="closeMobileNav()">Menus</a>
+          <a href="catering.html" onclick="closeMobileNav()">Catering</a>
+          <a href="meal-prep.html" onclick="closeMobileNav()">Meal Prep</a>
+          <a href="gallery.html" onclick="closeMobileNav()">Gallery</a>
+          <a href="inquire.html" onclick="closeMobileNav()">Inquire</a>
+        </nav>
+        <a href="inquire.html" class="btn-book-mobile" onclick="closeMobileNav()">Book a Chef</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- PAGE HEADER -->
+    <section class="page-hero" style="text-align:center;">
+      <div class="container-brand">
+        <span class="eyebrow">Visual Portfolio</span>
+        <h1>The <span class="gold-text">Gallery</span></h1>
+        <p style="max-width:600px;margin:1.5rem auto 0;color:var(--cream-muted);font-size:1rem;line-height:1.7;">
+          A curated collection of dishes, dining experiences, and behind-the-scenes moments from Chef Daniel German&rsquo;s culinary journey.
+        </p>
+      </div>
+    </section>
+
+    <!-- FILTER TABS + MASONRY GALLERY -->
+    <section class="py-section bg-dg-black">
+      <div class="container-brand">
+
+        <div class="gallery-filter-tabs">
+          <button class="filter-tab active" data-filter="all">All</button>
+          <button class="filter-tab" data-filter="food">Food &amp; Plating</button>
+          <button class="filter-tab" data-filter="chef">Chef</button>
+          <button class="filter-tab" data-filter="events">Events</button>
+        </div>
+
+        <div class="gallery-masonry" id="galleryGrid">
+
+          <!-- Food photos -->
+          <div class="gallery-masonry-item" data-cat="food" onclick="openLightbox('images/gallery-01.jpg')">
+            <img src="images/gallery-01.jpg" alt="Plated dish" loading="lazy" onerror="this.parentElement.style.display='none'" />
+            <div class="gallery-overlay"></div>
+          </div>
+
+          <div class="gallery-masonry-item" data-cat="food" onclick="openLightbox('images/gallery-02.jpg')">
+            <img src="images/gallery-02.jpg" alt="Plated dish" loading="lazy" onerror="this.parentElement.style.display='none'" />
+            <div class="gallery-overlay"></div>
+          </div>
+
+          <div class="gallery-masonry-item" data-cat="food" onclick="openLightbox('images/gallery-04.jpg')">
+            <img src="images/gallery-04.jpg" alt="Dessert course" loading="lazy" onerror="this.parentElement.style.display='none'" />
+            <div class="gallery-overlay"></div>
+          </div>
+
+          <div class="gallery-masonry-item" data-cat="food" onclick="openLightbox('images/gallery-05.jpg')">
+            <img src="images/gallery-05.jpg" alt="Ingredients" loading="lazy" onerror="this.parentElement.style.display='none'" />
+            <div class="gallery-overlay"></div>
+          </div>
+
+          <div class="gallery-masonry-item" data-cat="food" onclick="openLightbox('images/gallery-08.jpg')">
+            <img src="images/gallery-08.jpg" alt="Final presentation" loading="lazy" onerror="this.parentElement.style.display='none'" />
+            <div class="gallery-overlay"></div>
+          </div>
+
+          <div class="gallery-masonry-item" data-cat="food" onclick="openLightbox('images/gallery-09.jpg')">
+            <img src="images/gallery-09.jpg" alt="Food shot" loading="lazy" onerror="this.parentElement.style.display='none'" />
+            <div class="gallery-overlay"></div>
+          </div>
+
+          <div class="gallery-masonry-item" data-cat="food" onclick="openLightbox('images/gallery-10.jpg')">
+            <img src="images/gallery-10.jpg" alt="Food shot" loading="lazy" onerror="this.parentElement.style.display='none'" />
+            <div class="gallery-overlay"></div>
+          </div>
+
+          <div class="gallery-masonry-item" data-cat="food" onclick="openLightbox('images/gallery-11.jpg')">
+            <img src="images/gallery-11.jpg" alt="Food shot" loading="lazy" onerror="this.parentElement.style.display='none'" />
+            <div class="gallery-overlay"></div>
+          </div>
+
+          <div class="gallery-masonry-item" data-cat="food" onclick="openLightbox('images/gallery-12.jpg')">
+            <img src="images/gallery-12.jpg" alt="Food shot" loading="lazy" onerror="this.parentElement.style.display='none'" />
+            <div class="gallery-overlay"></div>
+          </div>
+
+          <!-- Chef photos -->
+          <div class="gallery-masonry-item" data-cat="chef" onclick="openLightbox('images/gallery-03.jpg')">
+            <img src="images/gallery-03.jpg" alt="Chef Daniel at work" loading="lazy" onerror="this.parentElement.style.display='none'" />
+            <div class="gallery-overlay"></div>
+          </div>
+
+          <div class="gallery-masonry-item" data-cat="chef" onclick="openLightbox('images/daniel-kitchen-prep.jpg')">
+            <img src="images/daniel-kitchen-prep.jpg" alt="Chef Daniel — prep" loading="lazy" onerror="this.parentElement.style.display='none'" />
+            <div class="gallery-overlay"></div>
+          </div>
+
+          <div class="gallery-masonry-item" data-cat="chef" onclick="openLightbox('images/daniel-plating.jpg')">
+            <img src="images/daniel-plating.jpg" alt="Chef Daniel — plating" loading="lazy" onerror="this.parentElement.style.display='none'" />
+            <div class="gallery-overlay"></div>
+          </div>
+
+          <div class="gallery-masonry-item" data-cat="chef" onclick="openLightbox('images/daniel-final-touch.jpg')">
+            <img src="images/daniel-final-touch.jpg" alt="Chef Daniel — final touch" loading="lazy" onerror="this.parentElement.style.display='none'" />
+            <div class="gallery-overlay"></div>
+          </div>
+
+          <!-- Events -->
+          <div class="gallery-masonry-item" data-cat="events" onclick="openLightbox('images/gallery-06.jpg')">
+            <img src="images/gallery-06.jpg" alt="Dining event" loading="lazy" onerror="this.parentElement.style.display='none'" />
+            <div class="gallery-overlay"></div>
+          </div>
+
+          <div class="gallery-masonry-item" data-cat="events" onclick="openLightbox('images/gallery-07.jpg')">
+            <img src="images/gallery-07.jpg" alt="Private event" loading="lazy" onerror="this.parentElement.style.display='none'" />
+            <div class="gallery-overlay"></div>
+          </div>
+
+        </div><!-- /gallery-masonry -->
+
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-section cta-section">
+      <div class="container-brand">
+        <h2>Inspired by What You See?</h2>
+        <p>Every image represents a real experience Chef Daniel has created. Let him create yours.</p>
+        <a href="inquire.html" class="btn-gold btn-gold-lg">Start Your Inquiry</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-main">
+      <div class="container-brand">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="logo" style="margin-bottom:1.5rem;">
+              <span class="logo-main">DG Creations</span>
+              <span class="logo-sub">by Daniel German</span>
+            </div>
+            <p>Elevated private dining experiences, bespoke catering, and personalized meal preparation. Every plate is a creation, every meal an experience.</p>
+          </div>
+          <div class="footer-col">
+            <h3>Services</h3>
+            <ul>
+              <li><a href="experiences.html">Private Dining</a></li>
+              <li><a href="catering.html">Catering</a></li>
+              <li><a href="meal-prep.html">Meal Prep</a></li>
+              <li><a href="menus.html">View Menus</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="about.html">About Chef Daniel</a></li>
+              <li><a href="gallery.html">Gallery</a></li>
+              <li><a href="inquire.html">Inquire</a></li>
+            </ul>
+          </div>
+          <div class="footer-contact">
+            <h3>Get in Touch</h3>
+            <p>Ready to create an unforgettable dining experience?</p>
+            <a href="inquire.html" class="btn-footer-inquiry">Start Your Inquiry</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container-brand">
+        <div class="footer-bottom-inner">
+          <p>&copy; 2026 DG Creations by Daniel German. All rights reserved.</p>
+          <p>Every plate, a creation.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ----- Mobile Nav ----- */
+    var hamburger = document.getElementById('hamburger');
+    var mobileNav = document.getElementById('mobile-nav');
+    hamburger.addEventListener('click', function () {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+    function closeMobileNav() {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+    }
+
+    /* ----- Lightbox ----- */
+    function openLightbox(src) {
+      var lb  = document.getElementById('lightbox');
+      var img = document.getElementById('lightboxImg');
+      img.src = src;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    /* ----- Filter Tabs ----- */
+    var tabs  = document.querySelectorAll('.filter-tab');
+    var items = document.querySelectorAll('.gallery-masonry-item');
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        tabs.forEach(function (t) { t.classList.remove('active'); });
+        tab.classList.add('active');
+
+        var filter = tab.dataset.filter;
+        items.forEach(function (item) {
+          if (filter === 'all' || item.dataset.cat === filter) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

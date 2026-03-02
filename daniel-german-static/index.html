@@ -33,6 +33,7 @@
           <a href="menus.html">Menus</a>
           <a href="catering.html">Catering</a>
           <a href="meal-prep.html">Meal Prep</a>
+          <a href="gallery.html">Gallery</a>
           <a href="inquire.html">Inquire</a>
         </nav>
 
@@ -56,6 +57,7 @@
           <a href="menus.html" onclick="closeMobileNav()">Menus</a>
           <a href="catering.html" onclick="closeMobileNav()">Catering</a>
           <a href="meal-prep.html" onclick="closeMobileNav()">Meal Prep</a>
+          <a href="gallery.html" onclick="closeMobileNav()">Gallery</a>
           <a href="inquire.html" onclick="closeMobileNav()">Inquire</a>
         </nav>
         <a href="inquire.html" class="btn-book-mobile" onclick="closeMobileNav()">Book a Chef</a>
@@ -68,18 +70,56 @@
        ====================================================== -->
   <main>
 
-    <!-- HERO SECTION -->
+    <!-- HERO SECTION — Carousel -->
     <section class="hero-section">
-      <!-- Background -->
-      <div class="hero-bg">
-        <div class="img-placeholder hero-img-placeholder">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
-          </svg>
-          <span>Hero Image — Chef Daniel at Work</span>
+      <!-- Carousel Background -->
+      <div class="hero-bg hero-carousel" id="heroCarousel">
+        <div class="hero-carousel-track" id="heroTrack">
+
+          <!-- Slide 1: Daniel holding spring rolls — MAIN HERO -->
+          <div class="hero-carousel-slide">
+            <img src="images/hero-1-daniel-spring-rolls.jpg"
+                 alt="Chef Daniel German holding a plate of spring rolls"
+                 onerror="this.parentElement.style.background='#141414'" />
+          </div>
+
+          <!-- Slide 2: Daniel as chef -->
+          <div class="hero-carousel-slide">
+            <img src="images/hero-2-daniel-chef.jpg"
+                 alt="Chef Daniel German"
+                 onerror="this.parentElement.style.background='#141414'" />
+          </div>
+
+          <!-- Slide 3: Daniel cooking -->
+          <div class="hero-carousel-slide">
+            <img src="images/hero-3-daniel-cooking.jpg"
+                 alt="Chef Daniel German cooking"
+                 onerror="this.parentElement.style.background='#141414'" />
+          </div>
+
         </div>
-        <div class="hero-overlay"></div>
+
+        <!-- Overlay -->
+        <div class="hero-overlay" style="position:absolute;inset:0;z-index:2;"></div>
+
+        <!-- Prev / Next -->
+        <button class="carousel-btn carousel-btn-prev" id="heroPrev" aria-label="Previous slide" style="z-index:5;">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg>
+        </button>
+        <button class="carousel-btn carousel-btn-next" id="heroNext" aria-label="Next slide" style="z-index:5;">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+          </svg>
+        </button>
+
+        <!-- Dots -->
+        <div class="carousel-dots" id="heroDots">
+          <button class="carousel-dot active" data-index="0"></button>
+          <button class="carousel-dot" data-index="1"></button>
+          <button class="carousel-dot" data-index="2"></button>
+        </div>
       </div>
 
       <!-- Content -->
@@ -114,14 +154,11 @@
       <div class="container-brand">
         <div class="intro-grid">
           <!-- Image -->
-          <div>
-            <div class="img-placeholder aspect-3-4">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
-              </svg>
-              <span>Chef Daniel Portrait</span>
-            </div>
+          <div class="site-img-wrap" style="aspect-ratio:3/4;overflow:hidden;background:#141414;">
+            <img class="site-img"
+                 src="images/daniel-intro.jpg"
+                 alt="Chef Daniel German"
+                 onerror="this.style.display='none'" />
           </div>
 
           <!-- Content -->
@@ -168,12 +205,9 @@
         <div class="service-grid">
           <!-- Service: Private Dining -->
           <div class="service-card">
-            <div class="img-placeholder aspect-16-10">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
-              </svg>
-              <span>Private Dining Experience</span>
+            <div class="site-img-wrap" style="aspect-ratio:16/10;overflow:hidden;background:#141414;">
+              <img class="site-img" src="images/gallery-06.jpg" alt="Private Dining Experience"
+                   loading="lazy" onerror="this.style.display='none'" />
             </div>
             <div class="service-card-body">
               <h3>Private Dining</h3>
@@ -190,12 +224,9 @@
 
           <!-- Service: Catering -->
           <div class="service-card">
-            <div class="img-placeholder aspect-16-10">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
-              </svg>
-              <span>Catering Service</span>
+            <div class="site-img-wrap" style="aspect-ratio:16/10;overflow:hidden;background:#141414;">
+              <img class="site-img" src="images/gallery-07.jpg" alt="Catering Service"
+                   loading="lazy" onerror="this.style.display='none'" />
             </div>
             <div class="service-card-body">
               <h3>Catering</h3>
@@ -212,17 +243,14 @@
 
           <!-- Service: Meal Prep -->
           <div class="service-card">
-            <div class="img-placeholder aspect-16-10">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
-              </svg>
-              <span>Meal Prep Service</span>
+            <div class="site-img-wrap" style="aspect-ratio:16/10;overflow:hidden;background:#141414;">
+              <img class="site-img" src="images/meal-prep-hero.jpg" alt="Meal Prep Service"
+                   loading="lazy" onerror="this.style.display='none'" />
             </div>
             <div class="service-card-body">
               <h3>Meal Prep</h3>
-              <p>Chef-crafted, nutritionally balanced meals prepared and delivered weekly. Fuel your life with restaurant-quality food.</p>
-              <p class="price-hint">From $250 per week</p>
+              <p>Chef-crafted, nutritionally balanced meals prepared and portioned for your week. Real food, real flavor &mdash; ready when you are.</p>
+              <p class="price-hint">From $12 per meal</p>
               <a href="meal-prep.html" class="btn-text-gold">
                 Learn More
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -234,6 +262,29 @@
         </div>
       </div>
     </section>
+
+    <!-- ROTATOR STRIP — scrolling food shots -->
+    <div class="rotator-strip" aria-hidden="true">
+      <div class="rotator-track">
+        <div class="rotator-item"><img src="images/gallery-01.jpg" alt="" loading="lazy" onerror="this.parentElement.style.background='#141414'" /></div>
+        <div class="rotator-item"><img src="images/gallery-02.jpg" alt="" loading="lazy" onerror="this.parentElement.style.background='#141414'" /></div>
+        <div class="rotator-item"><img src="images/gallery-03.jpg" alt="" loading="lazy" onerror="this.parentElement.style.background='#141414'" /></div>
+        <div class="rotator-item"><img src="images/gallery-04.jpg" alt="" loading="lazy" onerror="this.parentElement.style.background='#141414'" /></div>
+        <div class="rotator-item"><img src="images/gallery-05.jpg" alt="" loading="lazy" onerror="this.parentElement.style.background='#141414'" /></div>
+        <div class="rotator-item"><img src="images/gallery-06.jpg" alt="" loading="lazy" onerror="this.parentElement.style.background='#141414'" /></div>
+        <div class="rotator-item"><img src="images/gallery-07.jpg" alt="" loading="lazy" onerror="this.parentElement.style.background='#141414'" /></div>
+        <div class="rotator-item"><img src="images/gallery-08.jpg" alt="" loading="lazy" onerror="this.parentElement.style.background='#141414'" /></div>
+        <!-- duplicate for seamless loop -->
+        <div class="rotator-item"><img src="images/gallery-01.jpg" alt="" loading="lazy" onerror="this.parentElement.style.background='#141414'" /></div>
+        <div class="rotator-item"><img src="images/gallery-02.jpg" alt="" loading="lazy" onerror="this.parentElement.style.background='#141414'" /></div>
+        <div class="rotator-item"><img src="images/gallery-03.jpg" alt="" loading="lazy" onerror="this.parentElement.style.background='#141414'" /></div>
+        <div class="rotator-item"><img src="images/gallery-04.jpg" alt="" loading="lazy" onerror="this.parentElement.style.background='#141414'" /></div>
+        <div class="rotator-item"><img src="images/gallery-05.jpg" alt="" loading="lazy" onerror="this.parentElement.style.background='#141414'" /></div>
+        <div class="rotator-item"><img src="images/gallery-06.jpg" alt="" loading="lazy" onerror="this.parentElement.style.background='#141414'" /></div>
+        <div class="rotator-item"><img src="images/gallery-07.jpg" alt="" loading="lazy" onerror="this.parentElement.style.background='#141414'" /></div>
+        <div class="rotator-item"><img src="images/gallery-08.jpg" alt="" loading="lazy" onerror="this.parentElement.style.background='#141414'" /></div>
+      </div>
+    </div>
 
     <!-- PHILOSOPHY STRIP -->
     <section class="py-section philosophy-strip">
@@ -256,39 +307,34 @@
         </div>
 
         <div class="gallery-grid">
-          <!-- 8 placeholders -->
-          <div class="img-placeholder aspect-square">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" /></svg>
-            <span>Plated Dish</span>
+          <div class="site-img-wrap" style="aspect-ratio:1/1;overflow:hidden;background:#141414;cursor:pointer;" onclick="window.location='gallery.html'">
+            <img class="site-img" src="images/gallery-01.jpg" alt="Plated Dish" loading="lazy" onerror="this.style.display='none'" />
           </div>
-          <div class="img-placeholder aspect-square">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" /></svg>
-            <span>Table Setting</span>
+          <div class="site-img-wrap" style="aspect-ratio:1/1;overflow:hidden;background:#141414;cursor:pointer;" onclick="window.location='gallery.html'">
+            <img class="site-img" src="images/gallery-02.jpg" alt="Table Setting" loading="lazy" onerror="this.style.display='none'" />
           </div>
-          <div class="img-placeholder aspect-square">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" /></svg>
-            <span>Chef at Work</span>
+          <div class="site-img-wrap" style="aspect-ratio:1/1;overflow:hidden;background:#141414;cursor:pointer;" onclick="window.location='gallery.html'">
+            <img class="site-img" src="images/gallery-03.jpg" alt="Chef at Work" loading="lazy" onerror="this.style.display='none'" />
           </div>
-          <div class="img-placeholder aspect-square">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" /></svg>
-            <span>Dessert Course</span>
+          <div class="site-img-wrap" style="aspect-ratio:1/1;overflow:hidden;background:#141414;cursor:pointer;" onclick="window.location='gallery.html'">
+            <img class="site-img" src="images/gallery-04.jpg" alt="Dessert Course" loading="lazy" onerror="this.style.display='none'" />
           </div>
-          <div class="img-placeholder aspect-square">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" /></svg>
-            <span>Ingredients</span>
+          <div class="site-img-wrap" style="aspect-ratio:1/1;overflow:hidden;background:#141414;cursor:pointer;" onclick="window.location='gallery.html'">
+            <img class="site-img" src="images/gallery-05.jpg" alt="Ingredients" loading="lazy" onerror="this.style.display='none'" />
           </div>
-          <div class="img-placeholder aspect-square">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" /></svg>
-            <span>Wine Pairing</span>
+          <div class="site-img-wrap" style="aspect-ratio:1/1;overflow:hidden;background:#141414;cursor:pointer;" onclick="window.location='gallery.html'">
+            <img class="site-img" src="images/gallery-06.jpg" alt="Table Setting" loading="lazy" onerror="this.style.display='none'" />
           </div>
-          <div class="img-placeholder aspect-square">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" /></svg>
-            <span>Private Event</span>
+          <div class="site-img-wrap" style="aspect-ratio:1/1;overflow:hidden;background:#141414;cursor:pointer;" onclick="window.location='gallery.html'">
+            <img class="site-img" src="images/gallery-07.jpg" alt="Private Event" loading="lazy" onerror="this.style.display='none'" />
           </div>
-          <div class="img-placeholder aspect-square">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" /></svg>
-            <span>Final Presentation</span>
+          <div class="site-img-wrap" style="aspect-ratio:1/1;overflow:hidden;background:#141414;cursor:pointer;" onclick="window.location='gallery.html'">
+            <img class="site-img" src="images/gallery-08.jpg" alt="Final Presentation" loading="lazy" onerror="this.style.display='none'" />
           </div>
+        </div>
+
+        <div style="text-align:center; margin-top:3rem;">
+          <a href="gallery.html" class="btn-gold">View Full Gallery</a>
         </div>
       </div>
     </section>
@@ -314,8 +360,6 @@
     <div class="footer-main">
       <div class="container-brand">
         <div class="footer-grid">
-
-          <!-- Brand Column -->
           <div class="footer-brand">
             <div class="logo" style="margin-bottom:1.5rem;">
               <span class="logo-main">DG Creations</span>
@@ -323,8 +367,6 @@
             </div>
             <p>Elevated private dining experiences, bespoke catering, and personalized meal preparation. Every plate is a creation, every meal an experience.</p>
           </div>
-
-          <!-- Services Column -->
           <div class="footer-col">
             <h3>Services</h3>
             <ul>
@@ -334,28 +376,22 @@
               <li><a href="menus.html">View Menus</a></li>
             </ul>
           </div>
-
-          <!-- Company Column -->
           <div class="footer-col">
             <h3>Company</h3>
             <ul>
               <li><a href="about.html">About Chef Daniel</a></li>
+              <li><a href="gallery.html">Gallery</a></li>
               <li><a href="inquire.html">Inquire</a></li>
             </ul>
           </div>
-
-          <!-- Contact Column -->
           <div class="footer-contact">
             <h3>Get in Touch</h3>
             <p>Ready to create an unforgettable dining experience?</p>
             <a href="inquire.html" class="btn-footer-inquiry">Start Your Inquiry</a>
           </div>
-
         </div>
       </div>
     </div>
-
-    <!-- Bottom Bar -->
     <div class="footer-bottom">
       <div class="container-brand">
         <div class="footer-bottom-inner">
@@ -367,21 +403,51 @@
   </footer>
 
   <!-- ======================================================
-       JAVASCRIPT — Mobile Nav Toggle
+       JAVASCRIPT
        ====================================================== -->
   <script>
+    /* ----- Mobile Nav ----- */
     var hamburger = document.getElementById('hamburger');
     var mobileNav = document.getElementById('mobile-nav');
-
     hamburger.addEventListener('click', function () {
       hamburger.classList.toggle('open');
       mobileNav.classList.toggle('open');
     });
-
     function closeMobileNav() {
       hamburger.classList.remove('open');
       mobileNav.classList.remove('open');
     }
+
+    /* ----- Hero Carousel ----- */
+    (function () {
+      var track   = document.getElementById('heroTrack');
+      var dots    = document.querySelectorAll('#heroDots .carousel-dot');
+      var total   = 3;
+      var current = 0;
+      var timer;
+
+      function goTo(index) {
+        current = (index + total) % total;
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        dots.forEach(function (d, i) {
+          d.classList.toggle('active', i === current);
+        });
+      }
+
+      function next() { goTo(current + 1); }
+      function prev() { goTo(current - 1); }
+
+      function startTimer() { timer = setInterval(next, 5500); }
+      function resetTimer()  { clearInterval(timer); startTimer(); }
+
+      document.getElementById('heroNext').addEventListener('click', function () { next(); resetTimer(); });
+      document.getElementById('heroPrev').addEventListener('click', function () { prev(); resetTimer(); });
+      dots.forEach(function (d) {
+        d.addEventListener('click', function () { goTo(parseInt(d.dataset.index)); resetTimer(); });
+      });
+
+      startTimer();
+    })();
   </script>
 
 </body>
