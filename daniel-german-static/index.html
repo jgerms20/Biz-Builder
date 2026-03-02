@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DG Creations by Daniel German — Private Chef &amp; Dining Experiences</title>
+  <meta name="description" content="Elevated private dining experiences, bespoke catering, and personalized meal preparation by Chef Daniel German. Johnson &amp; Wales trained. Every plate, a creation." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="DG Creations by Daniel German — Private Chef &amp; Dining Experiences" />
+  <meta property="og:description" content="Elevated private dining experiences, bespoke catering, and personalized meal preparation by Chef Daniel German." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ======================================================
+       HEADER
+       ====================================================== -->
+  <header class="site-header">
+    <div class="container-brand">
+      <div class="header-inner">
+
+        <!-- Logo -->
+        <a href="index.html" class="logo">
+          <span class="logo-main">DG Creations</span>
+          <span class="logo-sub">by Daniel German</span>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="experiences.html">Experiences</a>
+          <a href="menus.html">Menus</a>
+          <a href="catering.html">Catering</a>
+          <a href="meal-prep.html">Meal Prep</a>
+          <a href="inquire.html">Inquire</a>
+        </nav>
+
+        <!-- Desktop CTA -->
+        <a href="inquire.html" class="btn-book">Book a Chef</a>
+
+        <!-- Mobile Hamburger -->
+        <button class="hamburger-btn" id="hamburger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <!-- Mobile Navigation -->
+      <div class="mobile-nav" id="mobile-nav">
+        <nav>
+          <a href="index.html" onclick="closeMobileNav()">Home</a>
+          <a href="about.html" onclick="closeMobileNav()">About</a>
+          <a href="experiences.html" onclick="closeMobileNav()">Experiences</a>
+          <a href="menus.html" onclick="closeMobileNav()">Menus</a>
+          <a href="catering.html" onclick="closeMobileNav()">Catering</a>
+          <a href="meal-prep.html" onclick="closeMobileNav()">Meal Prep</a>
+          <a href="inquire.html" onclick="closeMobileNav()">Inquire</a>
+        </nav>
+        <a href="inquire.html" class="btn-book-mobile" onclick="closeMobileNav()">Book a Chef</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================================================
+       MAIN CONTENT
+       ====================================================== -->
+  <main>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <!-- Background -->
+      <div class="hero-bg">
+        <div class="img-placeholder hero-img-placeholder">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+          </svg>
+          <span>Hero Image — Chef Daniel at Work</span>
+        </div>
+        <div class="hero-overlay"></div>
+      </div>
+
+      <!-- Content -->
+      <div class="hero-content">
+        <div class="container-brand">
+          <div class="inner" style="max-width:48rem;margin:0 auto;">
+            <span class="hero-eyebrow animate-shimmer">Private Chef &middot; Private Dining &middot; Catering</span>
+            <h1 class="hero-h1">
+              Every Plate,<br />
+              <span class="gold-text">a Creation</span>
+            </h1>
+            <p class="hero-p">
+              Intimate dining experiences crafted with precision, passion, and a deep respect for ingredients. Chef Daniel German brings the restaurant to you.
+            </p>
+            <div class="hero-actions">
+              <a href="inquire.html" class="btn-gold">Begin Your Experience</a>
+              <a href="experiences.html" class="btn-outline-cream">View Experiences</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <div class="scroll-indicator">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- INTRODUCTION SECTION -->
+    <section class="py-section bg-dg-black">
+      <div class="container-brand">
+        <div class="intro-grid">
+          <!-- Image -->
+          <div>
+            <div class="img-placeholder aspect-3-4">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+              </svg>
+              <span>Chef Daniel Portrait</span>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="intro-content">
+            <span class="eyebrow">The Chef</span>
+            <h2>Culinary Artistry,<br />Delivered to You</h2>
+            <div class="text-body">
+              <p>Chef Daniel German is a Johnson &amp; Wales University graduate, holding degrees in both Culinary Arts and Culinary Nutrition. His approach transcends traditional cooking &mdash; every dish is designed as an experience, every meal a narrative.</p>
+              <p>From intimate dinners for two to lavish multi-day retreats, Daniel brings Michelin-level precision to the privacy and comfort of your own space.</p>
+            </div>
+            <div class="cta-link">
+              <a href="about.html" class="btn-text-gold">
+                Read His Story
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GOLD DIVIDER -->
+    <div class="bg-dg-black">
+      <div class="container-brand">
+        <div class="gold-divider">
+          <span class="line"></span>
+          <span class="diamond"></span>
+          <span class="line"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICES OVERVIEW -->
+    <section class="py-section bg-dg-black">
+      <div class="container-brand">
+        <div class="section-heading">
+          <span class="label">What We Offer</span>
+          <h2>Tailored Culinary Services</h2>
+          <p>Whether it is an intimate dinner, a grand celebration, or your weekly meals, every offering is crafted with the same exacting standard.</p>
+        </div>
+
+        <div class="service-grid">
+          <!-- Service: Private Dining -->
+          <div class="service-card">
+            <div class="img-placeholder aspect-16-10">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+              </svg>
+              <span>Private Dining Experience</span>
+            </div>
+            <div class="service-card-body">
+              <h3>Private Dining</h3>
+              <p>An exclusive, multi-course dining experience in the comfort of your home. From a single evening to multi-day retreats.</p>
+              <p class="price-hint">From $150 per person</p>
+              <a href="experiences.html" class="btn-text-gold">
+                Learn More
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Service: Catering -->
+          <div class="service-card">
+            <div class="img-placeholder aspect-16-10">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+              </svg>
+              <span>Catering Service</span>
+            </div>
+            <div class="service-card-body">
+              <h3>Catering</h3>
+              <p>Elegant catering for corporate events, celebrations, and gatherings of any scale. Custom menus, flawless execution.</p>
+              <p class="price-hint">From $65 per person</p>
+              <a href="catering.html" class="btn-text-gold">
+                Learn More
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Service: Meal Prep -->
+          <div class="service-card">
+            <div class="img-placeholder aspect-16-10">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+              </svg>
+              <span>Meal Prep Service</span>
+            </div>
+            <div class="service-card-body">
+              <h3>Meal Prep</h3>
+              <p>Chef-crafted, nutritionally balanced meals prepared and delivered weekly. Fuel your life with restaurant-quality food.</p>
+              <p class="price-hint">From $250 per week</p>
+              <a href="meal-prep.html" class="btn-text-gold">
+                Learn More
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHILOSOPHY STRIP -->
+    <section class="py-section philosophy-strip">
+      <div class="container-brand">
+        <span class="eyebrow">Our Philosophy</span>
+        <blockquote>
+          &ldquo;Food is not just sustenance &mdash; it is memory, it is art, it is the language of care. I cook so that every bite tells a story.&rdquo;
+        </blockquote>
+        <cite>&mdash; Chef Daniel German</cite>
+      </div>
+    </section>
+
+    <!-- GALLERY PREVIEW -->
+    <section class="py-section bg-dg-black">
+      <div class="container-brand">
+        <div class="section-heading">
+          <span class="label">Portfolio</span>
+          <h2>A Taste of What Awaits</h2>
+          <p>Moments captured from private dining experiences, events, and behind-the-scenes preparation.</p>
+        </div>
+
+        <div class="gallery-grid">
+          <!-- 8 placeholders -->
+          <div class="img-placeholder aspect-square">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" /></svg>
+            <span>Plated Dish</span>
+          </div>
+          <div class="img-placeholder aspect-square">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" /></svg>
+            <span>Table Setting</span>
+          </div>
+          <div class="img-placeholder aspect-square">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" /></svg>
+            <span>Chef at Work</span>
+          </div>
+          <div class="img-placeholder aspect-square">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" /></svg>
+            <span>Dessert Course</span>
+          </div>
+          <div class="img-placeholder aspect-square">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" /></svg>
+            <span>Ingredients</span>
+          </div>
+          <div class="img-placeholder aspect-square">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" /></svg>
+            <span>Wine Pairing</span>
+          </div>
+          <div class="img-placeholder aspect-square">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" /></svg>
+            <span>Private Event</span>
+          </div>
+          <div class="img-placeholder aspect-square">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" /></svg>
+            <span>Final Presentation</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="py-section cta-section">
+      <div class="container-brand">
+        <h2>
+          Ready to Create Something<br />
+          <span class="gold-text">Extraordinary?</span>
+        </h2>
+        <p>Every experience begins with a conversation. Share your vision, and Chef Daniel will craft something unforgettable.</p>
+        <a href="inquire.html" class="btn-gold btn-gold-lg">Start Your Inquiry</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================
+       FOOTER
+       ====================================================== -->
+  <footer class="site-footer">
+    <div class="footer-main">
+      <div class="container-brand">
+        <div class="footer-grid">
+
+          <!-- Brand Column -->
+          <div class="footer-brand">
+            <div class="logo" style="margin-bottom:1.5rem;">
+              <span class="logo-main">DG Creations</span>
+              <span class="logo-sub">by Daniel German</span>
+            </div>
+            <p>Elevated private dining experiences, bespoke catering, and personalized meal preparation. Every plate is a creation, every meal an experience.</p>
+          </div>
+
+          <!-- Services Column -->
+          <div class="footer-col">
+            <h3>Services</h3>
+            <ul>
+              <li><a href="experiences.html">Private Dining</a></li>
+              <li><a href="catering.html">Catering</a></li>
+              <li><a href="meal-prep.html">Meal Prep</a></li>
+              <li><a href="menus.html">View Menus</a></li>
+            </ul>
+          </div>
+
+          <!-- Company Column -->
+          <div class="footer-col">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="about.html">About Chef Daniel</a></li>
+              <li><a href="inquire.html">Inquire</a></li>
+            </ul>
+          </div>
+
+          <!-- Contact Column -->
+          <div class="footer-contact">
+            <h3>Get in Touch</h3>
+            <p>Ready to create an unforgettable dining experience?</p>
+            <a href="inquire.html" class="btn-footer-inquiry">Start Your Inquiry</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <div class="container-brand">
+        <div class="footer-bottom-inner">
+          <p>&copy; 2026 DG Creations by Daniel German. All rights reserved.</p>
+          <p>Every plate, a creation.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================================================
+       JAVASCRIPT — Mobile Nav Toggle
+       ====================================================== -->
+  <script>
+    var hamburger = document.getElementById('hamburger');
+    var mobileNav = document.getElementById('mobile-nav');
+
+    hamburger.addEventListener('click', function () {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+
+    function closeMobileNav() {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+    }
+  </script>
+
+</body>
+</html>

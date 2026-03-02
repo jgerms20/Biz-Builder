@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menus | DG Creations</title>
+  <meta name="description" content="Explore DG Creations menu offerings: brunch, lunch, dinner, dessert bundles, and seasonal menus. Every dish crafted by Chef Daniel German." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container-brand">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <span class="logo-main">DG Creations</span>
+          <span class="logo-sub">by Daniel German</span>
+        </a>
+        <nav class="desktop-nav">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="experiences.html">Experiences</a>
+          <a href="menus.html">Menus</a>
+          <a href="catering.html">Catering</a>
+          <a href="meal-prep.html">Meal Prep</a>
+          <a href="inquire.html">Inquire</a>
+        </nav>
+        <a href="inquire.html" class="btn-book">Book a Chef</a>
+        <button class="hamburger-btn" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="mobile-nav" id="mobile-nav">
+        <nav>
+          <a href="index.html" onclick="closeMobileNav()">Home</a>
+          <a href="about.html" onclick="closeMobileNav()">About</a>
+          <a href="experiences.html" onclick="closeMobileNav()">Experiences</a>
+          <a href="menus.html" onclick="closeMobileNav()">Menus</a>
+          <a href="catering.html" onclick="closeMobileNav()">Catering</a>
+          <a href="meal-prep.html" onclick="closeMobileNav()">Meal Prep</a>
+          <a href="inquire.html" onclick="closeMobileNav()">Inquire</a>
+        </nav>
+        <a href="inquire.html" class="btn-book-mobile" onclick="closeMobileNav()">Book a Chef</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero text-center">
+      <div class="container-brand">
+        <span class="eyebrow">Our Menus</span>
+        <h1>Curated with<br /><span class="gold-text">Intention</span></h1>
+        <p class="lead">Every menu is a starting point &mdash; a canvas that Chef Daniel customizes to your preferences, dietary needs, and the story you want your meal to tell.</p>
+      </div>
+    </section>
+
+    <!-- GOLD DIVIDER -->
+    <div class="bg-dg-black" style="padding-top:0.5rem;padding-bottom:0.5rem;">
+      <div class="container-brand">
+        <div class="gold-divider">
+          <span class="line"></span>
+          <span class="diamond"></span>
+          <span class="line"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MENU CATEGORIES -->
+    <section class="py-section bg-dg-black">
+      <div class="container-brand">
+
+        <!-- BRUNCH -->
+        <div id="brunch" class="menu-item">
+          <div>
+            <div class="img-placeholder aspect-4-3">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+              </svg>
+              <span>Brunch Menu</span>
+            </div>
+          </div>
+          <div class="menu-content">
+            <span class="cat-eyebrow">Late Morning Luxury</span>
+            <h2>Brunch</h2>
+            <p class="cat-desc">Elevated brunch offerings that blend comfort with sophistication. From savory egg preparations to artisanal pastries, each brunch menu is designed to start the day with intention.</p>
+            <p class="sample-dishes-label">Sample Dishes</p>
+            <ul class="dishes-list">
+              <li><span class="dot"></span>Truffle Scrambled Eggs with Chive Cr&egrave;me Fra&icirc;che</li>
+              <li><span class="dot"></span>Brioche French Toast with Caramelized Stone Fruit</li>
+              <li><span class="dot"></span>Smoked Salmon Benedict with Hollandaise</li>
+              <li><span class="dot"></span>Shakshuka with Harissa and Fresh Herbs</li>
+              <li><span class="dot"></span>House-Made Granola with Seasonal Compote</li>
+              <li><span class="dot"></span>Fresh-Pressed Juices and Craft Mimosa Bar</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="menu-separator">
+          <div class="gold-divider">
+            <span class="line"></span>
+            <span class="diamond"></span>
+            <span class="line"></span>
+          </div>
+        </div>
+
+        <!-- LUNCH -->
+        <div id="lunch" class="menu-item" style="margin-top:5rem;">
+          <!-- Image (right on desktop) -->
+          <div class="lg-order-2">
+            <div class="img-placeholder aspect-4-3">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+              </svg>
+              <span>Lunch Menu</span>
+            </div>
+          </div>
+          <!-- Content (left on desktop) -->
+          <div class="menu-content lg-order-1">
+            <span class="cat-eyebrow">Midday Refinement</span>
+            <h2>Lunch</h2>
+            <p class="cat-desc">Light yet substantial, lunch menus are designed for business gatherings, daytime events, or leisurely afternoon affairs. Clean flavors, beautiful presentation.</p>
+            <p class="sample-dishes-label">Sample Dishes</p>
+            <ul class="dishes-list">
+              <li><span class="dot"></span>Seared Ahi Tuna Ni&ccedil;oise with Quail Egg</li>
+              <li><span class="dot"></span>Roasted Beet and Burrata Salad with Pistachio</li>
+              <li><span class="dot"></span>Pan-Seared Halibut with Citrus Beurre Blanc</li>
+              <li><span class="dot"></span>Heirloom Tomato Gazpacho with Basil Oil</li>
+              <li><span class="dot"></span>Grilled Lamb Chops with Mint Gremolata</li>
+              <li><span class="dot"></span>Artisanal Cheese and Charcuterie Board</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="menu-separator">
+          <div class="gold-divider">
+            <span class="line"></span>
+            <span class="diamond"></span>
+            <span class="line"></span>
+          </div>
+        </div>
+
+        <!-- DINNER -->
+        <div id="dinner" class="menu-item" style="margin-top:5rem;">
+          <div>
+            <div class="img-placeholder aspect-4-3">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+              </svg>
+              <span>Dinner Menu</span>
+            </div>
+          </div>
+          <div class="menu-content">
+            <span class="cat-eyebrow">The Main Event</span>
+            <h2>Dinner</h2>
+            <p class="cat-desc">The centerpiece of the DG Creations experience. Multi-course dinner menus designed to take guests on a culinary journey &mdash; from amuse-bouche to the final petit four.</p>
+            <p class="sample-dishes-label">Sample Dishes</p>
+            <ul class="dishes-list">
+              <li><span class="dot"></span>Lobster Bisque with Cognac Cream</li>
+              <li><span class="dot"></span>Wagyu Beef Tartare with Truffle Aioli</li>
+              <li><span class="dot"></span>Pan-Roasted Duck Breast with Cherry Reduction</li>
+              <li><span class="dot"></span>Herb-Crusted Rack of Lamb with Rosemary Jus</li>
+              <li><span class="dot"></span>Miso-Glazed Chilean Sea Bass</li>
+              <li><span class="dot"></span>Dark Chocolate Souffl&eacute; with Gold Leaf</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="menu-separator">
+          <div class="gold-divider">
+            <span class="line"></span>
+            <span class="diamond"></span>
+            <span class="line"></span>
+          </div>
+        </div>
+
+        <!-- DESSERT BUNDLES -->
+        <div id="dessert" class="menu-item" style="margin-top:5rem;">
+          <!-- Image (right on desktop) -->
+          <div class="lg-order-2">
+            <div class="img-placeholder aspect-4-3">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+              </svg>
+              <span>Dessert Bundles</span>
+            </div>
+          </div>
+          <!-- Content (left on desktop) -->
+          <div class="menu-content lg-order-1">
+            <span class="cat-eyebrow">Sweet Finales</span>
+            <h2>Dessert Bundles</h2>
+            <p class="cat-desc">Dessert is not an afterthought &mdash; it is the crescendo. Standalone dessert bundles perfect for celebrations, or as the final chapter of a full dining experience.</p>
+            <p class="sample-dishes-label">Sample Dishes</p>
+            <ul class="dishes-list">
+              <li><span class="dot"></span>Cr&egrave;me Br&ucirc;l&eacute;e Trio &mdash; Vanilla, Lavender, Espresso</li>
+              <li><span class="dot"></span>Deconstructed Tiramisu with Mascarpone Foam</li>
+              <li><span class="dot"></span>Seasonal Fruit Tart with Pastry Cream</li>
+              <li><span class="dot"></span>Chocolate Fondant with Salted Caramel</li>
+              <li><span class="dot"></span>Passion Fruit Panna Cotta</li>
+              <li><span class="dot"></span>Artisanal Petit Fours Collection</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="menu-separator">
+          <div class="gold-divider">
+            <span class="line"></span>
+            <span class="diamond"></span>
+            <span class="line"></span>
+          </div>
+        </div>
+
+        <!-- SEASONAL MENUS -->
+        <div id="seasonal" class="menu-item" style="margin-top:5rem;">
+          <div>
+            <div class="img-placeholder aspect-4-3">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+              </svg>
+              <span>Seasonal Menus</span>
+            </div>
+          </div>
+          <div class="menu-content">
+            <span class="cat-eyebrow">Nature&rsquo;s Calendar</span>
+            <h2>Seasonal Menus</h2>
+            <p class="cat-desc">Menus that change with the seasons, celebrating peak ingredients at their most vibrant. Spring blossoms, summer abundance, autumn warmth, and winter comfort &mdash; each season tells its own story.</p>
+            <p class="sample-dishes-label">Sample Dishes</p>
+            <ul class="dishes-list">
+              <li><span class="dot"></span>Spring: Pea and Mint Risotto with Pecorino</li>
+              <li><span class="dot"></span>Spring: Grilled Asparagus with Poached Egg</li>
+              <li><span class="dot"></span>Summer: Heirloom Tomato Caprese with Burrata</li>
+              <li><span class="dot"></span>Autumn: Butternut Squash Velouté with Sage</li>
+              <li><span class="dot"></span>Autumn: Braised Short Rib with Root Vegetables</li>
+              <li><span class="dot"></span>Winter: Truffle Risotto with Aged Parmesan</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- NOTE: FULLY CUSTOMIZABLE -->
+    <section class="py-section bg-dg-surface border-surface">
+      <div class="container-brand">
+        <div class="section-heading">
+          <span class="label">A Note on Our Menus</span>
+          <h2>Fully Customizable</h2>
+          <p>The menus shown here are representative samples. Every DG Creations experience features a menu designed specifically for you &mdash; your preferences, dietary restrictions, and vision guide every decision.</p>
+        </div>
+        <div class="dietary-badges">
+          <span class="dietary-badge">Gluten-Free</span>
+          <span class="dietary-badge">Dairy-Free</span>
+          <span class="dietary-badge">Vegan</span>
+          <span class="dietary-badge">Vegetarian</span>
+          <span class="dietary-badge">Keto</span>
+          <span class="dietary-badge">Halal</span>
+          <span class="dietary-badge">Kosher</span>
+          <span class="dietary-badge">Allergy-Sensitive</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-section cta-section">
+      <div class="container-brand">
+        <h2>Ready to Design Your Menu?</h2>
+        <p>Share your preferences and Chef Daniel will create a bespoke menu tailored to your event.</p>
+        <a href="inquire.html" class="btn-gold btn-gold-lg">Start Your Inquiry</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-main">
+      <div class="container-brand">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="logo" style="margin-bottom:1.5rem;">
+              <span class="logo-main">DG Creations</span>
+              <span class="logo-sub">by Daniel German</span>
+            </div>
+            <p>Elevated private dining experiences, bespoke catering, and personalized meal preparation. Every plate is a creation, every meal an experience.</p>
+          </div>
+          <div class="footer-col">
+            <h3>Services</h3>
+            <ul>
+              <li><a href="experiences.html">Private Dining</a></li>
+              <li><a href="catering.html">Catering</a></li>
+              <li><a href="meal-prep.html">Meal Prep</a></li>
+              <li><a href="menus.html">View Menus</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="about.html">About Chef Daniel</a></li>
+              <li><a href="inquire.html">Inquire</a></li>
+            </ul>
+          </div>
+          <div class="footer-contact">
+            <h3>Get in Touch</h3>
+            <p>Ready to create an unforgettable dining experience?</p>
+            <a href="inquire.html" class="btn-footer-inquiry">Start Your Inquiry</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container-brand">
+        <div class="footer-bottom-inner">
+          <p>&copy; 2026 DG Creations by Daniel German. All rights reserved.</p>
+          <p>Every plate, a creation.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    var hamburger = document.getElementById('hamburger');
+    var mobileNav = document.getElementById('mobile-nav');
+    hamburger.addEventListener('click', function () {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+    function closeMobileNav() {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+    }
+  </script>
+
+</body>
+</html>

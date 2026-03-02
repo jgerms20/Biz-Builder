@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book an Alteration | Janie Bell's Alterations</title>
+  <meta name="description" content="Submit your alteration request to Janie Bell Daniels in Walterboro, SC. Local drop-off and mail-in orders accepted." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Additional styles specific to the multi-step booking form */
+    .step-panel {
+      display: none;
+    }
+    .step-panel.active {
+      display: block;
+    }
+    .service-option-label input[type="checkbox"]:checked + span,
+    .service-option-label.selected {
+      /* visual selected state handled via JS class toggle */
+    }
+    .service-option-label.selected {
+      border-color: var(--terracotta);
+      background-color: rgba(168,92,58,0.05);
+    }
+    .delivery-option-label.selected {
+      border-color: var(--terracotta);
+      background-color: rgba(168,92,58,0.05);
+    }
+    .timeline-option-label.selected {
+      border-color: var(--terracotta);
+      background-color: rgba(168,92,58,0.05);
+    }
+    .back-btn {
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      color: rgba(26,23,20,0.5);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s;
+      padding: 0;
+    }
+    .back-btn:hover {
+      color: var(--charcoal);
+    }
+    .back-btn.hidden {
+      visibility: hidden;
+    }
+    .continue-btn {
+      background-color: var(--terracotta);
+      color: var(--cream);
+      font-family: var(--font-sans);
+      font-size: 0.625rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 1rem 2rem;
+      border-radius: var(--radius-brand);
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s, opacity 0.2s;
+    }
+    .continue-btn:hover:not(:disabled) {
+      background-color: var(--terracotta-dark);
+    }
+    .continue-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .summary-label {
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      color: rgba(26,23,20,0.6);
+    }
+    .summary-value {
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      color: var(--charcoal);
+    }
+    .summary-box {
+      background-color: var(--cream-dark);
+      border: 1px solid var(--gray);
+      border-radius: var(--radius-brand);
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .summary-heading {
+      font-family: var(--font-sans);
+      font-size: 0.625rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(26,23,20,0.5);
+      margin-bottom: 0.75rem;
+    }
+    .summary-divider {
+      border: none;
+      border-top: 1px solid var(--gray);
+      margin: 0.75rem 0;
+    }
+    .services-selected-list {
+      list-style: none;
+      margin-top: 0.25rem;
+    }
+    .services-selected-list li {
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      color: var(--charcoal);
+      padding: 0.125rem 0;
+    }
+    .success-wrap {
+      display: none;
+      text-align: center;
+      padding: 4rem 0;
+      max-width: 32rem;
+      margin: 0 auto;
+    }
+    .success-wrap.visible {
+      display: block;
+    }
+    .success-icon {
+      width: 4rem;
+      height: 4rem;
+      background-color: rgba(44,62,45,0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+    .success-icon svg {
+      width: 2rem;
+      height: 2rem;
+      color: var(--olive);
+    }
+    .success-title {
+      font-family: var(--font-serif);
+      font-size: 1.875rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 0.75rem;
+    }
+    .success-body {
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      color: rgba(26,23,20,0.7);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .success-note {
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      color: rgba(26,23,20,0.5);
+    }
+    .success-note a {
+      color: var(--terracotta);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header">
+    <div class="container-brand">
+      <div class="header-inner">
+        <a href="index.html" class="site-logo">
+          <span class="logo-name">Janie Bell's</span>
+          <span class="logo-sub">Alterations</span>
+        </a>
+
+        <nav class="desktop-nav">
+          <a href="about.html" class="nav-link">About Janie</a>
+          <a href="services.html" class="nav-link">Services &amp; Pricing</a>
+          <a href="how-it-works.html" class="nav-link">How It Works</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+          <a href="book.html" class="btn-nav">Book Now</a>
+        </nav>
+
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle menu">
+          <svg id="icon-menu" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <svg id="icon-close" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:none;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="mobile-nav" id="mobile-nav">
+        <a href="about.html" class="mobile-nav-link">About Janie</a>
+        <a href="services.html" class="mobile-nav-link">Services &amp; Pricing</a>
+        <a href="how-it-works.html" class="mobile-nav-link">How It Works</a>
+        <a href="contact.html" class="mobile-nav-link">Contact</a>
+        <a href="book.html" class="mobile-nav-book">Book Now</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===================== PAGE HERO ===================== -->
+    <section class="page-hero" style="padding-top:4rem; padding-bottom:4rem;">
+      <div class="container-brand">
+        <div style="max-width:36rem;">
+          <p class="page-hero-eyebrow">Get Started</p>
+          <h1 class="page-hero-title">Book an Alteration</h1>
+          <p class="page-hero-desc">
+            Fill out the form below. We'll confirm your request within 24
+            hours with pricing details. Local drop-off and mail-in both
+            welcome.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== BOOKING FORM ===================== -->
+    <section class="booking-section">
+      <div class="container-brand">
+
+        <!-- Success state -->
+        <div class="success-wrap" id="success-wrap">
+          <div class="success-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+          <h2 class="success-title">Request Received</h2>
+          <p class="success-body" id="success-body">
+            Thank you. We'll review your request and get back to you within 24 hours to confirm details and pricing.
+          </p>
+          <p class="success-note">
+            Questions? Visit our <a href="contact.html">contact page</a>.
+          </p>
+        </div>
+
+        <!-- Form wrap -->
+        <div class="booking-form-wrap" id="booking-form-wrap">
+
+          <!-- Progress bar -->
+          <div>
+            <div class="progress-bar" id="progress-bar">
+              <div class="progress-segment active" id="seg-1"></div>
+              <div class="progress-segment" id="seg-2"></div>
+              <div class="progress-segment" id="seg-3"></div>
+              <div class="progress-segment" id="seg-4"></div>
+              <div class="progress-segment" id="seg-5"></div>
+            </div>
+            <p class="progress-label" id="progress-label">Step 1 of 5</p>
+          </div>
+
+          <form action="#" id="booking-form" novalidate>
+
+            <!-- STEP 1: Services -->
+            <div class="step-panel active" id="step-1">
+              <h2 class="form-step-title">What do you need done?</h2>
+              <p class="form-step-desc">Select all that apply. You can add details in the next step.</p>
+
+              <div class="service-options">
+                <label class="service-option-label">
+                  <input type="checkbox" name="services" value="Hem pants (no cuff)">
+                  <span>Hem pants (no cuff)</span>
+                </label>
+                <label class="service-option-label">
+                  <input type="checkbox" name="services" value="Hem pants (with cuff)">
+                  <span>Hem pants (with cuff)</span>
+                </label>
+                <label class="service-option-label">
+                  <input type="checkbox" name="services" value="Shorten shorts">
+                  <span>Shorten shorts</span>
+                </label>
+                <label class="service-option-label">
+                  <input type="checkbox" name="services" value="Taper / slim legs">
+                  <span>Taper / slim legs</span>
+                </label>
+                <label class="service-option-label">
+                  <input type="checkbox" name="services" value="Take in waist">
+                  <span>Take in waist</span>
+                </label>
+                <label class="service-option-label">
+                  <input type="checkbox" name="services" value="Let out waist">
+                  <span>Let out waist</span>
+                </label>
+                <label class="service-option-label">
+                  <input type="checkbox" name="services" value="Take in sides (shirt/blouse)">
+                  <span>Take in sides (shirt/blouse)</span>
+                </label>
+                <label class="service-option-label">
+                  <input type="checkbox" name="services" value="Shorten sleeves">
+                  <span>Shorten sleeves</span>
+                </label>
+                <label class="service-option-label">
+                  <input type="checkbox" name="services" value="Take in jacket/blazer">
+                  <span>Take in jacket/blazer</span>
+                </label>
+                <label class="service-option-label">
+                  <input type="checkbox" name="services" value="Hem dress">
+                  <span>Hem dress</span>
+                </label>
+                <label class="service-option-label">
+                  <input type="checkbox" name="services" value="Take in dress">
+                  <span>Take in dress</span>
+                </label>
+                <label class="service-option-label">
+                  <input type="checkbox" name="services" value="Bridal/formal alterations">
+                  <span>Bridal/formal alterations</span>
+                </label>
+                <label class="service-option-label">
+                  <input type="checkbox" name="services" value="Repairs &amp; mending">
+                  <span>Repairs &amp; mending</span>
+                </label>
+                <label class="service-option-label">
+                  <input type="checkbox" name="services" value="Custom work / other">
+                  <span>Custom work / other</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- STEP 2: Garment -->
+            <div class="step-panel" id="step-2">
+              <h2 class="form-step-title">Tell us about the garment.</h2>
+              <p class="form-step-desc">The more detail, the better we can help.</p>
+
+              <div class="form-field">
+                <label class="form-label" for="garment-type">Garment Type *</label>
+                <select class="form-select" id="garment-type" name="garmentType">
+                  <option value="">Select a garment type...</option>
+                  <option value="Pants / Trousers">Pants / Trousers</option>
+                  <option value="Jeans">Jeans</option>
+                  <option value="Shorts">Shorts</option>
+                  <option value="Shirt / Blouse">Shirt / Blouse</option>
+                  <option value="Blazer / Jacket">Blazer / Jacket</option>
+                  <option value="Dress (casual)">Dress (casual)</option>
+                  <option value="Dress (formal/gown)">Dress (formal/gown)</option>
+                  <option value="Wedding dress">Wedding dress</option>
+                  <option value="Suit (jacket + pants)">Suit (jacket + pants)</option>
+                  <option value="Skirt">Skirt</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="garment-desc">Description / Details</label>
+                <textarea class="form-textarea" id="garment-desc" name="garmentDescription" rows="5"
+                  placeholder="e.g. 'Dark navy dress pants, need the legs tapered and waist taken in about an inch. The fabric is wool.' — any detail helps."></textarea>
+              </div>
+            </div>
+
+            <!-- STEP 3: Contact -->
+            <div class="step-panel" id="step-3">
+              <h2 class="form-step-title">Your contact information.</h2>
+              <p class="form-step-desc">We'll use this to confirm your order and communicate.</p>
+
+              <div class="form-field">
+                <label class="form-label" for="full-name">Full Name *</label>
+                <input class="form-input" type="text" id="full-name" name="name" placeholder="Your name" />
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="email">Email Address *</label>
+                <input class="form-input" type="email" id="email" name="email" placeholder="your@email.com" />
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="phone">Phone Number *</label>
+                <input class="form-input" type="tel" id="phone" name="phone" placeholder="(555) 000-0000" />
+              </div>
+            </div>
+
+            <!-- STEP 4: Delivery -->
+            <div class="step-panel" id="step-4">
+              <h2 class="form-step-title">How will you get us the garment?</h2>
+              <p class="form-step-desc">Local drop-off in Walterboro, or ship it to us from anywhere.</p>
+
+              <div class="delivery-options">
+                <label class="delivery-option-label" id="delivery-local-label">
+                  <input type="radio" name="deliveryMethod" value="local" id="delivery-local" />
+                  <div>
+                    <p class="delivery-option-title">Local Drop-Off</p>
+                    <p class="delivery-option-desc">Drop off in Walterboro, SC. We'll confirm the location when we confirm your booking.</p>
+                  </div>
+                </label>
+                <label class="delivery-option-label" id="delivery-mail-label">
+                  <input type="radio" name="deliveryMethod" value="mail-in" id="delivery-mail" />
+                  <div>
+                    <p class="delivery-option-title">Mail-In Order</p>
+                    <p class="delivery-option-desc">Ship your garment to us. We'll provide the mailing address in your confirmation. +$10 handling fee.</p>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- STEP 5: Timeline + Review -->
+            <div class="step-panel" id="step-5">
+              <h2 class="form-step-title">Almost done.</h2>
+              <p class="form-step-desc">A couple last details, then we'll review your request.</p>
+
+              <div class="form-field">
+                <label class="form-label">Timeline</label>
+                <div class="timeline-options">
+                  <label class="timeline-option-label" id="timeline-standard-label">
+                    <input type="radio" name="timeline" value="standard" id="timeline-standard" checked />
+                    Standard (3–7 days)
+                  </label>
+                  <label class="timeline-option-label" id="timeline-rush-label">
+                    <input type="radio" name="timeline" value="rush" id="timeline-rush" />
+                    Rush (ASAP)
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="heard-about">How did you hear about us?</label>
+                <select class="form-select" id="heard-about" name="heardAboutUs">
+                  <option value="">Select...</option>
+                  <option value="TikTok">TikTok</option>
+                  <option value="Word of mouth">Word of mouth</option>
+                  <option value="Google search">Google search</option>
+                  <option value="Instagram">Instagram</option>
+                  <option value="Local community">Local community (Walterboro)</option>
+                  <option value="Friend or family">Friend or family</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="additional-notes">Anything else we should know?</label>
+                <textarea class="form-textarea" id="additional-notes" name="additionalNotes" rows="4"
+                  placeholder="Deadlines, specific measurements, questions..."></textarea>
+              </div>
+
+              <!-- Order Summary -->
+              <div class="summary-box" id="order-summary">
+                <p class="summary-heading">Order Summary</p>
+                <div class="summary-row">
+                  <span class="summary-label">Name</span>
+                  <span class="summary-value" id="sum-name">&mdash;</span>
+                </div>
+                <div class="summary-row">
+                  <span class="summary-label">Delivery</span>
+                  <span class="summary-value" id="sum-delivery">&mdash;</span>
+                </div>
+                <div class="summary-row">
+                  <span class="summary-label">Timeline</span>
+                  <span class="summary-value" id="sum-timeline">&mdash;</span>
+                </div>
+                <hr class="summary-divider" />
+                <div>
+                  <span class="summary-label">Services</span>
+                  <ul class="services-selected-list" id="sum-services"></ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="form-nav">
+              <button type="button" class="back-btn hidden" id="back-btn">&larr; Back</button>
+              <button type="button" class="continue-btn" id="next-btn">Continue &rarr;</button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="container-brand footer-inner">
+      <div class="footer-grid">
+
+        <div>
+          <h3 class="footer-brand-name">Janie Bell's Alterations</h3>
+          <p class="footer-brand-location">Walterboro, South Carolina</p>
+          <p class="footer-tagline">&ldquo;Fifty years of perfect fit.&rdquo;</p>
+          <p class="footer-description">
+            Master seamstress Janie Bell Daniels has spent a lifetime
+            perfecting the craft of alterations in the heart of Colleton
+            County. She does the sewing. She gets paid what she deserves.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-heading">Services</h4>
+          <ul class="footer-links">
+            <li><a href="services.html#pants">Pants &amp; Bottoms</a></li>
+            <li><a href="services.html#tops">Tops &amp; Jackets</a></li>
+            <li><a href="services.html#dresses">Dresses &amp; Formal</a></li>
+            <li><a href="services.html#custom">Custom Work</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-heading">Quick Links</h4>
+          <ul class="footer-links" style="margin-bottom:2rem;">
+            <li><a href="about.html">About Janie</a></li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+            <li><a href="book.html">Book an Alteration</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+          <h4 class="footer-col-heading">Payment Accepted</h4>
+          <p class="footer-payment">Venmo &middot; Zelle &middot; Cash</p>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Janie Bell's Alterations. Walterboro, South Carolina.</p>
+        <p>Managed by Joshua Daniels, Los Angeles, CA</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ===== Mobile nav toggle =====
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileNav = document.getElementById('mobile-nav');
+    const iconMenu = document.getElementById('icon-menu');
+    const iconClose = document.getElementById('icon-close');
+
+    hamburgerBtn.addEventListener('click', function() {
+      const isOpen = mobileNav.classList.toggle('open');
+      iconMenu.style.display = isOpen ? 'none' : 'block';
+      iconClose.style.display = isOpen ? 'block' : 'none';
+    });
+
+    mobileNav.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        mobileNav.classList.remove('open');
+        iconMenu.style.display = 'block';
+        iconClose.style.display = 'none';
+      });
+    });
+
+    // ===== Multi-step form logic =====
+    const TOTAL_STEPS = 5;
+    let currentStep = 1;
+
+    const backBtn = document.getElementById('back-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const progressLabel = document.getElementById('progress-label');
+
+    // Service checkbox styling
+    document.querySelectorAll('.service-option-label input[type="checkbox"]').forEach(function(cb) {
+      cb.addEventListener('change', function() {
+        if (this.checked) {
+          this.closest('.service-option-label').classList.add('selected');
+        } else {
+          this.closest('.service-option-label').classList.remove('selected');
+        }
+        updateNextButton();
+      });
+    });
+
+    // Delivery radio styling
+    document.querySelectorAll('input[name="deliveryMethod"]').forEach(function(radio) {
+      radio.addEventListener('change', function() {
+        document.querySelectorAll('.delivery-option-label').forEach(function(l) {
+          l.classList.remove('selected');
+        });
+        this.closest('.delivery-option-label').classList.add('selected');
+        updateNextButton();
+      });
+    });
+
+    // Timeline radio styling
+    var timelineStandard = document.getElementById('timeline-standard');
+    var timelineRush = document.getElementById('timeline-rush');
+    var timelineStandardLabel = document.getElementById('timeline-standard-label');
+    var timelineRushLabel = document.getElementById('timeline-rush-label');
+
+    // Set standard as selected by default
+    timelineStandardLabel.classList.add('selected');
+
+    [timelineStandard, timelineRush].forEach(function(radio) {
+      radio.addEventListener('change', function() {
+        timelineStandardLabel.classList.remove('selected');
+        timelineRushLabel.classList.remove('selected');
+        this.closest('.timeline-option-label').classList.add('selected');
+      });
+    });
+
+    function canAdvance() {
+      switch (currentStep) {
+        case 1:
+          return document.querySelectorAll('input[name="services"]:checked').length > 0;
+        case 2:
+          return document.getElementById('garment-type').value !== '';
+        case 3:
+          return (
+            document.getElementById('full-name').value.trim() !== '' &&
+            document.getElementById('email').value.trim() !== '' &&
+            document.getElementById('phone').value.trim() !== ''
+          );
+        case 4:
+          return document.querySelector('input[name="deliveryMethod"]:checked') !== null;
+        case 5:
+          return true;
+        default:
+          return false;
+      }
+    }
+
+    function updateNextButton() {
+      nextBtn.disabled = !canAdvance();
+    }
+
+    function updateProgress() {
+      for (var i = 1; i <= TOTAL_STEPS; i++) {
+        var seg = document.getElementById('seg-' + i);
+        if (i <= currentStep) {
+          seg.classList.add('active');
+        } else {
+          seg.classList.remove('active');
+        }
+      }
+      progressLabel.textContent = 'Step ' + currentStep + ' of ' + TOTAL_STEPS;
+    }
+
+    function showStep(step) {
+      document.querySelectorAll('.step-panel').forEach(function(panel) {
+        panel.classList.remove('active');
+      });
+      document.getElementById('step-' + step).classList.add('active');
+
+      // Back button
+      if (step === 1) {
+        backBtn.classList.add('hidden');
+      } else {
+        backBtn.classList.remove('hidden');
+      }
+
+      // Next button label
+      if (step === TOTAL_STEPS) {
+        nextBtn.textContent = 'Submit Request';
+      } else {
+        nextBtn.textContent = 'Continue \u2192';
+      }
+
+      // Populate summary on step 5
+      if (step === 5) {
+        updateSummary();
+      }
+
+      updateProgress();
+      updateNextButton();
+    }
+
+    function updateSummary() {
+      document.getElementById('sum-name').textContent =
+        document.getElementById('full-name').value.trim() || '\u2014';
+
+      var deliveryRadio = document.querySelector('input[name="deliveryMethod"]:checked');
+      document.getElementById('sum-delivery').textContent =
+        deliveryRadio ? (deliveryRadio.value === 'local' ? 'Local Drop-Off' : 'Mail-In') : '\u2014';
+
+      var timelineRadio = document.querySelector('input[name="timeline"]:checked');
+      document.getElementById('sum-timeline').textContent =
+        timelineRadio ? (timelineRadio.value === 'rush' ? 'Rush' : 'Standard') : 'Standard';
+
+      var servicesList = document.getElementById('sum-services');
+      servicesList.innerHTML = '';
+      document.querySelectorAll('input[name="services"]:checked').forEach(function(cb) {
+        var li = document.createElement('li');
+        li.textContent = cb.value;
+        servicesList.appendChild(li);
+      });
+    }
+
+    // Input change listeners for validation re-check
+    ['full-name', 'email', 'phone', 'garment-type'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', updateNextButton);
+        el.addEventListener('change', updateNextButton);
+      }
+    });
+
+    backBtn.addEventListener('click', function() {
+      if (currentStep > 1) {
+        currentStep--;
+        showStep(currentStep);
+      }
+    });
+
+    nextBtn.addEventListener('click', function() {
+      if (!canAdvance()) return;
+
+      if (currentStep < TOTAL_STEPS) {
+        currentStep++;
+        showStep(currentStep);
+      } else {
+        // Submit: show success
+        var name = document.getElementById('full-name').value.trim();
+        document.getElementById('success-body').textContent =
+          'Thank you, ' + (name || 'there') + '. We\u2019ll review your request and get back to you within 24 hours to confirm details and pricing.';
+        document.getElementById('booking-form-wrap').style.display = 'none';
+        document.getElementById('success-wrap').classList.add('visible');
+      }
+    });
+
+    // Initial state
+    updateNextButton();
+    updateProgress();
+  </script>
+
+</body>
+</html>
