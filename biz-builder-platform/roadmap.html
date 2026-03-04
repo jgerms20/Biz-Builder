@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Roadmap — Biz Builder</title>
+  <meta name="description" content="Your personalized phase-by-phase business roadmap. Track your progress from idea to first client." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ============================================================
+     Header
+     ============================================================ -->
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="index.html" class="logo-mark">
+        <span class="logo-name">Biz Builder</span>
+        <span class="logo-tag">Build System</span>
+      </a>
+      <nav class="desktop-nav">
+        <a href="process.html">The Process</a>
+        <a href="builds.html">Builds</a>
+        <a href="skills.html">Skills Finder</a>
+        <a href="start.html">Start</a>
+      </nav>
+      <div class="header-actions">
+        <a href="start.html" class="btn btn-primary btn-sm">Start Your Build →</a>
+        <button class="hamburger-btn" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <nav>
+    <a href="process.html">The Process</a>
+    <a href="builds.html">Builds</a>
+    <a href="skills.html">Skills Finder</a>
+    <a href="start.html">Start</a>
+  </nav>
+  <a href="start.html" class="btn btn-primary">Start Your Build →</a>
+</div>
+
+<main>
+
+  <!-- ============================================================
+       Roadmap Header + Progress
+       ============================================================ -->
+  <section class="py-section-sm" style="border-bottom: 1px solid var(--border); background: var(--surface);">
+    <div class="container">
+      <div class="roadmap-header">
+        <div class="roadmap-meta">
+          <span class="meta-badge" id="catBadge"></span>
+          <span class="meta-badge stage" id="stageBadge"></span>
+        </div>
+        <h1 class="display-lg" id="roadmapTitle">Your Roadmap</h1>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span id="progressText">0 of 0 tasks complete</span>
+          <span id="progressPct">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="roadmap-actions">
+        <button class="btn btn-primary btn-sm" id="shareBtn" onclick="shareRoadmap()">Share Roadmap</button>
+        <a href="start.html" class="btn btn-outline btn-sm">Edit Details</a>
+        <button class="btn btn-ghost btn-sm" onclick="resetRoadmap()">Reset Progress</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Roadmap Phases
+       ============================================================ -->
+  <section class="py-section">
+    <div class="container">
+      <div class="roadmap-phases" id="roadmapPhases"></div>
+      <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+        <p style="color: var(--cream-muted); font-size: 0.875rem; margin-bottom: 1rem;">Need to know what skills to develop next?</p>
+        <a href="skills.html" class="btn btn-outline-blue">Open Skills Finder →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     Footer
+     ============================================================ -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo-mark">
+            <span class="logo-name">Biz Builder</span>
+            <span class="logo-tag">Build System</span>
+          </a>
+          <p>The framework behind building any real business — from idea to first client. Proven across industries, built for the solo founder.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="process.html">The Process</a></li>
+            <li><a href="builds.html">Builds</a></li>
+            <li><a href="skills.html">Skills Finder</a></li>
+            <li><a href="start.html">Start Building</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Live Builds</h4>
+          <ul>
+            <li><a href="../daniel-german-static/index.html">DG Creations</a></li>
+            <li><a href="../janie-bell-static/index.html">Janie Bell's Alterations</a></li>
+          </ul>
+        </div>
+        <div class="footer-cta">
+          <h4>Get Your Roadmap</h4>
+          <p>Two minutes. Three questions. One personalized checklist for your business.</p>
+          <a href="start.html" class="btn btn-primary btn-sm">Start Now →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="footer-bottom-inner">
+        <span>© 2025 Biz Builder. All rights reserved.</span>
+        <span>Built with the system.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script>
+  // Mobile nav
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+    document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+  });
+
+  // ============================================================
+  // Roadmap Logic
+  // ============================================================
+
+  let allTasks = {}; // taskId -> { phaseId, isExtra }
+  let checkState = {}; // taskId -> boolean
+  const storageKey = () => `bb_roadmap_${getParam('category') || 'general'}`;
+
+  function getParam(key) {
+    return new URLSearchParams(window.location.search).get(key) || '';
+  }
+
+  function loadState() {
+    try { checkState = JSON.parse(localStorage.getItem(storageKey())) || {}; } catch(e) { checkState = {}; }
+  }
+
+  function saveState() {
+    localStorage.setItem(storageKey(), JSON.stringify(checkState));
+  }
+
+  function updateProgress() {
+    const total = Object.keys(allTasks).length;
+    const done = Object.values(checkState).filter(Boolean).length;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').textContent = `${done} of ${total} tasks complete`;
+    document.getElementById('progressPct').textContent = pct + '%';
+  }
+
+  function buildRoadmap() {
+    const name = decodeURIComponent(getParam('name')) || 'Your Business';
+    const categoryId = getParam('category') || 'food-culinary';
+    const stage = getParam('stage') || 'idea';
+    const cat = CATEGORIES.find(c => c.id === categoryId);
+
+    // Set header info
+    document.getElementById('roadmapTitle').textContent = name;
+    document.getElementById('catBadge').textContent = cat ? cat.icon + ' ' + cat.name : 'General';
+    const stageLabels = { idea: '💡 Just an Idea', forming: '⚙️ Forming', building: '🔨 Building', launching: '🚀 Launching' };
+    document.getElementById('stageBadge').textContent = stageLabels[stage] || stage;
+
+    const container = document.getElementById('roadmapPhases');
+    container.innerHTML = '';
+    allTasks = {};
+
+    PHASES.forEach(phase => {
+      const extraTasks = getExtraTasks(categoryId, phase.id);
+      const universalTasks = phase.tasks;
+      const allPhaseTasks = [...universalTasks, ...extraTasks];
+
+      allPhaseTasks.forEach(t => { allTasks[t.id] = { phaseId: phase.id, isExtra: !!extraTasks.find(e => e.id === t.id) }; });
+
+      const phaseEl = document.createElement('div');
+      phaseEl.className = `roadmap-phase ${phase.color}`;
+      phaseEl.id = 'phase-' + phase.id;
+
+      const doneTasks = allPhaseTasks.filter(t => checkState[t.id]).length;
+
+      phaseEl.innerHTML = `
+        <button class="phase-header-btn" onclick="togglePhase('${phase.id}')">
+          <div class="phase-header-left">
+            <span class="phase-num-tag">Phase ${phase.number}</span>
+            <h3>${phase.name}</h3>
+          </div>
+          <div class="phase-header-right">
+            <span class="phase-count">${doneTasks}/${allPhaseTasks.length}</span>
+            <span class="phase-toggle">+</span>
+          </div>
+        </button>
+        <div class="phase-tasks">
+          ${allPhaseTasks.map(task => {
+            const isExtra = !!extraTasks.find(e => e.id === task.id);
+            const isDone = !!checkState[task.id];
+            return `
+              <div class="task-item${isDone ? ' done' : ''}" id="item-${task.id}">
+                <input type="checkbox" class="task-cb" id="cb-${task.id}" ${isDone ? 'checked' : ''} onchange="toggleTask('${task.id}', '${phase.id}')"/>
+                <div class="task-body">
+                  <strong>${task.text}</strong>
+                  <p>${task.desc}</p>
+                </div>
+                ${isExtra ? '<span class="task-extra-badge">Category-specific</span>' : ''}
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+
+      container.appendChild(phaseEl);
+    });
+
+    // Open first phase by default
+    const firstPhase = container.querySelector('.roadmap-phase');
+    if (firstPhase) firstPhase.classList.add('open');
+
+    updateProgress();
+  }
+
+  function togglePhase(id) {
+    const el = document.getElementById('phase-' + id);
+    el.classList.toggle('open');
+  }
+
+  function toggleTask(taskId, phaseId) {
+    const cb = document.getElementById('cb-' + taskId);
+    checkState[taskId] = cb.checked;
+    const item = document.getElementById('item-' + taskId);
+    item.classList.toggle('done', cb.checked);
+    // Update phase count
+    const phase = document.getElementById('phase-' + phaseId);
+    const allCbs = phase.querySelectorAll('.task-cb');
+    const doneCount = Array.from(allCbs).filter(c => c.checked).length;
+    phase.querySelector('.phase-count').textContent = `${doneCount}/${allCbs.length}`;
+    saveState();
+    updateProgress();
+  }
+
+  function shareRoadmap() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      const btn = document.getElementById('shareBtn');
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => btn.textContent = 'Share Roadmap', 2000);
+    });
+  }
+
+  function resetRoadmap() {
+    if (!confirm('Reset all progress? This cannot be undone.')) return;
+    checkState = {};
+    saveState();
+    buildRoadmap();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadState();
+    buildRoadmap();
+  });
+</script>
+</body>
+</html>

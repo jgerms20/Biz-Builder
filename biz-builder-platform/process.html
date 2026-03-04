@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Process — Biz Builder Framework</title>
+  <meta name="description" content="The complete 6-phase framework for building any business. See the full process, phases, tasks, and deliverables." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ============================================================
+     Header
+     ============================================================ -->
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="index.html" class="logo-mark">
+        <span class="logo-name">Biz Builder</span>
+        <span class="logo-tag">Build System</span>
+      </a>
+      <nav class="desktop-nav">
+        <a href="process.html">The Process</a>
+        <a href="builds.html">Builds</a>
+        <a href="skills.html">Skills Finder</a>
+        <a href="start.html">Start</a>
+      </nav>
+      <div class="header-actions">
+        <a href="start.html" class="btn btn-primary btn-sm">Start Your Build →</a>
+        <button class="hamburger-btn" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <nav>
+    <a href="process.html">The Process</a>
+    <a href="builds.html">Builds</a>
+    <a href="skills.html">Skills Finder</a>
+    <a href="start.html">Start</a>
+  </nav>
+  <a href="start.html" class="btn btn-primary">Start Your Build →</a>
+</div>
+
+<main>
+
+  <!-- ============================================================
+       Hero
+       ============================================================ -->
+  <section class="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-bg-glow"></div>
+    <div class="container hero-content">
+      <div class="hero-inner">
+        <span class="eyebrow">The Framework</span>
+        <h1 class="display-xl">
+          The Process
+        </h1>
+        <p class="hero-sub">
+          Six phases. Eight categories. One universal framework that works whether you're a private chef, a seamstress, or a financial advisor. Every business — regardless of category — goes through these exact phases in this exact order.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Process Phases
+       ============================================================ -->
+  <section class="py-section">
+    <div id="processContainer"></div>
+  </section>
+
+  <!-- ============================================================
+       CTA Section
+       ============================================================ -->
+  <section class="py-section cta-section">
+    <div class="container">
+      <span class="eyebrow eyebrow-gold">Ready?</span>
+      <h2 class="display-md">Your roadmap is<br/>two minutes away.</h2>
+      <p>Answer three questions. Get a personalized, phase-by-phase checklist for your specific business — saved in your browser, shareable with anyone.</p>
+      <div class="cta-actions">
+        <a href="start.html" class="btn btn-gold btn-lg">Start Your Build →</a>
+        <a href="builds.html" class="btn btn-outline btn-lg">See Live Builds</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     Footer
+     ============================================================ -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo-mark">
+            <span class="logo-name">Biz Builder</span>
+            <span class="logo-tag">Build System</span>
+          </a>
+          <p>The framework behind building any real business — from idea to first client. Proven across industries, built for the solo founder.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="process.html">The Process</a></li>
+            <li><a href="builds.html">Builds</a></li>
+            <li><a href="skills.html">Skills Finder</a></li>
+            <li><a href="start.html">Start Building</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Live Builds</h4>
+          <ul>
+            <li><a href="../daniel-german-static/index.html">DG Creations</a></li>
+            <li><a href="../janie-bell-static/index.html">Janie Bell's Alterations</a></li>
+          </ul>
+        </div>
+        <div class="footer-cta">
+          <h4>Get Your Roadmap</h4>
+          <p>Two minutes. Three questions. One personalized checklist for your business.</p>
+          <a href="start.html" class="btn btn-primary btn-sm">Start Now →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="footer-bottom-inner">
+        <span>© 2025 Biz Builder. All rights reserved.</span>
+        <span>Built with the system.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script>
+  // Mobile nav
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+    document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+  });
+
+  // Render process phases
+  function renderProcess() {
+    const container = document.getElementById('processContainer');
+    if (!container) return;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'process-phases';
+
+    PHASES.forEach((phase, index) => {
+      const phaseDiv = document.createElement('div');
+      phaseDiv.className = `process-phase ${phase.color}`;
+
+      // Alternate background colors: odd = var(--surface), even = var(--bg)
+      if ((index + 1) % 2 === 0) {
+        phaseDiv.style.background = 'var(--surface)';
+      } else {
+        phaseDiv.style.background = 'var(--bg)';
+      }
+
+      const innerDiv = document.createElement('div');
+      innerDiv.className = 'container';
+
+      const phaseInnerDiv = document.createElement('div');
+      phaseInnerDiv.className = 'process-phase-inner';
+      phaseInnerDiv.style.display = 'grid';
+      phaseInnerDiv.style.gridTemplateColumns = '250px 1fr';
+      phaseInnerDiv.style.gap = '3rem';
+
+      // Left column: meta information (sticky)
+      const metaDiv = document.createElement('div');
+      metaDiv.className = 'process-phase-meta';
+
+      // Large phase number
+      const phaseNumLg = document.createElement('div');
+      phaseNumLg.className = 'phase-num-lg';
+      phaseNumLg.textContent = `Phase ${String(phase.number).padStart(2, '0')}`;
+
+      // Phase name
+      const phaseName = document.createElement('h3');
+      phaseName.textContent = phase.name;
+
+      // Tagline
+      const taglineDiv = document.createElement('div');
+      taglineDiv.className = 'phase-tagline';
+      taglineDiv.textContent = phase.tagline;
+
+      // Effort tag
+      const effortTag = document.createElement('div');
+      effortTag.className = 'effort-tag';
+      effortTag.textContent = phase.effort;
+
+      // Deliverable box
+      const deliverableBox = document.createElement('div');
+      deliverableBox.className = 'deliverable-box';
+
+      const delLabel = document.createElement('div');
+      delLabel.className = 'del-label';
+      delLabel.textContent = 'Deliverable';
+
+      const delText = document.createElement('p');
+      delText.textContent = phase.deliverable;
+
+      deliverableBox.appendChild(delLabel);
+      deliverableBox.appendChild(delText);
+
+      metaDiv.appendChild(phaseNumLg);
+      metaDiv.appendChild(phaseName);
+      metaDiv.appendChild(taglineDiv);
+      metaDiv.appendChild(effortTag);
+      metaDiv.appendChild(deliverableBox);
+
+      // Right column: task list
+      const taskListDiv = document.createElement('div');
+      taskListDiv.className = 'process-task-list';
+
+      phase.tasks.forEach((task) => {
+        const taskDiv = document.createElement('div');
+        taskDiv.className = 'process-task';
+
+        // Check icon
+        const checkIcon = document.createElement('div');
+        checkIcon.className = 'task-check-icon';
+        checkIcon.innerHTML = '<svg viewBox="0 0 12 12"><polyline points="1,6 4,10 11,2" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+        // Task title
+        const taskTitle = document.createElement('h4');
+        taskTitle.textContent = task.text;
+
+        // Task description
+        const taskDesc = document.createElement('p');
+        taskDesc.textContent = task.desc;
+
+        taskDiv.appendChild(checkIcon);
+        taskDiv.appendChild(taskTitle);
+        taskDiv.appendChild(taskDesc);
+
+        taskListDiv.appendChild(taskDiv);
+      });
+
+      phaseInnerDiv.appendChild(metaDiv);
+      phaseInnerDiv.appendChild(taskListDiv);
+
+      innerDiv.appendChild(phaseInnerDiv);
+      phaseDiv.appendChild(innerDiv);
+
+      wrapper.appendChild(phaseDiv);
+    });
+
+    container.appendChild(wrapper);
+  }
+
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', renderProcess);
+</script>
+</body>
+</html>

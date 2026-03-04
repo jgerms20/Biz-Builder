@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skills Finder — Biz Builder</title>
+  <meta name="description" content="Select your business category and get a prioritized list of the skills that will make or break your build — with specific resources for each one." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Category Grid ─────────────────────────────────────── */
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .cat-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 1.5rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: border-color 0.18s, background 0.18s, transform 0.15s, box-shadow 0.18s;
+      text-align: center;
+      color: var(--cream);
+      font-family: var(--font-sans);
+    }
+
+    .cat-btn:hover {
+      border-color: var(--gold);
+      background: color-mix(in srgb, var(--gold) 6%, var(--surface));
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    }
+
+    .cat-btn.active {
+      border-color: var(--gold);
+      background: color-mix(in srgb, var(--gold) 12%, var(--surface));
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--gold) 30%, transparent);
+    }
+
+    .cat-btn .icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .cat-btn .cat-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--cream);
+      line-height: 1.3;
+    }
+
+    /* ── Skills Output ─────────────────────────────────────── */
+    .skills-output {
+      display: none;
+      margin-top: 4rem;
+    }
+
+    .skills-output.visible {
+      display: block;
+    }
+
+    /* ── Skills Tier ───────────────────────────────────────── */
+    .skills-tier {
+      margin-bottom: 3.5rem;
+    }
+
+    .skills-tier-header {
+      margin-bottom: 1.75rem;
+    }
+
+    .skills-tier-header p {
+      margin-top: 0.75rem;
+      color: var(--cream-muted);
+      font-size: 0.92rem;
+      max-width: 620px;
+      line-height: 1.6;
+    }
+
+    .tier-badge {
+      display: inline-block;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .tier-badge.critical {
+      background: color-mix(in srgb, #e55 18%, transparent);
+      color: #f88;
+      border: 1px solid color-mix(in srgb, #e55 40%, transparent);
+    }
+
+    .tier-badge.recommended {
+      background: color-mix(in srgb, var(--gold) 18%, transparent);
+      color: var(--gold);
+      border: 1px solid color-mix(in srgb, var(--gold) 40%, transparent);
+    }
+
+    /* ── Skill Cards ───────────────────────────────────────── */
+    .skills-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: border-color 0.18s, box-shadow 0.18s;
+    }
+
+    .skill-card:hover {
+      border-color: color-mix(in srgb, var(--gold) 35%, transparent);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    .skill-card h4 {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 500;
+      margin: 0 0 0.6rem 0;
+      color: var(--cream);
+    }
+
+    .skill-card .skill-why {
+      font-size: 0.87rem;
+      color: var(--cream-muted);
+      line-height: 1.6;
+      margin: 0 0 1rem 0;
+    }
+
+    .skill-card .skill-how {
+      font-size: 0.8rem;
+      color: color-mix(in srgb, var(--gold) 85%, var(--cream));
+      background: color-mix(in srgb, var(--gold) 6%, var(--surface));
+      border: 1px solid color-mix(in srgb, var(--gold) 18%, transparent);
+      border-radius: 8px;
+      padding: 0.75rem;
+      line-height: 1.6;
+    }
+
+    /* ── Divider ───────────────────────────────────────────── */
+    .skills-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 0 3.5rem 0;
+    }
+
+    /* ── Responsive ────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .cat-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .skills-list {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     Header
+     ============================================================ -->
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="index.html" class="logo-mark">
+        <span class="logo-name">Biz Builder</span>
+        <span class="logo-tag">Build System</span>
+      </a>
+      <nav class="desktop-nav">
+        <a href="process.html">The Process</a>
+        <a href="builds.html">Builds</a>
+        <a href="skills.html" class="active">Skills Finder</a>
+        <a href="start.html">Start</a>
+      </nav>
+      <div class="header-actions">
+        <a href="start.html" class="btn btn-primary btn-sm">Start Your Build →</a>
+        <button class="hamburger-btn" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <nav>
+    <a href="process.html">The Process</a>
+    <a href="builds.html">Builds</a>
+    <a href="skills.html" class="active">Skills Finder</a>
+    <a href="start.html">Start</a>
+  </nav>
+  <a href="start.html" class="btn btn-primary">Start Your Build →</a>
+</div>
+
+<main>
+
+  <!-- ============================================================
+       Page Hero
+       ============================================================ -->
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Skills Finder</span>
+      <h1 class="display-lg">Know what you need<br/>to learn.</h1>
+      <p>Select your business category and get a prioritized list of the skills that will make or break your build — with specific resources for each one.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Category Selector + Skills Output
+       ============================================================ -->
+  <section class="py-section">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow eyebrow-muted">Step 1</span>
+        <h2 class="display-md">Choose your category.</h2>
+        <p>Select the type of business you're building. You'll see universal skills that apply to everyone, plus category-specific skills that matter for your industry.</p>
+      </div>
+
+      <div class="cat-grid" id="catGrid"></div>
+
+      <div class="skills-output" id="skillsOutput"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CTA
+       ============================================================ -->
+  <section class="py-section cta-section">
+    <div class="container">
+      <span class="eyebrow eyebrow-gold">Ready to build?</span>
+      <h2 class="display-md">Turn your skills into<br/>a real business.</h2>
+      <p>Answer three questions and get a personalized, phase-by-phase roadmap for your specific business — with category-specific tasks built in from the start.</p>
+      <div class="cta-actions">
+        <a href="start.html" class="btn btn-gold btn-lg">Start Your Build →</a>
+        <a href="process.html" class="btn btn-outline btn-lg">See the Process</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     Footer
+     ============================================================ -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo-mark">
+            <span class="logo-name">Biz Builder</span>
+            <span class="logo-tag">Build System</span>
+          </a>
+          <p>The framework behind building any real business — from idea to first client. Proven across industries, built for the solo founder.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="process.html">The Process</a></li>
+            <li><a href="builds.html">Builds</a></li>
+            <li><a href="skills.html">Skills Finder</a></li>
+            <li><a href="start.html">Start Building</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Live Builds</h4>
+          <ul>
+            <li><a href="../daniel-german-static/index.html">DG Creations</a></li>
+            <li><a href="../janie-bell-static/index.html">Janie Bell's Alterations</a></li>
+          </ul>
+        </div>
+        <div class="footer-cta">
+          <h4>Get Your Roadmap</h4>
+          <p>Two minutes. Three questions. One personalized checklist for your business.</p>
+          <a href="start.html" class="btn btn-primary btn-sm">Start Now →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="footer-bottom-inner">
+        <span>© 2025 Biz Builder. All rights reserved.</span>
+        <span>Built with the system.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script>
+  // ── Mobile Nav ───────────────────────────────────────────────
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+    document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+  });
+
+  // ── Skills Finder Logic ──────────────────────────────────────
+  let activeCategory = null;
+
+  function renderCategories() {
+    const grid = document.getElementById('catGrid');
+    grid.innerHTML = '';
+    CATEGORIES.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'cat-btn';
+      btn.dataset.id = cat.id;
+      btn.innerHTML = `<span class="icon">${cat.icon}</span><span class="cat-name">${cat.name}</span>`;
+      btn.addEventListener('click', () => selectCategory(cat.id));
+      grid.appendChild(btn);
+    });
+  }
+
+  function selectCategory(id) {
+    activeCategory = id;
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.dataset.id === id));
+    const skills = getSkillsForCategory(id);
+    const critical = skills.filter(s => s.priority === 'critical');
+    const recommended = skills.filter(s => s.priority === 'recommended');
+    const output = document.getElementById('skillsOutput');
+    output.classList.add('visible');
+    output.innerHTML = '';
+    if (critical.length) output.appendChild(renderTier('Critical Skills', 'critical', critical, 'Get these right before you do anything else. These are the skills directly tied to survival and revenue.'));
+    if (recommended.length) output.appendChild(renderTier('Recommended Skills', 'recommended', recommended, 'Important for sustainable growth. Develop these in your first 90 days of operation.'));
+    output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function renderTier(label, cls, skills, desc) {
+    const tier = document.createElement('div');
+    tier.className = 'skills-tier';
+    tier.innerHTML = `
+      <div class="skills-tier-header">
+        <span class="tier-badge ${cls}">${label}</span>
+        <p>${desc}</p>
+      </div>
+      <div class="skills-list">
+        ${skills.map(s => `
+          <div class="skill-card">
+            <h4>${s.name}</h4>
+            <p class="skill-why">${s.why}</p>
+            <div class="skill-how">${s.howToGet}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    return tier;
+  }
+
+  // ── Init ─────────────────────────────────────────────────────
+  renderCategories();
+</script>
+</body>
+</html>

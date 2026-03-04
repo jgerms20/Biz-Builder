@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Start Your Build — Biz Builder</title>
+  <meta name="description" content="Answer three questions and get a personalized, phase-by-phase roadmap for your specific business." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ============================================================
+     Header
+     ============================================================ -->
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="index.html" class="logo-mark">
+        <span class="logo-name">Biz Builder</span>
+        <span class="logo-tag">Build System</span>
+      </a>
+      <nav class="desktop-nav">
+        <a href="process.html">The Process</a>
+        <a href="builds.html">Builds</a>
+        <a href="skills.html">Skills Finder</a>
+        <a href="start.html" class="active">Start</a>
+      </nav>
+      <div class="header-actions">
+        <a href="start.html" class="btn btn-primary btn-sm">Start Your Build →</a>
+        <button class="hamburger-btn" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <nav>
+    <a href="process.html">The Process</a>
+    <a href="builds.html">Builds</a>
+    <a href="skills.html">Skills Finder</a>
+    <a href="start.html">Start</a>
+  </nav>
+  <a href="start.html" class="btn btn-primary">Start Your Build →</a>
+</div>
+
+<main>
+
+  <!-- ============================================================
+       Page Hero
+       ============================================================ -->
+  <section class="hero" style="padding-top: 5rem; padding-bottom: 3rem;">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-bg-glow"></div>
+    <div class="container hero-content">
+      <div class="hero-inner" style="text-align: center;">
+        <span class="eyebrow">3 Steps · 2 Minutes</span>
+        <h1 class="display-xl">Start Your Build</h1>
+        <p class="hero-sub" style="max-width: 540px; margin: 0 auto;">
+          Tell us about your business. We'll generate a personalized, phase-by-phase roadmap built for your category and stage.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Wizard
+       ============================================================ -->
+  <section class="py-section" style="padding-top: 2rem;">
+    <div class="container">
+      <div class="wizard-wrap">
+
+        <!-- Progress Indicator -->
+        <div class="wizard-progress">
+          <div class="wizard-step-dot" id="dot1">
+            <div class="dot-circle">1</div>
+            <div class="dot-label">Your Business</div>
+          </div>
+          <div class="wizard-step-dot" id="dot2">
+            <div class="dot-circle">2</div>
+            <div class="dot-label">Category</div>
+          </div>
+          <div class="wizard-step-dot" id="dot3">
+            <div class="dot-circle">3</div>
+            <div class="dot-label">Stage</div>
+          </div>
+        </div>
+
+        <!-- ── Panel 1: Your Business ── -->
+        <div class="wizard-panel" id="panel1">
+          <span class="eyebrow">Step 1 of 3</span>
+          <h2 class="display-md">Your Business</h2>
+          <p class="step-desc">Start with the basics. What are you building, and for whom?</p>
+
+          <div class="form-group">
+            <label class="form-label" for="bizName">Business name <span style="color: var(--accent, #e5a32b);">*</span></label>
+            <input
+              class="form-input"
+              type="text"
+              id="bizName"
+              name="bizName"
+              placeholder="e.g. DG Creations, Janie Bell's Alterations"
+              autocomplete="organization"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="bizDesc">One-line description <span style="opacity: 0.55; font-weight: 400;">(optional)</span></label>
+            <textarea
+              class="form-textarea"
+              id="bizDesc"
+              name="bizDesc"
+              placeholder="What does your business do and for whom?"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <div class="wizard-nav">
+            <button class="btn btn-outline" style="visibility: hidden;" disabled>Back</button>
+            <button class="btn btn-primary" onclick="nextStep()">Next: Choose Category →</button>
+          </div>
+        </div>
+
+        <!-- ── Panel 2: Your Category ── -->
+        <div class="wizard-panel" id="panel2">
+          <span class="eyebrow">Step 2 of 3</span>
+          <h2 class="display-md">Your Category</h2>
+          <p class="step-desc">Pick the category that best describes your business. This unlocks category-specific tasks in your roadmap.</p>
+
+          <div class="cat-radio-grid" id="catRadioGrid">
+            <!-- Populated dynamically by renderCategoryRadios() -->
+          </div>
+
+          <div class="wizard-nav">
+            <button class="btn btn-outline" onclick="prevStep()">← Back</button>
+            <button class="btn btn-primary" onclick="nextStep()">Next: Your Stage →</button>
+          </div>
+        </div>
+
+        <!-- ── Panel 3: Your Stage ── -->
+        <div class="wizard-panel" id="panel3">
+          <span class="eyebrow">Step 3 of 3</span>
+          <h2 class="display-md">Your Stage</h2>
+          <p class="step-desc">Where are you right now? Be honest — your roadmap will meet you where you are.</p>
+
+          <div class="stage-radio-stack">
+
+            <label class="stage-radio">
+              <input type="radio" name="stage" value="idea" />
+              <div class="stage-radio-card">
+                <span class="stage-icon">💡</span>
+                <div class="stage-text">
+                  <strong>Just an Idea</strong>
+                  <span>I have a concept but haven't started anything yet.</span>
+                </div>
+              </div>
+            </label>
+
+            <label class="stage-radio">
+              <input type="radio" name="stage" value="forming" />
+              <div class="stage-radio-card">
+                <span class="stage-icon">⚙️</span>
+                <div class="stage-text">
+                  <strong>Forming</strong>
+                  <span>I've started the paperwork or legal setup.</span>
+                </div>
+              </div>
+            </label>
+
+            <label class="stage-radio">
+              <input type="radio" name="stage" value="building" />
+              <div class="stage-radio-card">
+                <span class="stage-icon">🔨</span>
+                <div class="stage-text">
+                  <strong>Building</strong>
+                  <span>I'm working on branding, website, or operations.</span>
+                </div>
+              </div>
+            </label>
+
+            <label class="stage-radio">
+              <input type="radio" name="stage" value="launching" />
+              <div class="stage-radio-card">
+                <span class="stage-icon">🚀</span>
+                <div class="stage-text">
+                  <strong>Launching</strong>
+                  <span>I'm about ready to serve my first real clients.</span>
+                </div>
+              </div>
+            </label>
+
+          </div>
+
+          <div class="wizard-nav">
+            <button class="btn btn-outline" onclick="prevStep()">← Back</button>
+            <button class="btn btn-primary" onclick="nextStep()">Build My Roadmap →</button>
+          </div>
+        </div>
+
+      </div><!-- /.wizard-wrap -->
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     Footer
+     ============================================================ -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo-mark">
+            <span class="logo-name">Biz Builder</span>
+            <span class="logo-tag">Build System</span>
+          </a>
+          <p>The framework behind building any real business — from idea to first client. Proven across industries, built for the solo founder.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="process.html">The Process</a></li>
+            <li><a href="builds.html">Builds</a></li>
+            <li><a href="skills.html">Skills Finder</a></li>
+            <li><a href="start.html">Start Building</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Live Builds</h4>
+          <ul>
+            <li><a href="../daniel-german-static/index.html">DG Creations</a></li>
+            <li><a href="../janie-bell-static/index.html">Janie Bell's Alterations</a></li>
+          </ul>
+        </div>
+        <div class="footer-cta">
+          <h4>Get Your Roadmap</h4>
+          <p>Two minutes. Three questions. One personalized checklist for your business.</p>
+          <a href="start.html" class="btn btn-primary btn-sm">Start Now →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="footer-bottom-inner">
+        <span>© 2025 Biz Builder. All rights reserved.</span>
+        <span>Built with the system.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script>
+  // ── Mobile nav ──
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+    document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+  });
+
+  // ── Wizard logic ──
+  let currentStep = 1;
+  const totalSteps = 3;
+
+  function goTo(step) {
+    document.querySelectorAll('.wizard-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel' + step).classList.add('active');
+    document.querySelectorAll('.wizard-step-dot').forEach((dot, i) => {
+      dot.classList.remove('active', 'done');
+      const circle = dot.querySelector('.dot-circle');
+      if (i + 1 < step) {
+        dot.classList.add('done');
+        circle.textContent = '✓';
+      } else {
+        circle.textContent = i + 1;
+      }
+      if (i + 1 === step) dot.classList.add('active');
+    });
+    currentStep = step;
+    // Scroll wizard into view smoothly on step change
+    document.querySelector('.wizard-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function nextStep() {
+    if (currentStep === 1) {
+      const name = document.getElementById('bizName').value.trim();
+      if (!name) { document.getElementById('bizName').focus(); return; }
+    }
+    if (currentStep === 2) {
+      const cat = document.querySelector('input[name="category"]:checked');
+      if (!cat) { alert('Please select a business category.'); return; }
+    }
+    if (currentStep < totalSteps) goTo(currentStep + 1);
+    else submitWizard();
+  }
+
+  function prevStep() {
+    if (currentStep > 1) goTo(currentStep - 1);
+  }
+
+  function submitWizard() {
+    const name = encodeURIComponent(document.getElementById('bizName').value.trim());
+    const cat = document.querySelector('input[name="category"]:checked')?.value || 'general';
+    const stage = document.querySelector('input[name="stage"]:checked')?.value || 'idea';
+    window.location.href = `roadmap.html?name=${name}&category=${cat}&stage=${stage}`;
+  }
+
+  // ── Render categories dynamically from data.js ──
+  function renderCategoryRadios() {
+    const grid = document.getElementById('catRadioGrid');
+    CATEGORIES.forEach(cat => {
+      grid.innerHTML += `<label class="cat-radio"><input type="radio" name="category" value="${cat.id}"><div class="cat-radio-card"><span class="icon">${cat.icon}</span><span class="name">${cat.name}</span></div></label>`;
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderCategoryRadios();
+    goTo(1);
+  });
+</script>
+</body>
+</html>
