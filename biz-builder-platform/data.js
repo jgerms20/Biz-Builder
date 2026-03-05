@@ -302,7 +302,7 @@ const BUILDS = [
       'Catering and meal prep pages with transparent, market-rate pricing',
       'Inquiry form for booking private events'
     ],
-    url: '../daniel-german-static/index.html',
+    url: 'https://dg-creations.vercel.app',
     colorClass: 'gold'
   },
   {
@@ -321,7 +321,7 @@ const BUILDS = [
       'Google Fonts + custom Tailwind design system',
       'SEO metadata and OpenGraph configuration throughout'
     ],
-    url: '../janie-bell-static/index.html',
+    url: 'https://janie-bells.vercel.app',
     colorClass: 'blue'
   }
 ];
