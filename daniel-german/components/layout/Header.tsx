@@ -48,7 +48,7 @@ export default function Header() {
             href="/inquire"
             className="hidden lg:inline-flex px-6 py-2.5 bg-gold/10 border border-gold/30 text-gold text-sm font-sans tracking-wider uppercase hover:bg-gold/20 hover:border-gold/50 transition-all duration-300"
           >
-            Book a Chef
+            Book Chef Daniel
           </Link>
 
           {/* Mobile Menu Button */}
@@ -97,7 +97,7 @@ export default function Header() {
               onClick={() => setMobileOpen(false)}
               className="inline-flex px-6 py-2.5 bg-gold/10 border border-gold/30 text-gold text-sm font-sans tracking-wider uppercase hover:bg-gold/20 hover:border-gold/50 transition-all duration-300 mt-2"
             >
-              Book a Chef
+              Book Chef Daniel
             </Link>
           </div>
         )}

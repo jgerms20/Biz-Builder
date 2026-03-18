@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-mg-white text-mg-charcoal font-sans antialiased;
+  }
+}
+
+@layer components {
+  .container-brand {
+    @apply max-w-content mx-auto px-6 md:px-10 lg:px-16;
+  }
+  .font-serif {
+    font-family: "Cormorant Garant", Georgia, serif;
+  }
+  .gold-text {
+    @apply text-mg-gold;
+  }
+  .section-padding {
+    @apply py-section;
+  }
+  .section-padding-sm {
+    @apply py-section-sm;
+  }
+  .btn-primary {
+    @apply bg-mg-green text-white font-sans text-sm uppercase tracking-widest px-8 py-3 hover:bg-mg-green-dark transition-colors duration-200;
+  }
+  .btn-outline {
+    @apply border border-mg-navy text-mg-navy font-sans text-sm uppercase tracking-widest px-8 py-3 hover:bg-mg-navy hover:text-white transition-colors duration-200;
+  }
+}

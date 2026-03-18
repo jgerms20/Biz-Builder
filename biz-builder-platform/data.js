@@ -323,6 +323,24 @@ const BUILDS = [
     ],
     url: 'https://janie-bells.vercel.app',
     colorClass: 'blue'
+  },
+  {
+    id: 'milton-german',
+    name: 'Milton German Bookkeeping',
+    founder: 'Milton German',
+    tagline: 'Your books, done right.',
+    category: 'Professional Services',
+    categoryId: 'professional-services',
+    description: 'Milton German — a Newberry College accounting graduate with 30+ years in South Carolina state government, including the Department of Health & Human Services — brings compliance expertise and institutional-grade precision to small business bookkeeping. His practice helps entrepreneurs get their books right from day one.',
+    whatWasBuilt: [
+      'Full website — 5 pages (Home, About, Services, How It Works, Contact)',
+      'Professional navy/green brand identity and custom Tailwind design system',
+      'Contact form with email integration via Nodemailer',
+      'Service pages with detailed descriptions for bookkeeping, accounting, compliance, and consulting',
+      'SEO metadata and OpenGraph configuration throughout'
+    ],
+    url: 'https://milton-german.vercel.app',
+    colorClass: 'green'
   }
 ];
 

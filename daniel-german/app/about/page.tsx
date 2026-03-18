@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import SectionHeading from "@/components/ui/SectionHeading";
 import GoldDivider from "@/components/ui/GoldDivider";
 import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
@@ -12,28 +13,60 @@ export const metadata: Metadata = {
 
 const milestones = [
   {
+    year: "Age 13",
+    label: "The Beginning",
+    title: "Highway 55 Burgers",
+    description:
+      "At just thirteen, Daniel stepped into his first commercial kitchen. The fast pace, the heat, the rhythm of a working line — it all clicked immediately. This is where the foundation was laid.",
+    imageLabel: "First Kitchen Job",
+  },
+  {
+    year: "High School",
+    label: "Building Heat",
+    title: "Rio's Brazilian Steakhouse",
+    description:
+      "Working alongside experienced grill masters at a Brazilian churrascaria, Daniel developed an early understanding of fire, protein, and the art of tableside service.",
+    imageLabel: "Rio's Brazilian Steakhouse",
+  },
+  {
+    year: "Pre-College",
+    label: "Going Pro",
+    title: "Carolina Ale House",
+    description:
+      "Before heading to culinary school, Daniel sharpened his skills in a high-volume kitchen, building the discipline and speed that professional cooking demands.",
+    imageLabel: "Carolina Ale House Kitchen",
+  },
+  {
+    year: "While at JWU",
+    label: "Leveling Up",
+    title: "Luxury Hotel Kitchen",
+    description:
+      "While pursuing his degrees, Daniel trained in a luxury hotel kitchen — an environment where precision, plating, and consistency are not optional.",
+    imageLabel: "Hotel Kitchen Training",
+  },
+  {
     year: "Education",
+    label: "The Foundation",
     title: "Johnson & Wales University",
     description:
-      "Dual degrees in Culinary Arts and Culinary Nutrition, building the foundation for a career defined by both artistry and wellness.",
+      "Dual degrees in Culinary Arts and Culinary Nutrition from one of the most respected culinary programs in the country. The academic rigor and hands-on training that built everything that followed.",
+    imageLabel: "Johnson & Wales University",
   },
   {
-    year: "Training",
-    title: "Professional Kitchens",
-    description:
-      "Years of experience in high-end restaurants and professional kitchens, refining techniques and developing a signature style.",
-  },
-  {
-    year: "Evolution",
+    year: "Post-Grad",
+    label: "The Craft",
     title: "Private Dining",
     description:
-      "Transition to private chef work, discovering that the most meaningful culinary moments happen in intimate settings.",
+      "After graduating, Daniel discovered that the most meaningful culinary moments happen in intimate settings — private homes, small gatherings, personal celebrations where the chef and the guest connect.",
+    imageLabel: "Private Dining Experience",
   },
   {
     year: "Today",
+    label: "The Vision",
     title: "DG Creations",
     description:
-      "A full-service culinary brand offering private dining experiences, bespoke catering, and personalized meal preparation.",
+      "A full-service culinary brand offering private dining experiences, bespoke catering, and personalized meal preparation. Every plate, a creation.",
+    imageLabel: "DG Creations — Today",
   },
 ];
 
@@ -101,10 +134,15 @@ export default function AboutPage() {
               </div>
             </div>
             <div>
-              <ImagePlaceholder
-                label="Chef Daniel German — Portrait"
-                aspectRatio="aspect-[3/4]"
-              />
+              <div className="relative aspect-[3/4] overflow-hidden">
+                <Image
+                  src="/images/chef-daniel.jpg"
+                  alt="Chef Daniel German — Private Chef"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -121,28 +159,83 @@ export default function AboutPage() {
             subtitle="A career built on education, experience, and an unrelenting pursuit of culinary excellence."
           />
 
-          <div className="max-w-3xl mx-auto space-y-0">
+          <div className="max-w-5xl mx-auto">
             {milestones.map((milestone, index) => (
-              <div key={milestone.title} className="relative flex gap-8">
-                {/* Timeline line */}
-                <div className="flex flex-col items-center">
-                  <div className="w-3 h-3 bg-gold rotate-45 shrink-0 mt-1" />
-                  {index < milestones.length - 1 && (
-                    <div className="w-px flex-1 bg-dg-border" />
-                  )}
+              <div key={milestone.title}>
+                {/* Mobile: vertical stacked layout */}
+                <div className="md:hidden flex gap-6 pb-12">
+                  <div className="flex flex-col items-center shrink-0">
+                    <div className="w-3 h-3 bg-gold rotate-45 mt-1 shrink-0" />
+                    {index < milestones.length - 1 && (
+                      <div className="w-px flex-1 bg-dg-border mt-1" />
+                    )}
+                  </div>
+                  <div className="flex-1 space-y-3 pb-2">
+                    <div>
+                      <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-gold/70">
+                        {milestone.label}
+                      </span>
+                      <span className="font-sans text-xs uppercase tracking-[0.2em] text-gold ml-3">
+                        {milestone.year}
+                      </span>
+                    </div>
+                    <h3 className="font-serif text-xl text-cream">{milestone.title}</h3>
+                    <p className="font-sans text-sm text-cream-muted/60 leading-relaxed">
+                      {milestone.description}
+                    </p>
+                    <ImagePlaceholder label={milestone.imageLabel} aspectRatio="aspect-[16/10]" />
+                  </div>
                 </div>
 
-                {/* Content */}
-                <div className="pb-12">
-                  <span className="inline-block font-sans text-xs uppercase tracking-[0.2em] text-gold mb-2">
-                    {milestone.year}
-                  </span>
-                  <h3 className="font-serif text-xl md:text-2xl text-cream mb-2">
-                    {milestone.title}
-                  </h3>
-                  <p className="font-sans text-sm text-cream-muted/60 leading-relaxed">
-                    {milestone.description}
-                  </p>
+                {/* Desktop: alternating left/right layout */}
+                <div className="hidden md:grid md:grid-cols-[1fr_3rem_1fr] gap-x-8 pb-16 items-start">
+                  {/* Left column — text on even, image on odd */}
+                  <div className={index % 2 === 0 ? "text-right pr-4" : "pr-4"}>
+                    {index % 2 === 0 ? (
+                      <div>
+                        <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-gold/70 block mb-1">
+                          {milestone.label}
+                        </span>
+                        <span className="font-sans text-xs uppercase tracking-[0.2em] text-gold block mb-3">
+                          {milestone.year}
+                        </span>
+                        <h3 className="font-serif text-2xl text-cream mb-3">{milestone.title}</h3>
+                        <p className="font-sans text-sm text-cream-muted/60 leading-relaxed">
+                          {milestone.description}
+                        </p>
+                      </div>
+                    ) : (
+                      <ImagePlaceholder label={milestone.imageLabel} aspectRatio="aspect-[16/10]" />
+                    )}
+                  </div>
+
+                  {/* Center — diamond + connecting line */}
+                  <div className="flex flex-col items-center">
+                    <div className="w-4 h-4 bg-gold rotate-45 shrink-0" />
+                    {index < milestones.length - 1 && (
+                      <div className="w-px flex-1 bg-dg-border mt-1" style={{ minHeight: "4rem" }} />
+                    )}
+                  </div>
+
+                  {/* Right column — image on even, text on odd */}
+                  <div className="pl-4">
+                    {index % 2 === 0 ? (
+                      <ImagePlaceholder label={milestone.imageLabel} aspectRatio="aspect-[16/10]" />
+                    ) : (
+                      <div>
+                        <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-gold/70 block mb-1">
+                          {milestone.label}
+                        </span>
+                        <span className="font-sans text-xs uppercase tracking-[0.2em] text-gold block mb-3">
+                          {milestone.year}
+                        </span>
+                        <h3 className="font-serif text-2xl text-cream mb-3">{milestone.title}</h3>
+                        <p className="font-sans text-sm text-cream-muted/60 leading-relaxed">
+                          {milestone.description}
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}

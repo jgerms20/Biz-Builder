@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import SectionHeading from "@/components/ui/SectionHeading";
 import GoldDivider from "@/components/ui/GoldDivider";
 import ServiceCard from "@/components/ui/ServiceCard";
@@ -12,10 +13,14 @@ export default function HomePage() {
         {/* Background */}
         <div className="absolute inset-0 bg-dg-black">
           <div className="absolute inset-0 bg-gradient-to-b from-dg-black/50 via-transparent to-dg-black" />
-          <ImagePlaceholder
-            label="Hero Image — Chef Daniel at Work"
-            aspectRatio="aspect-auto"
-            className="absolute inset-0 !aspect-auto h-full opacity-30"
+          <Image
+            src="/images/chef-daniel.jpg"
+            alt="Chef Daniel German at work"
+            fill
+            className="object-cover opacity-30"
+            priority
+            quality={85}
+            sizes="100vw"
           />
         </div>
 
@@ -69,10 +74,15 @@ export default function HomePage() {
         <div className="container-brand">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
             <div>
-              <ImagePlaceholder
-                label="Chef Daniel Portrait"
-                aspectRatio="aspect-[3/4]"
-              />
+              <div className="relative aspect-[3/4] overflow-hidden">
+                <Image
+                  src="/images/chef-daniel.jpg"
+                  alt="Chef Daniel German"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
             </div>
             <div>
               <span className="inline-block font-sans text-xs uppercase tracking-[0.3em] text-gold mb-4">
@@ -185,17 +195,25 @@ export default function HomePage() {
             subtitle="Moments captured from private dining experiences, events, and behind-the-scenes preparation."
           />
 
+          {/* Gallery grid - real photos for first 4, placeholders for last 4 */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {[
-              "Plated Dish",
-              "Table Setting",
-              "Chef at Work",
-              "Dessert Course",
-              "Ingredients",
-              "Wine Pairing",
-              "Private Event",
-              "Final Presentation",
-            ].map((label) => (
+              { src: "/images/food-pasta.jpg", alt: "Pan-seared shrimp pasta" },
+              { src: "/images/food-pork.jpg", alt: "Pork chop with fruit salsa" },
+              { src: "/images/food-salad.jpg", alt: "Seasonal garden salad" },
+              { src: "/images/food-seafood.jpg", alt: "Seared scallops and octopus" },
+            ].map((img) => (
+              <div key={img.alt} className="relative aspect-square overflow-hidden">
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+              </div>
+            ))}
+            {["Ingredients", "Wine Pairing", "Private Event", "Final Presentation"].map((label) => (
               <ImagePlaceholder
                 key={label}
                 label={label}
