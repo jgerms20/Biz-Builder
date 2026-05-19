@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-ct-black text-ct-cream;
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+}
+
+@layer utilities {
+  .container-ct {
+    @apply max-w-[1180px] mx-auto px-6 md:px-10;
+  }
+  .text-mustard-gradient {
+    background: linear-gradient(135deg, #E5A018, #F0B53D);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .smoke-overlay {
+    background: radial-gradient(ellipse at 50% 0%, rgba(229, 160, 24, 0.12) 0%, transparent 60%);
+  }
+}
