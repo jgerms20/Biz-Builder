@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import QRCodeBlock from "@/components/ui/QRCodeBlock";
 
 export const metadata: Metadata = {
   title: "Menu",
@@ -9,96 +10,83 @@ export const metadata: Metadata = {
 
 const loadedDogs = [
   {
-    name: "Classic Loaded Dog",
-    desc: "All-beef dog, house chili, cheddar, mustard, onions",
+    name: "Regular Hot Dog",
+    desc: "All-beef hot dog, classic style",
+    price: "$6",
+  },
+  {
+    name: "Slaw Dog",
+    desc: "All-beef dog topped with house coleslaw",
+    price: "$7",
+  },
+  {
+    name: "Comeback Dog",
+    desc: "All-beef dog, chili, 4-cheese comeback sauce, coleslaw",
     price: "$8",
   },
   {
-    name: "BBQ Bacon Dog",
-    desc: "All-beef dog, BBQ sauce, crispy bacon, cheddar, jalapeños",
+    name: "Pulled Pork Dog",
+    desc: "All-beef dog piled high with smoked pulled pork and BBQ drizzle",
     price: "$9",
-  },
-  {
-    name: "The Comeback Dog",
-    desc: "All-beef dog, chili, cheese sauce, coleslaw, special sauce",
-    price: "$10",
   },
 ];
 
 const handhelds = [
   {
-    name: "Pulled Pork Sandwich",
-    desc: "Slow-smoked pulled pork, coleslaw, pickles on a brioche bun",
-    price: "$10",
-  },
-  {
-    name: "BBQ Chicken Sandwich",
-    desc: "Grilled or fried chicken, BBQ sauce, pickles, slaw",
-    price: "$10",
-  },
-  {
-    name: "Catfish Po'Boy",
-    desc: "Crispy fried catfish, lettuce, tomato, remoulade",
-    price: "$11",
-  },
-];
-
-const loadedSides = [
-  {
-    name: "Chili Cheese Fries",
-    desc: "Crinkle fries, house chili, cheddar, scallions",
-    price: "$8",
-  },
-  {
-    name: "Loaded Nachos",
-    desc: "Tortilla chips, chili, cheese sauce, jalapeños, sour cream",
-    price: "$8",
-  },
-  {
-    name: "Loaded Mac",
-    desc: "Creamy mac & cheese topped with pulled pork and BBQ drizzle",
+    name: "BBQ Sandwich",
+    desc: "Slow-smoked BBQ on a toasted bun with pickles and sauce",
     price: "$9",
   },
-];
-
-const sides = [
-  { name: "Crinkle Fries", price: "$4" },
-  { name: "Mac & Cheese", price: "$5" },
-  { name: "Coleslaw", price: "$3" },
-  { name: "Collard Greens", price: "$4" },
-  { name: "Potato Salad", price: "$4" },
-  { name: "Corn Bread", price: "$2" },
+  {
+    name: "Pulled Pork Sandwich",
+    desc: "Tender pulled pork, coleslaw, brioche bun",
+    price: "$10",
+  },
 ];
 
 const dinner = [
   {
-    name: "Rib Plate",
-    desc: "Slow-smoked ribs with two sides of your choice",
-    price: "$15",
+    name: "Fish Plate",
+    desc: "Crispy fried catfish — 1 or 2 pieces, served with 2 sides",
+    price: "$10 / $13",
   },
   {
-    name: "Fried Fish Plate",
-    desc: "Crispy fried catfish with two sides of your choice",
-    price: "$13",
+    name: "Leg Quarter Plate",
+    desc: "Juicy fried leg quarter with 2 sides of your choice",
+    price: "$11",
   },
   {
-    name: "Stuffed Meatloaf Plate",
-    desc: "House meatloaf, glazed and finished hot, with two sides",
-    price: "$12",
+    name: "Chicken Tenders",
+    desc: "Hand-battered tenders with 1 side and dipping sauce",
+    price: "$9",
   },
   {
-    name: "BBQ Chicken Plate",
-    desc: "Half chicken, BBQ sauce, with two sides of your choice",
-    price: "$13",
+    name: "Fried Rib Plate",
+    desc: "Slow-cooked ribs, fried and finished — with 1 or 2 sides",
+    price: "$13 / $15",
   },
 ];
 
-const otherExtra = [
-  { name: "Bottled Water", price: "$2" },
-  { name: "Canned Soda", price: "$2" },
-  { name: "Lemonade", price: "$3" },
-  { name: "Extra Sauce", price: "$1" },
-  { name: "Extra Side", price: "$4" },
+const sides = [
+  { name: "Baked Beans", price: "$3" },
+  { name: "Rice", price: "$2" },
+  { name: "Green Beans", price: "$3" },
+  { name: "Mac & Cheese", price: "$4" },
+  { name: "Fries", price: "$4" },
+  { name: "Comeback Sauce", price: "$1" },
+];
+
+const loaded = [
+  {
+    name: "Loaded Fries",
+    desc: "Crispy fries topped with our signature Comeback Sauce",
+    price: "$9",
+  },
+  {
+    name: "Loaded Nachos",
+    desc: "Tortilla chips piled with our signature Comeback Sauce",
+    price: "$9",
+  },
 ];
 
 export default function MenuPage() {
@@ -112,8 +100,7 @@ export default function MenuPage() {
             The Menu
           </span>
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl text-ct-cream uppercase leading-tight">
-            THE FULL{" "}
-            <span className="text-ct-orange">SPREAD</span>
+            THE FULL <span className="text-ct-orange">SPREAD</span>
           </h1>
           <p className="text-ct-cream-muted text-base md:text-lg mt-6 max-w-xl mx-auto font-sans">
             Made fresh. Served hot. Soul food done right.
@@ -121,226 +108,253 @@ export default function MenuPage() {
         </div>
       </section>
 
-      {/* COMBO CALLOUT BANNER */}
-      <div className="bg-ct-orange py-4 px-6">
-        <p className="text-center font-display text-white text-base md:text-xl uppercase tracking-wide">
-          Make it a Combo!{" "}
-          <span className="font-sans font-semibold normal-case tracking-normal text-white/90">
-            Add fries &amp; a drink for $3.50
-          </span>
+      {/* COMBO CALLOUT STRIP */}
+      <div className="bg-ct-orange py-4 text-center">
+        <p className="font-display text-lg text-white uppercase tracking-wide">
+          Make it a Combo! Add fries &amp; a drink for just $3.50
         </p>
       </div>
 
       {/* SECTION: LOADED DOGS */}
-      <section className="bg-ct-charcoal py-0">
-        <div className="container-ct py-0 px-0">
-          {/* Section Header Bar */}
-          <div className="bg-ct-mustard px-6 md:px-10 py-4">
-            <h2 className="font-display text-white text-2xl md:text-3xl uppercase tracking-widest">
+      <section className="bg-ct-charcoal">
+        <div className="container-ct px-0">
+          <div className="bg-ct-mustard px-6 py-3">
+            <h2 className="font-display text-ct-black text-2xl md:text-3xl uppercase">
               Loaded Dogs
             </h2>
           </div>
-          {/* Items */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-ct-border">
-            {loadedDogs.map((item) => (
-              <div
-                key={item.name}
-                className="bg-ct-charcoal px-6 py-8 flex flex-col gap-2"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="font-display text-ct-cream text-lg md:text-xl uppercase leading-snug flex-1">
+          <div className="p-6 md:p-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {loadedDogs.map((item) => (
+                <div
+                  key={item.name}
+                  className="bg-ct-surface border border-ct-border p-5 flex flex-col"
+                >
+                  <h3 className="font-display text-ct-cream text-lg uppercase">
                     {item.name}
                   </h3>
-                  <span className="font-display text-ct-orange text-xl md:text-2xl shrink-0">
+                  <p className="font-sans text-ct-cream-muted text-sm mt-1 flex-1">
+                    {item.desc}
+                  </p>
+                  <p className="font-display text-ct-orange text-xl mt-3">
                     {item.price}
-                  </span>
+                  </p>
                 </div>
-                <p className="text-ct-cream-muted font-sans text-sm leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
+            <p className="text-ct-mustard text-sm font-sans mt-4">
+              ★ Make any dog a combo — add fries &amp; a drink for $3.50
+            </p>
           </div>
         </div>
       </section>
 
       {/* SECTION: HANDHELDS */}
-      <section className="bg-ct-black py-0">
-        <div className="container-ct py-0 px-0">
-          <div className="bg-ct-mustard px-6 md:px-10 py-4">
-            <h2 className="font-display text-white text-2xl md:text-3xl uppercase tracking-widest">
+      <section className="bg-ct-black">
+        <div className="container-ct px-0">
+          <div className="bg-ct-mustard px-6 py-3">
+            <h2 className="font-display text-ct-black text-2xl md:text-3xl uppercase">
               Handhelds
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-ct-border">
-            {handhelds.map((item) => (
-              <div
-                key={item.name}
-                className="bg-ct-black px-6 py-8 flex flex-col gap-2"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="font-display text-ct-cream text-lg md:text-xl uppercase leading-snug flex-1">
+          <div className="p-6 md:p-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {handhelds.map((item) => (
+                <div
+                  key={item.name}
+                  className="bg-ct-surface border border-ct-border p-5 flex flex-col"
+                >
+                  <h3 className="font-display text-ct-cream text-lg uppercase">
                     {item.name}
                   </h3>
-                  <span className="font-display text-ct-orange text-xl md:text-2xl shrink-0">
+                  <p className="font-sans text-ct-cream-muted text-sm mt-1 flex-1">
+                    {item.desc}
+                  </p>
+                  <p className="font-display text-ct-orange text-xl mt-3">
                     {item.price}
-                  </span>
+                  </p>
                 </div>
-                <p className="text-ct-cream-muted font-sans text-sm leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION: LOADED SIDES */}
-      <section className="bg-ct-charcoal py-0">
-        <div className="container-ct py-0 px-0">
-          <div className="bg-ct-mustard px-6 md:px-10 py-4">
-            <h2 className="font-display text-white text-2xl md:text-3xl uppercase tracking-widest">
-              Loaded Sides
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-ct-border">
-            {loadedSides.map((item) => (
-              <div
-                key={item.name}
-                className="bg-ct-charcoal px-6 py-8 flex flex-col gap-2"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="font-display text-ct-cream text-lg md:text-xl uppercase leading-snug flex-1">
-                    {item.name}
-                  </h3>
-                  <span className="font-display text-ct-orange text-xl md:text-2xl shrink-0">
-                    {item.price}
-                  </span>
-                </div>
-                <p className="text-ct-cream-muted font-sans text-sm leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION: SIDES */}
-      <section className="bg-ct-black py-0">
-        <div className="container-ct py-0 px-0">
-          <div className="bg-ct-mustard px-6 md:px-10 py-4">
-            <h2 className="font-display text-white text-2xl md:text-3xl uppercase tracking-widest">
-              Sides
-            </h2>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-ct-border">
-            {sides.map((item) => (
-              <div
-                key={item.name}
-                className="bg-ct-black px-6 py-6 flex items-center justify-between gap-4"
-              >
-                <span className="font-display text-ct-cream text-base md:text-lg uppercase leading-snug">
-                  {item.name}
-                </span>
-                <span className="font-display text-ct-orange text-lg md:text-xl shrink-0">
-                  {item.price}
-                </span>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* SECTION: DINNER */}
-      <section className="bg-ct-charcoal py-0">
-        <div className="container-ct py-0 px-0">
-          <div className="bg-ct-mustard px-6 md:px-10 py-4">
-            <h2 className="font-display text-white text-2xl md:text-3xl uppercase tracking-widest">
+      <section className="bg-ct-charcoal">
+        <div className="container-ct px-0">
+          <div className="bg-ct-mustard px-6 py-3">
+            <h2 className="font-display text-ct-black text-2xl md:text-3xl uppercase">
               Dinner
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-ct-border">
-            {dinner.map((item) => (
-              <div
-                key={item.name}
-                className="bg-ct-charcoal px-6 py-8 flex flex-col gap-2"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="font-display text-ct-cream text-lg md:text-xl uppercase leading-snug flex-1">
+          <div className="p-6 md:p-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {dinner.map((item) => (
+                <div
+                  key={item.name}
+                  className="bg-ct-surface border border-ct-border p-5 flex flex-col"
+                >
+                  <h3 className="font-display text-ct-cream text-lg uppercase">
                     {item.name}
                   </h3>
-                  <span className="font-display text-ct-orange text-xl md:text-2xl shrink-0">
+                  <p className="font-sans text-ct-cream-muted text-sm mt-1 flex-1">
+                    {item.desc}
+                  </p>
+                  <p className="font-display text-ct-orange text-xl mt-3">
+                    {item.price}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION: SIDES */}
+      <section className="bg-ct-black">
+        <div className="container-ct px-0">
+          <div className="bg-ct-mustard px-6 py-3">
+            <h2 className="font-display text-ct-black text-2xl md:text-3xl uppercase">
+              Sides
+            </h2>
+          </div>
+          <div className="p-6 md:p-10">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {sides.map((item) => (
+                <div
+                  key={item.name}
+                  className="bg-ct-surface border border-ct-border p-4 flex justify-between items-center"
+                >
+                  <span className="font-sans text-ct-cream text-sm">
+                    {item.name}
+                  </span>
+                  <span className="font-display text-ct-orange">
                     {item.price}
                   </span>
                 </div>
-                <p className="text-ct-cream-muted font-sans text-sm leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* SECTION: OTHER & EXTRA */}
-      <section className="bg-ct-black py-0">
-        <div className="container-ct py-0 px-0">
-          <div className="bg-ct-mustard px-6 md:px-10 py-4">
-            <h2 className="font-display text-white text-2xl md:text-3xl uppercase tracking-widest">
-              Other &amp; Extra
+      {/* SECTION: LOADED */}
+      <section className="bg-ct-charcoal">
+        <div className="container-ct px-0">
+          <div className="bg-ct-mustard px-6 py-3">
+            <h2 className="font-display text-ct-black text-2xl md:text-3xl uppercase">
+              Loaded
             </h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-px bg-ct-border">
-            {otherExtra.map((item) => (
-              <div
-                key={item.name}
-                className="bg-ct-black px-5 py-6 flex flex-col items-center gap-1 text-center"
-              >
-                <span className="font-display text-ct-cream text-sm md:text-base uppercase leading-snug">
-                  {item.name}
-                </span>
-                <span className="font-display text-ct-orange text-base md:text-lg">
-                  {item.price}
-                </span>
-              </div>
-            ))}
+          <div className="p-6 md:p-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {loaded.map((item) => (
+                <div
+                  key={item.name}
+                  className="bg-ct-surface border border-ct-border p-5 flex flex-col"
+                >
+                  <h3 className="font-display text-ct-cream text-lg uppercase">
+                    {item.name}
+                  </h3>
+                  <p className="font-sans text-ct-cream-muted text-sm mt-1 flex-1">
+                    {item.desc}
+                  </p>
+                  <p className="font-display text-ct-orange text-xl mt-3">
+                    {item.price}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* COMEBACK SAUCE CALLOUT BOX */}
+            <div className="mt-8 border-l-4 border-ct-mustard bg-ct-surface-2 p-6">
+              <h3 className="font-display text-ct-cream text-lg uppercase mb-2">
+                What is Comeback Sauce?
+              </h3>
+              <p className="font-sans text-ct-cream-muted text-sm leading-relaxed">
+                Our signature cheese sauce — a rich blend of four cheeses,
+                secret seasonings, peppers, and pork sausage. Slow-cooked and
+                poured hot over your fries or nachos. You&apos;ll understand the
+                name after the first bite.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CATERING BANNER */}
-      <section className="bg-ct-orange py-8 px-6">
-        <div className="container-ct text-center">
-          <p className="font-display text-white text-xl md:text-3xl uppercase tracking-wide leading-snug">
-            Catering &amp; Events Available!
+      {/* CATERING CTA STRIP */}
+      <section className="bg-ct-orange py-8 text-center">
+        <div className="container-ct">
+          <p className="font-display text-xl md:text-2xl text-white uppercase">
+            CATERING &amp; EVENTS AVAILABLE!
           </p>
-          <p className="font-sans text-white/90 text-base md:text-lg mt-2">
-            Call or message us —{" "}
-            <a
-              href="tel:8033803309"
-              className="underline underline-offset-2 hover:text-white transition-colors"
-            >
-              803-380-3309
-            </a>
+          <p className="font-sans text-white/90 text-base mt-2">
+            Call or message us to book the truck for your event.
           </p>
+          <a
+            href="tel:8033803309"
+            className="font-display text-2xl text-white mt-3 block hover:underline"
+          >
+            803-380-3309
+          </a>
         </div>
       </section>
 
-      {/* ORDER NOTE */}
-      <section className="bg-ct-black py-10">
-        <div className="container-ct text-center">
-          <p className="text-ct-muted font-sans text-sm max-w-2xl mx-auto leading-relaxed">
+      {/* ORDER ONLINE CTA */}
+      <section className="bg-ct-black py-16">
+        <div className="container-ct">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+            {/* Text + buttons */}
+            <div className="text-center md:text-left">
+              <h2 className="font-display text-3xl md:text-5xl text-ct-cream uppercase">
+                Ready to Order?
+              </h2>
+              <p className="font-sans text-ct-cream-muted text-base mt-4 max-w-md">
+                Place your order online for pickup — or scan the QR code with your phone.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center md:items-start justify-center md:justify-start gap-4 mt-8">
+                <Link
+                  href="/order"
+                  className="bg-ct-orange hover:bg-ct-orange-light text-white font-display tracking-widest px-8 py-4 uppercase transition-colors"
+                >
+                  Order Online
+                </Link>
+                <a
+                  href="tel:8033803309"
+                  className="border-2 border-ct-mustard text-ct-mustard hover:bg-ct-mustard hover:text-ct-black font-display tracking-widest px-8 py-4 uppercase transition-colors"
+                >
+                  Call to Order
+                </a>
+              </div>
+            </div>
+
+            {/* QR Code */}
+            <div className="shrink-0">
+              <QRCodeBlock
+                url={`${process.env.NEXT_PUBLIC_SITE_URL || "https://thecomebacktruck.com"}/order`}
+                label="Scan to Order"
+                size={160}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* DISCLAIMER */}
+      <section className="bg-ct-black py-8 text-center">
+        <div className="container-ct">
+          <p className="font-sans text-ct-muted text-sm max-w-2xl mx-auto leading-relaxed">
             Menu and pricing subject to change. Follow{" "}
             <a
-              href="https://www.instagram.com/the.comeback.truck"
+              href="https://www.instagram.com/the.comeback.truck/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-ct-mustard hover:text-ct-cream transition-colors"
             >
               @the.comeback.truck
             </a>{" "}
-            on Instagram for daily specials and updates.
+            on Instagram for daily specials.
           </p>
         </div>
       </section>
