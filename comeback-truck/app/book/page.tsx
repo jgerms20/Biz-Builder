@@ -106,20 +106,20 @@ export default function BookPage() {
                     Instagram
                   </p>
                   <a
-                    href="https://www.instagram.com/_thecomebacktruck/"
+                    href="https://www.instagram.com/the.comeback.truck/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-ct-mustard hover:text-ct-mustard-light transition-colors text-sm"
                   >
-                    @_thecomebacktruck
+                    @the.comeback.truck
                   </a>
                 </div>
 
                 <div className="border-t border-ct-border pt-6">
                   <p className="font-display text-ct-mustard text-lg md:text-xl uppercase leading-tight">
-                    Food So Good
+                    Soul Food That
                     <br />
-                    You&apos;ll Come Back
+                    Brings You Back
                   </p>
                 </div>
               </div>

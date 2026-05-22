@@ -27,10 +27,10 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-baseline gap-1.5 group">
-            <span className="font-display text-lg md:text-xl text-ct-cream tracking-wide group-hover:text-white transition-colors">
+            <span className="font-display text-lg md:text-xl text-ct-mustard tracking-wide group-hover:text-ct-mustard-light transition-colors">
               THE COMEBACK
             </span>
-            <span className="font-display text-lg md:text-xl text-ct-mustard group-hover:text-ct-mustard-light transition-colors">
+            <span className="font-display text-lg md:text-xl text-ct-orange group-hover:text-ct-orange-light transition-colors">
               TRUCK
             </span>
           </Link>
@@ -55,7 +55,7 @@ export default function Header() {
             ))}
             <Link
               href="/book"
-              className="bg-ct-mustard hover:bg-ct-mustard-light text-ct-black font-display tracking-wider text-sm px-5 py-2.5 rounded transition-colors"
+              className="bg-ct-orange hover:bg-ct-orange-light text-white font-display tracking-wider text-sm px-5 py-2.5 rounded transition-colors"
             >
               BOOK US
             </Link>
@@ -99,7 +99,7 @@ export default function Header() {
             <Link
               href="/book"
               onClick={() => setMobileOpen(false)}
-              className="bg-ct-mustard hover:bg-ct-mustard-light text-ct-black font-display tracking-wider text-sm px-5 py-3 rounded transition-colors text-center mt-2"
+              className="bg-ct-orange hover:bg-ct-orange-light text-white font-display tracking-wider text-sm px-5 py-3 rounded transition-colors text-center mt-2"
             >
               BOOK US
             </Link>

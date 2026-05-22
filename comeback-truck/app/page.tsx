@@ -4,24 +4,24 @@ import MustardDivider from "@/components/ui/MustardDivider";
 
 const foodCategories = [
   {
-    title: "BBQ Ribs",
-    description: "Slow-smoked, fall-off-the-bone, Carolina-style.",
-    filename: "food-ribs.jpg",
+    title: "Loaded Dogs",
+    description: "Loaded hot dogs piled high — chili, cheese, and all the fixins.",
+    filename: "food-loaded-dogs.jpg",
   },
   {
-    title: "Loaded Fries",
-    description: "Chili cheese fries with all the fixins.",
-    filename: "food-fries.jpg",
+    title: "Handhelds",
+    description: "Sandwiches and wraps packed with flavor.",
+    filename: "food-handhelds.jpg",
   },
   {
-    title: "Pulled Pork",
-    description: "Tender pulled pork with our mustard sauce.",
-    filename: "food-pulled-pork.jpg",
+    title: "Loaded Sides",
+    description: "Chili cheese fries, loaded nachos, and more.",
+    filename: "food-loaded-sides.jpg",
   },
   {
-    title: "Fried Fish",
-    description: "Crispy battered catfish with crinkle fries.",
-    filename: "food-fish.jpg",
+    title: "Dinner Plates",
+    description: "Full plates with your choice of main and sides.",
+    filename: "food-dinner.jpg",
   },
 ];
 
@@ -31,31 +31,20 @@ export default function HomePage() {
       {/* SECTION 1: HERO */}
       <section className="relative min-h-screen bg-ct-black smoke-overlay flex items-center overflow-hidden">
         {/* Mustard glow */}
-        <div className="absolute w-[800px] h-[800px] rounded-full bg-ct-mustard/15 blur-[150px] top-[-200px] left-1/2 -translate-x-1/2 pointer-events-none" />
+        <div className="absolute w-[800px] h-[800px] rounded-full bg-ct-mustard/10 blur-[150px] top-[-200px] left-1/2 -translate-x-1/2 pointer-events-none" />
 
         <div className="container-ct relative z-10 py-24 md:py-32 w-full">
           <div className="flex flex-col items-center text-center">
-            <span className="text-ct-mustard uppercase tracking-widest text-xs md:text-sm font-semibold font-sans mb-6">
-              Brigman German &middot; Columbia, SC
-            </span>
-
             <h1 className="font-display text-6xl md:text-8xl lg:text-9xl text-ct-cream uppercase leading-none tracking-tight">
               <span className="block">The Comeback</span>
-              <span className="block text-ct-mustard">Truck</span>
+              <span className="block text-ct-orange">Truck</span>
             </h1>
 
             <div className="h-1 w-24 bg-ct-mustard my-8" />
 
             <p className="font-display text-2xl md:text-3xl text-ct-cream-muted uppercase tracking-wide max-w-3xl">
-              Food So Good You&apos;ll Come Back
+              Soul Food That Brings You Back
             </p>
-
-            <a
-              href="tel:8033803309"
-              className="font-display text-2xl md:text-3xl text-ct-cream hover:text-ct-mustard transition-colors mt-8"
-            >
-              803-380-3309
-            </a>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-10">
               <Link
@@ -80,8 +69,8 @@ export default function HomePage() {
         <div className="container-ct">
           <SectionHeading
             label="What's Cooking"
-            title="Real Southern BBQ"
-            subtitle="Slow-smoked meats, fresh sides, and the Carolina mustard sauce that gives the truck its name."
+            title="Real Soul Food"
+            subtitle="Loaded dogs, handhelds, dinner plates, and loaded sides — soul food brought straight to you."
           />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-14">
@@ -118,7 +107,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 3: ABOUT TEASER */}
+      {/* SECTION 3: MEET THE OWNER */}
       <section className="bg-ct-black py-20 md:py-28">
         <div className="container-ct">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -128,30 +117,32 @@ export default function HomePage() {
               </span>
               <MustardDivider />
               <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-ct-cream uppercase leading-tight">
-                Brigman German Built This
+                Lorenzo Dykes, Owner
               </h2>
               <p className="text-ct-cream-muted leading-relaxed mt-2">
-                Brigman German started The Comeback Truck out of one belief — the
-                best food in South Carolina shouldn&apos;t be locked behind
-                restaurant doors. Carolina BBQ, slow-smoked meats, and real
-                comfort food brought directly to where people gather.
+                Lorenzo Dykes founded The Comeback Truck in 2020 with one idea in
+                mind — his community needed real soul food. Coming out of the Covid
+                pandemic, he saw a gap: quality comfort food was hard to find and
+                even harder to access. Lorenzo had always had a passion for cooking,
+                and he saw an opportunity to serve.
               </p>
               <p className="text-ct-cream-muted leading-relaxed">
-                Born and raised in the Carolinas, Brigman has spent years dialing
-                in his ribs, his sauces, and that mustard glaze that keeps people
-                rolling up window-side for one more plate.
+                The name says it all. Lorenzo built this truck around a promise:
+                every plate of loaded fries, every dinner special, every catered
+                event would be cooked with the same love he puts into food for his
+                own family. Soul food, done right, brought to where people are.
               </p>
               <Link
                 href="/about"
                 className="font-display tracking-widest text-ct-mustard hover:text-ct-mustard-light transition-colors mt-4 inline-block"
               >
-                READ HIS STORY &rarr;
+                READ THE STORY &rarr;
               </Link>
             </div>
 
             <div className="aspect-[4/5] bg-ct-surface border border-dashed border-ct-border flex items-center justify-center">
               <span className="text-ct-mustard text-xs font-mono">
-                brigman-portrait.jpg
+                lorenzo-portrait.jpg
               </span>
             </div>
           </div>
@@ -207,12 +198,12 @@ export default function HomePage() {
                 Instagram
               </h3>
               <a
-                href="https://www.instagram.com/_thecomebacktruck/"
+                href="https://www.instagram.com/the.comeback.truck/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-display text-lg text-ct-cream hover:text-ct-mustard transition-colors"
               >
-                @_thecomebacktruck
+                @the.comeback.truck
               </a>
             </div>
           </div>
@@ -229,7 +220,7 @@ export default function HomePage() {
           <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-ct-cream uppercase leading-tight">
             Want Us At Your
             <br />
-            <span className="text-ct-mustard">Next Event?</span>
+            <span className="text-ct-orange">Next Event?</span>
           </h2>
           <p className="text-ct-cream-muted text-base md:text-lg mt-6 max-w-2xl mx-auto">
             Weddings &middot; Corporate events &middot; Birthday parties &middot;
@@ -237,7 +228,7 @@ export default function HomePage() {
           </p>
           <Link
             href="/book"
-            className="inline-block bg-ct-mustard hover:bg-ct-mustard-light text-ct-black font-display tracking-widest text-lg px-10 py-5 rounded transition-colors mt-10"
+            className="inline-block bg-ct-orange hover:bg-ct-orange-light text-white font-display tracking-widest text-lg px-10 py-5 rounded transition-colors mt-10"
           >
             BOOK THE TRUCK
           </Link>

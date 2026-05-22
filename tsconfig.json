@@ -22,5 +22,5 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "daniel-german", "daniel-german-static", "janie-bell-static", "biz-builder-platform", "milton-german"]
+  "exclude": ["node_modules", "daniel-german", "daniel-german-static", "janie-bell-static", "biz-builder-platform", "milton-german", "nicholas-german", "comeback-truck"]
 }

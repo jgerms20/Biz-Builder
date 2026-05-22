@@ -3,5 +3,5 @@
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
   "installCommand": "npm install",
-  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- . ':!daniel-german' ':!biz-builder-platform' ':!daniel-german-static' ':!janie-bell-static' ':!milton-german'"
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- . ':!daniel-german' ':!biz-builder-platform' ':!daniel-german-static' ':!janie-bell-static' ':!milton-german' ':!nicholas-german' ':!comeback-truck'"
 }

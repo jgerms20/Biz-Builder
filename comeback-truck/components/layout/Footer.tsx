@@ -20,7 +20,7 @@ export default function Footer() {
               <span className="font-display text-lg text-ct-cream tracking-wide">
                 THE COMEBACK
               </span>
-              <span className="font-display text-lg text-ct-mustard">
+              <span className="font-display text-lg text-ct-orange">
                 TRUCK
               </span>
             </div>
@@ -28,8 +28,8 @@ export default function Footer() {
               Food So Good You&apos;ll Come Back.
             </p>
             <p className="text-ct-muted text-sm">
-              Southern BBQ and soul food brought to your event. Slow-smoked,
-              Carolina-style, served with personality.
+              Soul food and Southern comfort brought to your event. Real ingredients,
+              real flavor, served with heart.
             </p>
           </div>
 
@@ -61,22 +61,30 @@ export default function Footer() {
               803-380-3309
             </a>
             <a
-              href="https://www.instagram.com/_thecomebacktruck/"
+              href="https://www.instagram.com/the.comeback.truck/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-ct-cream-muted hover:text-ct-mustard text-sm transition-colors"
             >
-              @_thecomebacktruck
+              Instagram: @the.comeback.truck
+            </a>
+            <a
+              href="https://www.facebook.com/thecomebacktruck"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-ct-cream-muted hover:text-ct-mustard text-sm transition-colors"
+            >
+              Facebook: the comeback truck
             </a>
             <p className="text-ct-cream-muted text-sm">
-              Columbia, SC + Surrounding Areas
+              South Carolina &middot; Charlotte, NC &middot; N. Georgia
             </p>
           </div>
         </div>
 
         <div className="mt-10 pt-6 border-t border-ct-border flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="text-ct-muted text-xs">
-            &copy; {new Date().getFullYear()} The Comeback Truck &middot; Brigman German &middot; Columbia, SC
+            &copy; {new Date().getFullYear()} The Comeback Truck &middot; Lorenzo Dykes &middot; Columbia, SC
           </p>
           <p className="text-ct-muted text-xs">Built with Biz Builder</p>
         </div>
