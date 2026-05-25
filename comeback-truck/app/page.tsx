@@ -1,27 +1,32 @@
 import Link from "next/link";
+import Image from "next/image";
 import SectionHeading from "@/components/ui/SectionHeading";
 import MustardDivider from "@/components/ui/MustardDivider";
 
 const foodCategories = [
   {
     title: "Loaded Dogs",
-    description: "Loaded hot dogs piled high — chili, cheese, and all the fixins.",
-    filename: "food-loaded-dogs.jpg",
+    description: "Chili cheese dogs, slaw dogs, comeback dogs — piled high and served hot.",
+    image: "/images/IMG_9502.jpeg",
+    alt: "Chili cheese dog with crinkle fries and coleslaw",
   },
   {
     title: "Handhelds",
-    description: "Sandwiches and wraps packed with flavor.",
-    filename: "food-handhelds.jpg",
+    description: "BBQ and pulled pork sandwiches loaded with flavor on a toasted bun.",
+    image: "/images/IMG_9489.jpeg",
+    alt: "Pulled pork BBQ sandwich on white plate",
   },
   {
-    title: "Loaded Sides",
-    description: "Chili cheese fries, loaded nachos, and more.",
-    filename: "food-loaded-sides.jpg",
+    title: "Loaded Fries",
+    description: "Comeback Sauce poured hot — four cheeses, peppers, pork sausage on crispy fries.",
+    image: "/images/IMG_9503.jpeg",
+    alt: "Loaded fries smothered in comeback cheese sauce",
   },
   {
     title: "Dinner Plates",
-    description: "Full plates with your choice of main and sides.",
-    filename: "food-dinner.jpg",
+    description: "Leg quarter, fish, ribs, chicken tenders — full plates with your choice of sides.",
+    image: "/images/IMG_9505.jpeg",
+    alt: "Leg quarter dinner plate with mac and cheese and potato salad",
   },
 ];
 
@@ -30,6 +35,19 @@ export default function HomePage() {
     <>
       {/* SECTION 1: HERO */}
       <section className="relative min-h-screen bg-ct-black smoke-overlay flex items-center overflow-hidden">
+        {/* Hero background image */}
+        <div className="absolute inset-0 overflow-hidden">
+          <Image
+            src="/images/IMG_9501.jpeg"
+            alt="The Comeback Truck food"
+            fill
+            className="object-cover opacity-20"
+            priority
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-ct-black/80 via-ct-black/60 to-ct-black/90" />
+        </div>
+
         {/* Mustard glow */}
         <div className="absolute w-[800px] h-[800px] rounded-full bg-ct-mustard/10 blur-[150px] top-[-200px] left-1/2 -translate-x-1/2 pointer-events-none" />
 
@@ -77,12 +95,17 @@ export default function HomePage() {
             {foodCategories.map((item) => (
               <div
                 key={item.title}
-                className="bg-ct-surface border border-ct-border hover:border-ct-mustard transition-colors flex flex-col"
+                className="bg-ct-surface border border-ct-border hover:border-ct-mustard transition-colors flex flex-col overflow-hidden group"
               >
-                <div className="aspect-square bg-ct-surface-2 border-b border-dashed border-ct-border flex items-center justify-center">
-                  <span className="text-ct-mustard text-xs font-mono">
-                    {item.filename}
-                  </span>
+                <div className="relative aspect-square overflow-hidden">
+                  <Image
+                    src={item.image}
+                    alt={item.alt}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-ct-black/20" />
                 </div>
                 <div className="p-5">
                   <h3 className="font-display text-ct-cream text-xl uppercase mb-2">
@@ -140,10 +163,15 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="aspect-[4/5] bg-ct-surface border border-dashed border-ct-border flex items-center justify-center">
-              <span className="text-ct-mustard text-xs font-mono">
-                lorenzo-portrait.jpg
-              </span>
+            <div className="relative aspect-[4/5] overflow-hidden rounded-sm">
+              <Image
+                src="/images/IMG_9491.jpeg"
+                alt="The Comeback Truck food — BBQ sandwich plate with fries and coleslaw"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ct-black/60 to-transparent" />
             </div>
           </div>
         </div>

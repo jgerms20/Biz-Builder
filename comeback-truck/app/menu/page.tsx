@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import QRCodeBlock from "@/components/ui/QRCodeBlock";
 
 export const metadata: Metadata = {
@@ -9,62 +10,22 @@ export const metadata: Metadata = {
 };
 
 const loadedDogs = [
-  {
-    name: "Regular Hot Dog",
-    desc: "All-beef hot dog, classic style",
-    price: "$6",
-  },
-  {
-    name: "Slaw Dog",
-    desc: "All-beef dog topped with house coleslaw",
-    price: "$7",
-  },
-  {
-    name: "Comeback Dog",
-    desc: "All-beef dog, chili, 4-cheese comeback sauce, coleslaw",
-    price: "$8",
-  },
-  {
-    name: "Pulled Pork Dog",
-    desc: "All-beef dog piled high with smoked pulled pork and BBQ drizzle",
-    price: "$9",
-  },
+  { name: "Regular Hot Dog", desc: "All-beef hot dog, classic style", price: "$6", image: null },
+  { name: "Slaw Dog", desc: "All-beef dog topped with house coleslaw", price: "$7", image: null },
+  { name: "Comeback Dog", desc: "All-beef dog, chili, 4-cheese comeback sauce, coleslaw", price: "$8", image: "/images/IMG_9507.jpeg" },
+  { name: "Pulled Pork Dog", desc: "All-beef dog piled high with smoked pulled pork and BBQ drizzle", price: "$9", image: null },
 ];
 
 const handhelds = [
-  {
-    name: "BBQ Sandwich",
-    desc: "Slow-smoked BBQ on a toasted bun with pickles and sauce",
-    price: "$9",
-  },
-  {
-    name: "Pulled Pork Sandwich",
-    desc: "Tender pulled pork, coleslaw, brioche bun",
-    price: "$10",
-  },
+  { name: "BBQ Sandwich", desc: "Slow-smoked BBQ on a toasted bun with pickles and sauce", price: "$9", image: "/images/IMG_9489.jpeg" },
+  { name: "Pulled Pork Sandwich", desc: "Tender pulled pork, coleslaw, brioche bun", price: "$10", image: "/images/IMG_9501.jpeg" },
 ];
 
 const dinner = [
-  {
-    name: "Fish Plate",
-    desc: "Crispy fried catfish — 1 or 2 pieces, served with 2 sides",
-    price: "$10 / $13",
-  },
-  {
-    name: "Leg Quarter Plate",
-    desc: "Juicy fried leg quarter with 2 sides of your choice",
-    price: "$11",
-  },
-  {
-    name: "Chicken Tenders",
-    desc: "Hand-battered tenders with 1 side and dipping sauce",
-    price: "$9",
-  },
-  {
-    name: "Fried Rib Plate",
-    desc: "Slow-cooked ribs, fried and finished — with 1 or 2 sides",
-    price: "$13 / $15",
-  },
+  { name: "Fish Plate", desc: "Crispy fried catfish — 1 or 2 pieces, served with 2 sides", price: "$10 / $13", image: "/images/IMG_9508.jpeg" },
+  { name: "Leg Quarter Plate", desc: "Juicy fried leg quarter with 2 sides of your choice", price: "$11", image: "/images/IMG_9505.jpeg" },
+  { name: "Chicken Tenders", desc: "Hand-battered tenders with 1 side and dipping sauce", price: "$9", image: null },
+  { name: "Fried Rib Plate", desc: "Slow-cooked ribs, fried and finished — with 1 or 2 sides", price: "$13 / $15", image: "/images/IMG_9500.jpeg" },
 ];
 
 const sides = [
@@ -77,16 +38,8 @@ const sides = [
 ];
 
 const loaded = [
-  {
-    name: "Loaded Fries",
-    desc: "Crispy fries topped with our signature Comeback Sauce",
-    price: "$9",
-  },
-  {
-    name: "Loaded Nachos",
-    desc: "Tortilla chips piled with our signature Comeback Sauce",
-    price: "$9",
-  },
+  { name: "Loaded Fries", desc: "Crispy fries topped with our signature Comeback Sauce", price: "$9", image: "/images/IMG_9503.jpeg" },
+  { name: "Loaded Nachos", desc: "Tortilla chips piled with our signature Comeback Sauce", price: "$9", image: "/images/IMG_9490.jpeg" },
 ];
 
 export default function MenuPage() {
@@ -123,22 +76,51 @@ export default function MenuPage() {
               Loaded Dogs
             </h2>
           </div>
+          {/* Feature photo for hot dogs section */}
+          <div className="relative h-48 md:h-64 overflow-hidden">
+            <Image
+              src="/images/IMG_9492.jpeg"
+              alt="Chili cheese dog plate with crinkle fries and coleslaw"
+              fill
+              className="object-cover object-center"
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-ct-black/70 to-transparent" />
+            <div className="absolute inset-0 flex items-center px-6 md:px-10">
+              <p className="font-display text-ct-cream text-2xl md:text-3xl uppercase">
+                Loaded &amp; Stacked
+              </p>
+            </div>
+          </div>
           <div className="p-6 md:p-10">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {loadedDogs.map((item) => (
                 <div
                   key={item.name}
-                  className="bg-ct-surface border border-ct-border p-5 flex flex-col"
+                  className="bg-ct-surface border border-ct-border overflow-hidden flex flex-col group"
                 >
-                  <h3 className="font-display text-ct-cream text-lg uppercase">
-                    {item.name}
-                  </h3>
-                  <p className="font-sans text-ct-cream-muted text-sm mt-1 flex-1">
-                    {item.desc}
-                  </p>
-                  <p className="font-display text-ct-orange text-xl mt-3">
-                    {item.price}
-                  </p>
+                  {item.image && (
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    </div>
+                  )}
+                  <div className="p-5 flex flex-col flex-1">
+                    <h3 className="font-display text-ct-cream text-lg uppercase">
+                      {item.name}
+                    </h3>
+                    <p className="font-sans text-ct-cream-muted text-sm mt-1 flex-1">
+                      {item.desc}
+                    </p>
+                    <p className="font-display text-ct-orange text-xl mt-3">
+                      {item.price}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -162,17 +144,30 @@ export default function MenuPage() {
               {handhelds.map((item) => (
                 <div
                   key={item.name}
-                  className="bg-ct-surface border border-ct-border p-5 flex flex-col"
+                  className="bg-ct-surface border border-ct-border overflow-hidden flex flex-col group"
                 >
-                  <h3 className="font-display text-ct-cream text-lg uppercase">
-                    {item.name}
-                  </h3>
-                  <p className="font-sans text-ct-cream-muted text-sm mt-1 flex-1">
-                    {item.desc}
-                  </p>
-                  <p className="font-display text-ct-orange text-xl mt-3">
-                    {item.price}
-                  </p>
+                  {item.image && (
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    </div>
+                  )}
+                  <div className="p-5 flex flex-col flex-1">
+                    <h3 className="font-display text-ct-cream text-lg uppercase">
+                      {item.name}
+                    </h3>
+                    <p className="font-sans text-ct-cream-muted text-sm mt-1 flex-1">
+                      {item.desc}
+                    </p>
+                    <p className="font-display text-ct-orange text-xl mt-3">
+                      {item.price}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -193,17 +188,30 @@ export default function MenuPage() {
               {dinner.map((item) => (
                 <div
                   key={item.name}
-                  className="bg-ct-surface border border-ct-border p-5 flex flex-col"
+                  className="bg-ct-surface border border-ct-border overflow-hidden flex flex-col group"
                 >
-                  <h3 className="font-display text-ct-cream text-lg uppercase">
-                    {item.name}
-                  </h3>
-                  <p className="font-sans text-ct-cream-muted text-sm mt-1 flex-1">
-                    {item.desc}
-                  </p>
-                  <p className="font-display text-ct-orange text-xl mt-3">
-                    {item.price}
-                  </p>
+                  {item.image && (
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    </div>
+                  )}
+                  <div className="p-5 flex flex-col flex-1">
+                    <h3 className="font-display text-ct-cream text-lg uppercase">
+                      {item.name}
+                    </h3>
+                    <p className="font-sans text-ct-cream-muted text-sm mt-1 flex-1">
+                      {item.desc}
+                    </p>
+                    <p className="font-display text-ct-orange text-xl mt-3">
+                      {item.price}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -218,6 +226,22 @@ export default function MenuPage() {
             <h2 className="font-display text-ct-black text-2xl md:text-3xl uppercase">
               Sides
             </h2>
+          </div>
+          {/* Feature photo for sides */}
+          <div className="relative h-40 md:h-52 overflow-hidden">
+            <Image
+              src="/images/IMG_9506.jpeg"
+              alt="Sides spread — mac and cheese, green beans, rice"
+              fill
+              className="object-cover object-center"
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-ct-black/70 to-transparent" />
+            <div className="absolute inset-0 flex items-center px-6 md:px-10">
+              <p className="font-display text-ct-cream text-xl md:text-2xl uppercase">
+                Fresh Made Daily
+              </p>
+            </div>
           </div>
           <div className="p-6 md:p-10">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -247,22 +271,51 @@ export default function MenuPage() {
               Loaded
             </h2>
           </div>
+          {/* Feature photo for loaded section */}
+          <div className="relative h-48 md:h-64 overflow-hidden">
+            <Image
+              src="/images/IMG_9504.jpeg"
+              alt="Loaded nachos with comeback cheese sauce and jalapeños"
+              fill
+              className="object-cover object-center"
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-ct-black/70 to-transparent" />
+            <div className="absolute inset-0 flex items-center px-6 md:px-10">
+              <p className="font-display text-ct-cream text-2xl md:text-3xl uppercase">
+                The Comeback Sauce
+              </p>
+            </div>
+          </div>
           <div className="p-6 md:p-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {loaded.map((item) => (
                 <div
                   key={item.name}
-                  className="bg-ct-surface border border-ct-border p-5 flex flex-col"
+                  className="bg-ct-surface border border-ct-border overflow-hidden flex flex-col group"
                 >
-                  <h3 className="font-display text-ct-cream text-lg uppercase">
-                    {item.name}
-                  </h3>
-                  <p className="font-sans text-ct-cream-muted text-sm mt-1 flex-1">
-                    {item.desc}
-                  </p>
-                  <p className="font-display text-ct-orange text-xl mt-3">
-                    {item.price}
-                  </p>
+                  {item.image && (
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    </div>
+                  )}
+                  <div className="p-5 flex flex-col flex-1">
+                    <h3 className="font-display text-ct-cream text-lg uppercase">
+                      {item.name}
+                    </h3>
+                    <p className="font-sans text-ct-cream-muted text-sm mt-1 flex-1">
+                      {item.desc}
+                    </p>
+                    <p className="font-display text-ct-orange text-xl mt-3">
+                      {item.price}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
