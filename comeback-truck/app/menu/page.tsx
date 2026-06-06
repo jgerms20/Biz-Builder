@@ -364,7 +364,7 @@ export default function MenuPage() {
                 Ready to Order?
               </h2>
               <p className="font-sans text-ct-cream-muted text-base mt-4 max-w-md">
-                Place your order online for pickup — or scan the QR code with your phone.
+                Place your order online for pickup — or scan the QR code to see the full price menu.
               </p>
               <div className="flex flex-col sm:flex-row items-center md:items-start justify-center md:justify-start gap-4 mt-8">
                 <Link
@@ -373,20 +373,20 @@ export default function MenuPage() {
                 >
                   Order Online
                 </Link>
-                <a
-                  href="tel:8033803309"
+                <Link
+                  href="/menu/board"
                   className="border-2 border-ct-mustard text-ct-mustard hover:bg-ct-mustard hover:text-ct-black font-display tracking-widest px-8 py-4 uppercase transition-colors"
                 >
-                  Call to Order
-                </a>
+                  View Price Menu
+                </Link>
               </div>
             </div>
 
-            {/* QR Code */}
-            <div className="shrink-0">
+            {/* QR Code — links to the menu board sub-page */}
+            <div className="shrink-0 text-center">
               <QRCodeBlock
-                url={`${process.env.NEXT_PUBLIC_SITE_URL || "https://thecomebacktruck.com"}/order`}
-                label="Scan to Order"
+                url={`${process.env.NEXT_PUBLIC_SITE_URL || "https://thecomebacktruck.com"}/menu/board`}
+                label="Scan for price menu"
                 size={160}
               />
             </div>
