@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import QRCodeBlock from "@/components/ui/QRCodeBlock";
 
 export const metadata: Metadata = {
   title: "Menu",
@@ -336,6 +335,42 @@ export default function MenuPage() {
         </div>
       </section>
 
+      {/* PRICE MENU BOARD */}
+      <section className="bg-ct-charcoal py-16">
+        <div className="container-ct">
+          <div className="flex flex-col items-center gap-6">
+            <div className="text-center">
+              <span className="text-ct-mustard uppercase tracking-[0.25em] text-xs font-semibold font-sans">
+                Full Price Menu
+              </span>
+              <h2 className="font-display text-3xl md:text-4xl text-ct-cream uppercase mt-2">
+                All Prices
+              </h2>
+            </div>
+            <div className="w-full max-w-lg">
+              <div className="bg-ct-mustard p-1 rounded-sm">
+                <a href="/menu/board" target="_blank" rel="noopener noreferrer">
+                  <Image
+                    src="/images/menu-board.png"
+                    alt="The Comeback Truck full price menu"
+                    width={816}
+                    height={1088}
+                    className="w-full h-auto rounded-sm"
+                    quality={85}
+                  />
+                </a>
+              </div>
+              <p className="text-ct-muted text-xs text-center mt-3 font-sans">
+                Tap to open full screen &middot;{" "}
+                <a href="/menu/board" className="text-ct-mustard hover:text-ct-mustard-light transition-colors">
+                  View menu board page
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CATERING CTA STRIP */}
       <section className="bg-ct-orange py-8 text-center">
         <div className="container-ct">
@@ -355,41 +390,27 @@ export default function MenuPage() {
       </section>
 
       {/* ORDER ONLINE CTA */}
-      <section className="bg-ct-black py-16">
+      <section className="bg-ct-black py-16 text-center">
         <div className="container-ct">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-            {/* Text + buttons */}
-            <div className="text-center md:text-left">
-              <h2 className="font-display text-3xl md:text-5xl text-ct-cream uppercase">
-                Ready to Order?
-              </h2>
-              <p className="font-sans text-ct-cream-muted text-base mt-4 max-w-md">
-                Place your order online for pickup — or scan the QR code to see the full price menu.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center md:items-start justify-center md:justify-start gap-4 mt-8">
-                <Link
-                  href="/order"
-                  className="bg-ct-orange hover:bg-ct-orange-light text-white font-display tracking-widest px-8 py-4 uppercase transition-colors"
-                >
-                  Order Online
-                </Link>
-                <Link
-                  href="/menu/board"
-                  className="border-2 border-ct-mustard text-ct-mustard hover:bg-ct-mustard hover:text-ct-black font-display tracking-widest px-8 py-4 uppercase transition-colors"
-                >
-                  View Price Menu
-                </Link>
-              </div>
-            </div>
-
-            {/* QR Code — links to the menu board sub-page */}
-            <div className="shrink-0 text-center">
-              <QRCodeBlock
-                url={`${process.env.NEXT_PUBLIC_SITE_URL || "https://thecomebacktruck.com"}/menu/board`}
-                label="Scan for price menu"
-                size={160}
-              />
-            </div>
+          <h2 className="font-display text-3xl md:text-5xl text-ct-cream uppercase">
+            Ready to Order?
+          </h2>
+          <p className="font-sans text-ct-cream-muted text-base mt-4 max-w-md mx-auto">
+            Place your order online for pickup or give us a call.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+            <Link
+              href="/order"
+              className="bg-ct-orange hover:bg-ct-orange-light text-white font-display tracking-widest px-8 py-4 uppercase transition-colors"
+            >
+              Order Online
+            </Link>
+            <a
+              href="tel:8033803309"
+              className="border-2 border-ct-mustard text-ct-mustard hover:bg-ct-mustard hover:text-ct-black font-display tracking-widest px-8 py-4 uppercase transition-colors"
+            >
+              Call to Order
+            </a>
           </div>
         </div>
       </section>
