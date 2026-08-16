@@ -22,6 +22,32 @@ Every kit exports to Markdown from the project page.
 
 **Opportunity Scanner (`/opportunities`)** — the other direction. Instead of waiting for an idea, it runs live web research against a sector and region, then returns ranked, scored market gaps with the evidence behind each one. Leads to investigate, not verified businesses.
 
+## The operating layer
+
+The generation is the easy half. The operating layer is what makes it safe to let the platform act on your behalf.
+
+Every action carries an autonomy level, set per category on `/settings`:
+
+| Level | Behavior |
+|---|---|
+| `auto` | Executes immediately. Logged, not gated. |
+| `review` | Executes immediately, then lands in your queue. Post-hoc, reversible. |
+| `approve` | Does not run until you say yes. |
+
+The default posture is deliberately hands-off. Drafting is `auto` — nothing leaves the building. Publishing and messaging default to `review`, so work moves at full speed but you see what went out. Spending, contracts, and filings default to `approve`.
+
+**Three of those gates cannot be lowered**, and the UI says so rather than pretending otherwise:
+
+- **Spend** — money leaving an account is not reversible on your behalf.
+- **Contract** — an agreement signed in your name binds you.
+- **File** — entity filings need a signature, EIN applications need a responsible party with an SSN or ITIN, and bank accounts need identity verification on a real person.
+
+Those are regulatory facts, not product preferences. The platform prepares the work and hands it over.
+
+`/review` is the queue. Approvals block and sit at the top; reviewed items already ran and are there to check. Everything the platform has ever done stays in the ledger.
+
+The integration that makes this real: generating a **Formation Plan** doesn't just write a document — every filing step in it is fanned into the ledger as a gated action carrying its real cost, filing office, and whether it needs you personally. The plan becomes a working queue instead of a PDF nobody re-reads.
+
 ## Setup
 
 ```bash
@@ -62,15 +88,24 @@ lib/
   projects.ts     The seeded portfolio.
   store.ts        Storage adapter — disk locally, memory on read-only hosts.
   export.ts       Kit and scan to Markdown.
+  autonomy.ts     The action taxonomy, autonomy levels, and the floors that
+                  cannot be lowered. resolvePolicy() raises anything below
+                  its floor, so a client cannot disable a legal gate.
+  ledger.ts       Every action taken or proposed, plus the stored policy.
 
 app/
   page.tsx                  Portfolio dashboard
   new/                      Intake wizard
   opportunities/            Opportunity scanner
   projects/[id]/            Project hub with per-section generation
+  review/                   The approval + review queue
+  settings/                 Autonomy dial, per category
   api/projects/             CRUD
-  api/generate/             Section generation
+  api/generate/             Section generation (fans formation steps
+                            into the ledger)
   api/scan/                 Opportunity scanning
+  api/actions/              Ledger read + resolve
+  api/policy/               Autonomy policy read + write
   api/export/[id]/          Markdown download
 ```
 
@@ -87,13 +122,18 @@ Every build moves through the same track. `Project.phasesComplete` records where
 
 ## Where this is going
 
-The generation is the easy half. The durable part is the operating layer — what each business teaches the system about pricing that converted, channels that didn't, and which formation path was actually fastest. That accumulated playbook is what makes the next build better than the last.
+The durable part is the operating layer, and the ledger is its foundation. Every action the platform takes is recorded against a project, which means the system can eventually answer questions no single build can: which formation path was actually fastest in SC, which channels converted for a food business versus a trade, what a realistic price was rather than a guessed one.
 
-Near-term additions worth making:
+That accumulated playbook is the part that compounds. A prompt doesn't.
 
-- **Payment processors** — Stripe Connect per project, so the portfolio reports real revenue rather than projected
-- **Formation execution** — registered-agent APIs (Stripe Atlas, Firstbase, Middesk) can file entities programmatically; the human still signs
-- **Deploy pipeline** — generate a site from the kit and ship it to Vercel without leaving the console
-- **Cross-build learning** — feed outcomes back into the doctrine so generations improve with the portfolio
+Near-term, in the order I'd build them:
 
-A note on what will not automate: entity filings need a signature, EIN applications need a responsible party with an SSN, and bank accounts need KYC. Those gates are regulatory, not technical. Build for approval steps, not around them.
+1. **Executors behind the gates.** The ledger already routes actions and holds approvals; what it lacks is something on the other side that runs them. Start with the cheapest real one — domain registration through a registrar API — so an approved `spend` action actually executes rather than just being marked approved.
+2. **Payment processors.** Stripe Connect per project, so the portfolio reports real revenue instead of projections. This is also the fastest path to answering the Comeback Truck customer who asked how to pay online.
+3. **Deploy pipeline.** Generate a site from the kit and ship it to Vercel without leaving the console. Publishing is already a gated category, so the approval flow is in place.
+4. **Formation execution.** Registered-agent APIs (Stripe Atlas, Firstbase, Middesk) can file entities programmatically. The human still signs — that step routes through `file` and stays locked.
+5. **Cross-build learning.** Feed outcomes back into the doctrine so generation improves as the portfolio grows.
+
+**On autonomous operation.** Phase 2 of the vision — a system that finds gaps and builds businesses into them — is real in its parts. Gap-finding works today. Kit generation works today. Filing can be API-driven. What will not happen is a chain with zero human gates: entity filings need a signature, EIN applications need a responsible party with an SSN or ITIN, and bank accounts need KYC on a natural person. Those are regulatory design, not missing features, and no amount of capability removes them.
+
+That is not a ceiling on the idea. A system that finds the opportunity, drafts the entity, builds the brand, ships the site, and hands you three things to sign is most of the way there — and it is buildable.

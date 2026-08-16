@@ -33,14 +33,23 @@ function text(value: string | undefined | null): string {
   return value.replace(/\r\n?/g, "\n").trim();
 }
 
-/** Normalize a value destined for a table cell: single line, pipes escaped. */
+/** Collapse a value to a single line. No escaping — see `cell`. */
+function inline(value: string | undefined | null): string {
+  return text(value).replace(/\s*\n\s*/g, " ");
+}
+
+/**
+ * Normalize a value destined for a table cell: single line, pipes escaped.
+ * Applied by `table` exactly once per cell — never escape ahead of it, or
+ * the backslashes compound and the row splits into phantom columns.
+ */
 function cell(value: string | undefined | null): string {
-  return text(value).replace(/\s*\n\s*/g, " ").replace(/\|/g, "\\|");
+  return inline(value).replace(/\|/g, "\\|");
 }
 
 /** A table cell that should never render blank. */
 function dash(value: string | undefined | null): string {
-  return cell(value) || "—";
+  return inline(value) || "—";
 }
 
 /** Trim trailing zeros off generated scores so 8 renders as "8", not "8.0". */
@@ -547,7 +556,7 @@ function financialBlocks(financial: Financial): string[] {
   }
 
   const costs = arr(financial.startupCosts);
-  const total = cell(financial.totalStartupCost);
+  const total = inline(financial.totalStartupCost);
   if (costs.length > 0) {
     const rows = costs.map((cost) => [
       dash(cost.item),
