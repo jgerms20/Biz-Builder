@@ -9,4 +9,6 @@ build/
 .vercel
 *.tsbuildinfo
 next-env.d.ts
-/data/projects.json
+# Runtime state: projects, the action ledger, and the autonomy policy.
+# Local to each install — never source.
+/data/
