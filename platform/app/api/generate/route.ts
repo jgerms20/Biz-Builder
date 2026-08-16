@@ -94,13 +94,6 @@ export async function POST(request: NextRequest) {
   const projectId = typeof input.projectId === "string" ? input.projectId.trim() : "";
   const section = input.section;
 
-  if (!projectId) {
-    return NextResponse.json(
-      { error: "projectId is required." },
-      { status: 400 }
-    );
-  }
-
   if (!isKitSection(section)) {
     return NextResponse.json(
       { error: `section must be one of: ${SECTION_KEYS.join(", ")}.` },
@@ -108,57 +101,76 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const project = getProject(projectId);
-  if (!project) {
-    return NextResponse.json(
-      { error: `No project with id "${projectId}".` },
-      { status: 404 }
-    );
-  }
+  /* The founder's own projects live in their browser, because a
+     read-only host loses anything the server writes. So the brief may
+     arrive inline. Fall back to a server-side lookup for the seeded
+     portfolio and for local runs where the disk store is writable. */
+  const inlineBrief =
+    input.brief && typeof input.brief === "object"
+      ? (input.brief as Partial<Brief>)
+      : undefined;
 
-  const stored = project.brief;
-  const idea = stored?.idea?.trim() || project.description.trim();
+  const project = projectId ? getProject(projectId) : undefined;
+
+  const idea =
+    inlineBrief?.idea?.trim() ||
+    project?.brief?.idea?.trim() ||
+    project?.description.trim() ||
+    "";
 
   if (!idea) {
     return NextResponse.json(
       {
-        error:
-          "This project has no brief and no description — there is nothing to generate from. Add a description first.",
+        error: projectId
+          ? "This project has no brief and no description — there is nothing to generate from."
+          : "Provide either a projectId or an inline brief with an idea.",
       },
       { status: 400 }
     );
   }
 
   const brief: Brief = {
-    ...(stored ?? {}),
+    ...(project?.brief ?? {}),
+    ...(inlineBrief ?? {}),
     idea,
-    name: stored?.name?.trim() || project.name,
-    founder: stored?.founder?.trim() || project.founder,
+    name: inlineBrief?.name?.trim() || project?.brief?.name?.trim() || project?.name,
+    founder:
+      inlineBrief?.founder?.trim() || project?.brief?.founder?.trim() || project?.founder,
   };
+
+  const projectName = brief.name || project?.name || "Untitled build";
 
   try {
     const result = await generateSection(section, brief);
 
-    const updated: Project = {
-      ...project,
-      kit: mergeSection(project.kit, section, result),
-    };
-    saveProject(updated);
+    // Persist server-side only when there is a server-side project to
+    // update. Client-owned projects are saved by the caller.
+    if (project) {
+      const updated: Project = {
+        ...project,
+        kit: mergeSection(project.kit, section, result),
+      };
+      saveProject(updated);
+    }
 
     // Drafting is reversible and internal, so it records as an executed
     // action rather than waiting on anything.
     routeAction({
-      projectId,
-      projectName: project.name,
+      projectId: projectId || "unsaved",
+      projectName,
       category: "generate",
       title: `Generated ${section}`,
-      detail: `Drafted the ${section} section of the starter kit for ${project.name}.`,
+      detail: `Drafted the ${section} section of the starter kit for ${projectName}.`,
       effect: "Saved to the project. Nothing left the building.",
     });
 
     let queuedSteps = 0;
     if (section === "legal") {
-      queuedSteps = enqueueFormationSteps(projectId, project.name, result as Legal);
+      queuedSteps = enqueueFormationSteps(
+        projectId || "unsaved",
+        projectName,
+        result as Legal
+      );
     }
 
     return NextResponse.json({ section, result, queuedSteps });

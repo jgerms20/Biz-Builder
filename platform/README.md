@@ -68,9 +68,24 @@ Open http://localhost:3000. The five existing builds are seeded, so the portfoli
 
 ## Deploying
 
-On Vercel, set **Root Directory** to `platform` and add `ANTHROPIC_API_KEY` as an environment variable.
+Four steps, about two minutes:
 
-One caveat worth knowing: Vercel's filesystem is read-only, so generated kits live in process memory and don't survive a cold start. The seeded portfolio always renders, and every kit exports to Markdown, so nothing is ever trapped — but for durable storage, swap `readAll` / `writeAll` in `lib/store.ts` for Vercel KV or Postgres. The rest of the app is unaware of the storage layer.
+1. **vercel.com → Add New → Project**, import `jgerms20/Biz-Builder`.
+2. **Root Directory → `platform`.** This is the step that matters — without it Vercel builds the repo root, which is a different site.
+3. **Environment Variables → add `ANTHROPIC_API_KEY`.** Without it the app deploys and renders fine, but every generate button returns a clear error instead of working.
+4. Deploy.
+
+### Where your data lives
+
+Vercel's filesystem is read-only, so the server can't be the database. It isn't one:
+
+- **The seeded portfolio** is static, server-side, and identical for everyone.
+- **Your own builds live in your browser** (`localStorage`), so they survive cold starts, redeploys, and closing the tab.
+- **The server is only the generation engine.** Briefs are posted to it inline; it generates and returns, holding nothing.
+
+The honest tradeoff: builds are per-browser. Start one on your laptop and it won't appear on your phone, and clearing site data clears them. Every kit exports to Markdown from the build page, so nothing is ever trapped in there.
+
+For real multi-device storage, swap the two read/write functions in `lib/clientStore.ts` for API calls against Vercel KV or Postgres. Everything above them is unaware of the change.
 
 ## Architecture
 

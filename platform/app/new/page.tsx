@@ -3,6 +3,8 @@
 import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import { KIT_SECTIONS, type KitSection } from "@/lib/schemas";
+import { slugify, type Project } from "@/lib/projects";
+import { nextAccent, save, saveSection, uniqueId } from "@/lib/clientStore";
 
 /* ============================================================
    NEW BUILD — intake
@@ -11,9 +13,18 @@ import { KIT_SECTIONS, type KitSection } from "@/lib/schemas";
    screen, one required field, then it runs. The founder is
    often typing this with a phone against their ear, so nothing
    here asks a second question it could infer later.
+
+   The project itself is created in the BROWSER — the host's
+   filesystem is read-only, so anything the server wrote would
+   die at the next cold start. The server stays the generation
+   engine: it receives the brief inline and hands back a
+   section, which we persist the moment it lands.
    ============================================================ */
 
 type Step = "brief" | "generating" | "done";
+
+/** The shape the generate API expects, taken from the project itself. */
+type Brief = NonNullable<Project["brief"]>;
 
 interface BriefForm {
   idea: string;
@@ -105,18 +116,28 @@ async function postJson<T>(url: string, body: unknown): Promise<T> {
   return data as T;
 }
 
-interface CreateResponse {
-  project: { id: string; name: string };
+interface GenerateResponse {
+  section: KitSection;
+  result: unknown;
+  queuedSteps: number;
 }
 
-/** Trimmed, non-empty fields only — the API drops blanks anyway. */
-function briefPayload(form: BriefForm): Record<string, string> {
-  const out: Record<string, string> = {};
-  for (const [key, value] of Object.entries(form)) {
+/** Trimmed, non-empty fields only — blanks get figured out downstream. */
+function briefPayload(form: BriefForm): Brief {
+  const filled = (value: string): string | undefined => {
     const trimmed = value.trim();
-    if (trimmed.length > 0) out[key] = trimmed;
-  }
-  return out;
+    return trimmed.length > 0 ? trimmed : undefined;
+  };
+
+  return {
+    idea: form.idea.trim(),
+    name: filled(form.name),
+    founder: filled(form.founder),
+    location: filled(form.location),
+    customer: filled(form.customer),
+    pricePoint: filled(form.pricePoint),
+    notes: filled(form.notes),
+  };
 }
 
 /* ------------------------------------------------------------------ */
@@ -128,6 +149,7 @@ export default function NewBuildPage() {
   const [form, setForm] = useState<BriefForm>(EMPTY_FORM);
   const [projectId, setProjectId] = useState<string | null>(null);
   const [projectName, setProjectName] = useState<string>("");
+  const [brief, setBrief] = useState<Brief | null>(null);
   const [done, setDone] = useState<KitSection[]>([]);
   const [active, setActive] = useState<KitSection | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -145,32 +167,38 @@ export default function NewBuildPage() {
   }, []);
 
   /** Sequential on purpose — each section is a long model call, and the
-   *  founder wants to watch them land one at a time. */
-  const runKit = useCallback(async (id: string, sections: KitSection[]) => {
-    setError(null);
-    setStep("generating");
+   *  founder wants to watch them land one at a time. Every section is
+   *  written to the browser store the instant it arrives, so closing the
+   *  tab mid-run costs only the sections that had not finished. */
+  const runKit = useCallback(
+    async (id: string, payload: Brief, sections: KitSection[]) => {
+      setError(null);
+      setStep("generating");
 
-    for (const section of sections) {
-      setActive(section);
-      try {
-        await postJson<{ section: KitSection }>("/api/generate", {
-          projectId: id,
-          section,
-        });
-      } catch (err) {
-        setActive(null);
-        setError(messageOf(err));
-        setStep("done");
-        return;
+      for (const section of sections) {
+        setActive(section);
+        try {
+          const response = await postJson<GenerateResponse>("/api/generate", {
+            section,
+            brief: payload,
+          });
+          saveSection(id, section, response.result);
+        } catch (err) {
+          setActive(null);
+          setError(messageOf(err));
+          setStep("done");
+          return;
+        }
+        setDone((current) =>
+          current.includes(section) ? current : [...current, section],
+        );
       }
-      setDone((current) =>
-        current.includes(section) ? current : [...current, section],
-      );
-    }
 
-    setActive(null);
-    setStep("done");
-  }, []);
+      setActive(null);
+      setStep("done");
+    },
+    [],
+  );
 
   const submit = useCallback(async () => {
     if (!ready || step !== "brief") return;
@@ -180,22 +208,44 @@ export default function NewBuildPage() {
     setDone([]);
     setActive(null);
 
+    const payload = briefPayload(form);
+    const name = payload.name?.trim() || "Untitled Build";
+
     let id: string;
     try {
-      const created = await postJson<CreateResponse>("/api/projects", {
-        brief: briefPayload(form),
-      });
-      id = created.project.id;
-      setProjectId(id);
-      setProjectName(created.project.name);
+      id = uniqueId(slugify(name));
+      const project: Project = {
+        id,
+        name,
+        founder: payload.founder?.trim() || "",
+        tagline: "",
+        category: "",
+        description: payload.idea.trim(),
+        status: "idea",
+        accent: nextAccent(),
+        phasesComplete: [],
+        built: [],
+        nextUp: [],
+        createdAt: new Date().toISOString(),
+        brief: payload,
+      };
+      save(project);
     } catch (err) {
-      // No project exists yet, so there is nothing to open — back to the form.
+      // Nothing was stored, so there is nothing to open — back to the form.
       setError(messageOf(err));
       setStep("brief");
       return;
     }
 
-    await runKit(id, KIT_SECTIONS.map((s) => s.key));
+    setProjectId(id);
+    setProjectName(name);
+    setBrief(payload);
+
+    await runKit(
+      id,
+      payload,
+      KIT_SECTIONS.map((s) => s.key),
+    );
   }, [form, ready, step, runKit]);
 
   const reset = useCallback(() => {
@@ -203,6 +253,7 @@ export default function NewBuildPage() {
     setForm(EMPTY_FORM);
     setProjectId(null);
     setProjectName("");
+    setBrief(null);
     setDone([]);
     setActive(null);
     setError(null);
@@ -222,7 +273,7 @@ export default function NewBuildPage() {
         projectId={projectId}
         projectName={projectName}
         onRetry={() => {
-          if (projectId) void runKit(projectId, remaining);
+          if (projectId && brief) void runKit(projectId, brief, remaining);
         }}
         onReset={reset}
       />
@@ -522,11 +573,17 @@ function DoneView({
           </p>
         </>
       ) : (
-        <p className="mt-4 text-sm leading-relaxed text-muted">
-          Names, positioning, formation plan, brand, digital setup, marketing,
-          and pricing are all written and saved. Formation steps are already in
-          your review queue.
-        </p>
+        <>
+          <p className="mt-4 text-sm leading-relaxed text-muted">
+            Names, positioning, formation plan, brand, digital setup, marketing,
+            and pricing are all written and saved. Formation steps are already in
+            your review queue.
+          </p>
+          <p className="mt-3 font-mono text-[11px] leading-relaxed text-muted">
+            Saved in this browser. Export to Markdown from the build page to keep
+            a copy.
+          </p>
+        </>
       )}
 
       <div className="mt-8 flex flex-col items-center gap-4">

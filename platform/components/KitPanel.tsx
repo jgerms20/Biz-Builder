@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { ReactNode } from "react";
+import { isSeeded, saveSection } from "@/lib/clientStore";
 import type { Project } from "@/lib/projects";
 import { KIT_SECTIONS, type KitSection, type StarterKit } from "@/lib/schemas";
 import type {
@@ -18,14 +19,23 @@ import type {
    KitPanel — the interactive half of the project hub.
 
    Owns the starter kit locally so a generated section appears
-   the instant it lands, without a full route refresh. The API
-   route is the source of truth: it persists every section it
-   returns, so a reload shows the same thing.
+   the instant it lands, without a full route refresh. The server
+   is only the generator now: it takes a brief and returns one
+   section. Persistence happens here, in the browser, because a
+   read-only host loses anything the server writes.
+
+   Seeded projects are the exception — they are static and shared,
+   so saving is a deliberate no-op. Generation still runs and still
+   renders; it just does not survive a reload.
    ============================================================ */
 
 interface KitPanelProps {
   project: Project;
 }
+
+/** Derived from Project so the client never reaches into the
+ *  server-only generator module for its type. */
+type Brief = NonNullable<Project["brief"]>;
 
 interface GenerateResponse {
   section?: KitSection;
@@ -666,6 +676,21 @@ export default function KitPanel({ project }: KitPanelProps) {
   const [bulk, setBulk] = useState(false);
   const [open, setOpen] = useState<KitSection[]>([]);
 
+  const seeded = isSeeded(project.id);
+
+  /* The server no longer owns the project, so the brief travels with
+     the request. Older builds predate the brief field — their
+     description is the idea. */
+  const brief = useMemo<Brief>(
+    () =>
+      project.brief ?? {
+        idea: project.description,
+        name: project.name,
+        founder: project.founder,
+      },
+    [project.brief, project.description, project.name, project.founder]
+  );
+
   const readyCount = useMemo(
     () => KIT_SECTIONS.filter((s) => kit[s.key] !== undefined).length,
     [kit]
@@ -688,7 +713,7 @@ export default function KitPanel({ project }: KitPanelProps) {
       const res = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ projectId: project.id, section }),
+        body: JSON.stringify({ section, brief }),
       });
       const data = (await res.json()) as GenerateResponse;
 
@@ -697,6 +722,10 @@ export default function KitPanel({ project }: KitPanelProps) {
         return false;
       }
 
+      // Write through to the browser store, then mirror it in local
+      // state so the section renders without a reload. A no-op for
+      // seeded projects, by design.
+      saveSection(project.id, section, data.result);
       setKit((prev) => mergeSection(prev, section, data.result));
       setOpen((prev) => (prev.includes(section) ? prev : [...prev, section]));
       return true;
@@ -841,6 +870,12 @@ export default function KitPanel({ project }: KitPanelProps) {
           );
         })}
       </ul>
+
+      {seeded ? (
+        <p className="font-mono text-[11px] text-muted">
+          Seeded example &mdash; generated sections show here but are not saved.
+        </p>
+      ) : null}
     </div>
   );
 }
