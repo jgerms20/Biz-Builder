@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-ink text-chalk font-sans antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  ::selection {
+    @apply bg-ion/25 text-chalk;
+  }
+
+  *:focus-visible {
+    @apply outline-none ring-2 ring-ion/70 ring-offset-2 ring-offset-ink rounded-sm;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #333a47 transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full border-[3px] border-solid border-transparent bg-line-bright;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-faint;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-corner {
+    @apply bg-transparent;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface border border-line rounded-lg;
+  }
+
+  .chip {
+    @apply font-mono text-[10px] uppercase tracking-[0.14em] px-2 py-1 rounded-sm border;
+  }
+
+  .label {
+    @apply font-mono text-[10px] uppercase tracking-[0.18em] text-faint;
+  }
+}
+
+@layer utilities {
+  .grid-bg {
+    @apply relative isolate;
+  }
+
+  .grid-bg::before {
+    content: "";
+    @apply pointer-events-none absolute inset-0 -z-10 bg-grid opacity-[0.35];
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 0%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 0%, transparent 78%);
+  }
+}
