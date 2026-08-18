@@ -3,6 +3,23 @@ import type { Brief } from "./generators";
 
 export type ProjectStatus = "live" | "building" | "idea" | "paused";
 
+/** Everything needed to keep a shipped site alive and deployable. */
+export interface Maintenance {
+  /**
+   * Vercel's Root Directory setting for this project. This repo is a
+   * monorepo of separate sites, so a wrong value here is the single most
+   * common way a deployment serves the wrong business.
+   */
+  rootDirectory: string;
+  stack: string;
+  /** Environment variables the deployment needs to actually function. */
+  envVars: { key: string; purpose: string; required: boolean }[];
+  /** How to make a change and get it live. */
+  updateFlow: string[];
+  /** Known gaps that will bite if left alone. */
+  knownGaps: string[];
+}
+
 export interface Project {
   id: string;
   name: string;
@@ -22,6 +39,7 @@ export interface Project {
   createdAt?: string;
   brief?: Brief;
   kit?: StarterKit;
+  maintenance?: Maintenance;
 }
 
 /* ============================================================
@@ -57,6 +75,26 @@ export const SEEDED_PROJECTS: Project[] = [
       "Wire GMAIL_USER / GMAIL_PASS on Vercel so order emails actually send",
       "Claim Google Business Profile for local search",
     ],
+    maintenance: {
+      rootDirectory: "comeback-truck",
+      stack: "Next.js 14 · Tailwind · nodemailer · react-qr-code",
+      envVars: [
+        { key: "GMAIL_USER", purpose: "Gmail account that sends order and booking mail", required: true },
+        { key: "GMAIL_PASS", purpose: "Gmail App Password (not the account password)", required: true },
+        { key: "BOOKING_EMAIL", purpose: "Where orders and booking requests land; defaults to GMAIL_USER", required: false },
+        { key: "NEXT_PUBLIC_SITE_URL", purpose: "Absolute site URL the printed QR codes encode. Wrong value means flyers point at the wrong place.", required: true },
+      ],
+      updateFlow: [
+        "Edit under comeback-truck/ and push to the branch",
+        "Vercel rebuilds only this project because Root Directory scopes it",
+        "Menu prices live in app/menu/page.tsx; the printed board is public/images/menu-board.png",
+      ],
+      knownGaps: [
+        "Orders email but cannot be paid online — no processor connected",
+        "Order mail silently fails until GMAIL_USER and GMAIL_PASS are set on Vercel",
+        "Schedule events are hardcoded in app/schedule/page.tsx and need editing by hand",
+      ],
+    },
     seeded: true,
   },
   {
@@ -84,6 +122,24 @@ export const SEEDED_PROJECTS: Project[] = [
       "Collect and publish first three client testimonials",
       "Set up business email on the custom domain",
     ],
+    maintenance: {
+      rootDirectory: "daniel-german",
+      stack: "Next.js 14 · Tailwind · nodemailer · sharp",
+      envVars: [
+        { key: "GMAIL_USER", purpose: "Gmail account that sends inquiry mail", required: true },
+        { key: "GMAIL_APP_PASSWORD", purpose: "Gmail App Password — note this site uses APP_PASSWORD, not GMAIL_PASS", required: true },
+        { key: "CONTACT_EMAIL", purpose: "Where booking inquiries land", required: false },
+      ],
+      updateFlow: [
+        "Edit under daniel-german/ and push",
+        "Photography goes in daniel-german/public/images with the exact filenames the components expect",
+        "HEIC files need converting first: node scripts/convert-heic.mjs",
+      ],
+      knownGaps: [
+        "Several image slots still render placeholders until real photos are dropped in",
+        "No testimonials collected yet",
+      ],
+    },
     seeded: true,
   },
   {
@@ -112,6 +168,25 @@ export const SEEDED_PROJECTS: Project[] = [
       "Add Venmo Business handle for deposits",
       "Claim TikTok handle",
     ],
+    maintenance: {
+      rootDirectory: ".",
+      stack: "Next.js 14 · Tailwind · nodemailer",
+      envVars: [
+        { key: "GMAIL_USER", purpose: "Gmail account that sends booking mail", required: true },
+        { key: "GMAIL_APP_PASSWORD", purpose: "Gmail App Password", required: true },
+        { key: "CONTACT_EMAIL", purpose: "Where booking requests land", required: false },
+      ],
+      updateFlow: [
+        "This site is the REPOSITORY ROOT, not a subfolder — edit app/ and components/ at the top level",
+        "Because it is the root, any Vercel project with Root Directory left blank builds this site",
+        "Pricing lives in lib/services.ts",
+      ],
+      knownGaps: [
+        "Living at the repo root makes it the accidental default for any misconfigured Vercel project",
+        "Still using placeholder photography",
+        "No business email on a custom domain yet",
+      ],
+    },
     seeded: true,
   },
   {
@@ -138,6 +213,23 @@ export const SEEDED_PROJECTS: Project[] = [
       "Set up QuickBooks ProAdvisor listing",
       "Publish first two case studies",
     ],
+    maintenance: {
+      rootDirectory: "milton-german",
+      stack: "Next.js 14 · Tailwind · nodemailer",
+      envVars: [
+        { key: "GMAIL_USER", purpose: "Gmail account that sends contact mail", required: true },
+        { key: "GMAIL_APP_PASSWORD", purpose: "Gmail App Password", required: true },
+        { key: "CONTACT_EMAIL", purpose: "Where contact-form submissions land", required: false },
+      ],
+      updateFlow: [
+        "Edit under milton-german/ and push",
+        "Service definitions live in app/services/page.tsx",
+      ],
+      knownGaps: [
+        "Entity is not registered and there is no EIN — the site is live ahead of the business existing on paper",
+        "Contact form fails silently until the Gmail vars are set",
+      ],
+    },
     seeded: true,
   },
   {
@@ -162,6 +254,23 @@ export const SEEDED_PROJECTS: Project[] = [
       "Deploy to Vercel and connect a domain",
       "Add rate card for session work",
     ],
+    maintenance: {
+      rootDirectory: "nicholas-german",
+      stack: "Next.js 14 · Tailwind · nodemailer",
+      envVars: [
+        { key: "GMAIL_USER", purpose: "Gmail account that sends booking mail", required: true },
+        { key: "GMAIL_PASS", purpose: "Gmail App Password — this site uses GMAIL_PASS, not GMAIL_APP_PASSWORD", required: true },
+        { key: "BOOKING_EMAIL", purpose: "Where booking requests land", required: false },
+      ],
+      updateFlow: [
+        "Edit under nicholas-german/ and push",
+        "Media slots are in the components under components/ and expect files in public/",
+      ],
+      knownGaps: [
+        "No performance video or photography uploaded yet — media sections render placeholders",
+        "No rate card for session work",
+      ],
+    },
     seeded: true,
   },
 ];
