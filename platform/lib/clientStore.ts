@@ -20,6 +20,7 @@ import type { StarterKit, KitSection } from "./schemas";
    ============================================================ */
 
 const KEY = "bizbuilder.projects.v1";
+const OVERRIDES_KEY = "bizbuilder.overrides.v1";
 
 function available(): boolean {
   try {
@@ -52,15 +53,127 @@ function writeCustom(projects: Project[]): void {
   }
 }
 
+/* ------------------------------------------------------------
+   OVERRIDES
+
+   The seeded portfolio is static and shared, but some of its
+   facts — a live URL guessed at seed time, a status that has
+   moved on — are only correct until they are not. Rather than
+   making the whole seeded record mutable, corrections live in a
+   separate, tiny map keyed by project id. It layers over both
+   seeded and custom projects on read, so every consumer of
+   listAll()/get() sees the corrected value with no extra work.
+   ------------------------------------------------------------ */
+
+export interface ProjectOverride {
+  url?: string;
+  status?: Project["status"];
+}
+
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function readOverrides(): Record<string, ProjectOverride> {
+  if (!available()) return {};
+  try {
+    const raw = window.localStorage.getItem(OVERRIDES_KEY);
+    if (!raw) return {};
+    const parsed: unknown = JSON.parse(raw);
+    if (!isPlainObject(parsed)) return {};
+
+    // Keep only entries that actually look like overrides; a stray
+    // value should not be able to poison a project record on read.
+    const clean: Record<string, ProjectOverride> = {};
+    for (const [id, value] of Object.entries(parsed)) {
+      if (!isPlainObject(value)) continue;
+      const next: ProjectOverride = {};
+      if (typeof value.url === "string") next.url = value.url;
+      if (typeof value.status === "string") {
+        next.status = value.status as Project["status"];
+      }
+      if (Object.keys(next).length > 0) clean[id] = next;
+    }
+    return clean;
+  } catch {
+    // Corrupt or unreadable — fall back to the underlying record.
+    return {};
+  }
+}
+
+function writeOverrides(overrides: Record<string, ProjectOverride>): void {
+  if (!available()) return;
+  try {
+    window.localStorage.setItem(OVERRIDES_KEY, JSON.stringify(overrides));
+  } catch {
+    // Quota exceeded or storage disabled — the session still holds
+    // the corrected value in React state.
+  }
+}
+
+/** Shallow-merge only the keys the override actually defines. */
+function applyOverride(
+  project: Project,
+  override: ProjectOverride | undefined
+): Project {
+  if (!override) return project;
+  const merged: Project = { ...project };
+  if (override.url !== undefined) merged.url = override.url;
+  if (override.status !== undefined) merged.status = override.status;
+  return merged;
+}
+
+/** Every correction the founder has made in this browser. */
+export function getOverrides(): Record<string, ProjectOverride> {
+  return readOverrides();
+}
+
+/**
+ * Record a correction for one project. Keys set to `undefined` are
+ * dropped from the override rather than stored, so clearing a field
+ * restores the underlying value instead of blanking it.
+ */
+export function setOverride(id: string, patch: ProjectOverride): void {
+  if (!id) return;
+  const overrides = readOverrides();
+  const next: ProjectOverride = { ...overrides[id] };
+
+  if ("url" in patch) {
+    if (patch.url === undefined) delete next.url;
+    else next.url = patch.url;
+  }
+  if ("status" in patch) {
+    if (patch.status === undefined) delete next.status;
+    else next.status = patch.status;
+  }
+
+  if (Object.keys(next).length === 0) delete overrides[id];
+  else overrides[id] = next;
+
+  writeOverrides(overrides);
+}
+
+/** Drop every correction for one project, restoring the original. */
+export function clearOverride(id: string): void {
+  const overrides = readOverrides();
+  if (!(id in overrides)) return;
+  delete overrides[id];
+  writeOverrides(overrides);
+}
+
 /* ---------- Public API ---------- */
 
 /** Your builds, newest first, followed by the seeded portfolio. */
 export function listAll(): Project[] {
-  return [...readCustom(), ...SEEDED_PROJECTS];
+  const overrides = readOverrides();
+  return [...readCustom(), ...SEEDED_PROJECTS].map((p) =>
+    applyOverride(p, overrides[p.id])
+  );
 }
 
 export function listCustom(): Project[] {
-  return readCustom();
+  const overrides = readOverrides();
+  return readCustom().map((p) => applyOverride(p, overrides[p.id]));
 }
 
 export function get(id: string): Project | undefined {

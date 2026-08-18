@@ -1,10 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import KitPanel from "@/components/KitPanel";
-import { get as getStoredProject } from "@/lib/clientStore";
+import MaintenancePanel from "@/components/MaintenancePanel";
+import {
+  clearOverride,
+  get as getStoredProject,
+  getOverrides,
+  setOverride,
+} from "@/lib/clientStore";
 import { kitToMarkdown } from "@/lib/export";
 import { PHASES, phaseProgress } from "@/lib/framework";
 import type { Project, ProjectStatus } from "@/lib/projects";
@@ -209,10 +215,56 @@ export default function ProjectPage() {
   const [project, setProject] = useState<Project | undefined>(undefined);
   const [hydrated, setHydrated] = useState(false);
 
-  useEffect(() => {
-    setProject(getStoredProject(id));
-    setHydrated(true);
+  /* The seeded URLs were guessed at seed time. The founder can correct
+     one here; the correction is stored as an override in this browser,
+     never written back into the seeded record. */
+  const [editingUrl, setEditingUrl] = useState(false);
+  const [urlDraft, setUrlDraft] = useState("");
+  const [urlOverridden, setUrlOverridden] = useState(false);
+
+  /* localStorage does not exist during SSR — every read below runs from
+     an effect or an event handler, never during render. */
+  const refresh = useCallback(() => {
+    const next = getStoredProject(id);
+    setProject(next);
+    setUrlOverridden(getOverrides()[id]?.url !== undefined);
+    return next;
   }, [id]);
+
+  useEffect(() => {
+    refresh();
+    setHydrated(true);
+  }, [refresh]);
+
+  function openUrlEditor(current: Project) {
+    setUrlDraft(current.url ?? "");
+    setEditingUrl(true);
+  }
+
+  function cancelUrlEditor(current: Project) {
+    setUrlDraft(current.url ?? "");
+    setEditingUrl(false);
+  }
+
+  /* A bare "example.com" is what people actually type; treat the scheme
+     as optional rather than bouncing the value back at them. */
+  function saveUrl(current: Project) {
+    const trimmed = urlDraft.trim();
+    const normalized =
+      trimmed && !/^https?:\/\//i.test(trimmed) ? `https://${trimmed}` : trimmed;
+
+    setOverride(current.id, { url: normalized || undefined });
+    const next = refresh();
+    setUrlDraft(next?.url ?? "");
+    setEditingUrl(false);
+  }
+
+  function resetUrl(current: Project) {
+    clearOverride(current.id);
+    const next = refresh();
+    setUrlDraft(next?.url ?? "");
+    setEditingUrl(false);
+  }
 
   /* The server export route cannot see a browser-owned project, so the
      Markdown is built here and handed to the browser as a Blob. Re-read
@@ -279,17 +331,110 @@ export default function ProjectPage() {
             ) : null}
           </div>
 
-          {project.url ? (
-            <a
-              href={project.url}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="shrink-0 rounded-md border border-line-bright px-4 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-muted transition-colors hover:border-signal hover:text-chalk"
-            >
-              Visit site &#8599;
-            </a>
-          ) : null}
+          <div className="w-full shrink-0 sm:w-auto">
+            <div className="flex flex-wrap items-center gap-3">
+              {project.url ? (
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="rounded-md border border-line-bright px-4 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-muted transition-colors hover:border-signal hover:text-chalk"
+                >
+                  Visit site &#8599;
+                </a>
+              ) : null}
+
+              {editingUrl ? null : (
+                <>
+                  {project.url ? (
+                    <button
+                      type="button"
+                      onClick={() => openUrlEditor(project)}
+                      className="font-mono text-[10px] uppercase tracking-widest text-faint transition-colors hover:text-chalk"
+                    >
+                      edit
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => openUrlEditor(project)}
+                      className="rounded-md border border-dashed border-line-bright px-4 py-2 font-mono text-xs text-muted transition-colors hover:text-chalk"
+                    >
+                      + Add live URL
+                    </button>
+                  )}
+
+                  {urlOverridden ? (
+                    <button
+                      type="button"
+                      onClick={() => resetUrl(project)}
+                      className="font-mono text-[10px] uppercase tracking-widest text-faint transition-colors hover:text-chalk"
+                    >
+                      reset
+                    </button>
+                  ) : null}
+                </>
+              )}
+            </div>
+
+            {editingUrl ? (
+              <div className="mt-3">
+                <label
+                  htmlFor="live-url"
+                  className="block font-mono text-[10px] uppercase tracking-[0.18em] text-faint"
+                >
+                  Live URL
+                </label>
+                <input
+                  id="live-url"
+                  type="text"
+                  autoFocus
+                  value={urlDraft}
+                  onChange={(e) => setUrlDraft(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") saveUrl(project);
+                    if (e.key === "Escape") cancelUrlEditor(project);
+                  }}
+                  placeholder="https://&hellip;"
+                  spellCheck={false}
+                  autoComplete="off"
+                  className="mt-2 w-full rounded-md border border-line bg-elevated px-3 py-2 font-mono text-xs text-chalk outline-none transition-colors placeholder:text-faint focus:border-ion sm:w-80"
+                />
+                <div className="mt-2 flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => saveUrl(project)}
+                    className="rounded-md border border-line-bright px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-muted transition-colors hover:border-signal hover:text-chalk"
+                  >
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => cancelUrlEditor(project)}
+                    className="rounded-md border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-faint transition-colors hover:border-line-bright hover:text-muted"
+                  >
+                    Cancel
+                  </button>
+                  {urlOverridden ? (
+                    <button
+                      type="button"
+                      onClick={() => resetUrl(project)}
+                      className="font-mono text-[10px] uppercase tracking-widest text-faint transition-colors hover:text-chalk"
+                    >
+                      reset
+                    </button>
+                  ) : null}
+                </div>
+              </div>
+            ) : null}
+          </div>
         </div>
+
+        {urlOverridden ? (
+          <p className="mt-5 font-mono text-[10px] text-faint">
+            URL set by you, saved in this browser.
+          </p>
+        ) : null}
       </header>
 
       {/* ---------- phase track ---------- */}
@@ -390,6 +535,8 @@ export default function ProjectPage() {
               <p className="text-[13px] text-faint">Nothing logged yet.</p>
             )}
           </section>
+
+          <MaintenancePanel project={project} />
 
           <section>
             <KitPanel project={project} />

@@ -68,7 +68,11 @@ Open http://localhost:3000. The five existing builds are seeded, so the portfoli
 
 ## Deploying
 
-Four steps, about two minutes:
+See [`../DEPLOYMENTS.md`](../DEPLOYMENTS.md) for the full map of every site in this
+monorepo to its Vercel Root Directory — that setting is the only thing
+distinguishing them, and a wrong value silently serves a different business.
+
+For this console specifically, four steps, about two minutes:
 
 1. **vercel.com → Add New → Project**, import `jgerms20/Biz-Builder`.
 2. **Root Directory → `platform`.** This is the step that matters — without it Vercel builds the repo root, which is a different site.
