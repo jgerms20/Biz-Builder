@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-bg text-ink;
+    font-family: "{{BODY_FONT}}", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 {
+    font-family: "{{HEADING_FONT}}", Georgia, serif;
+  }
+}
+
+@layer components {
+  .container-brand {
+    @apply max-w-content mx-auto px-6 md:px-10;
+  }
+  .section-padding {
+    @apply py-20 md:py-section;
+  }
+  .btn-primary {
+    @apply inline-block bg-brand text-bg font-medium px-7 py-3 rounded-md transition-opacity hover:opacity-90;
+  }
+  .btn-outline {
+    @apply inline-block border border-line text-ink font-medium px-7 py-3 rounded-md transition-colors hover:border-brand;
+  }
+}
