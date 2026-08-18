@@ -1,10 +1,19 @@
-name: Deploy Biz Builder to GitHub Pages
+# RETIRED — the old static Biz Builder site (biz-builder-platform/) is no longer
+# the home. The operating platform in platform/ (deployed on Vercel) is the one
+# canonical hub. That old static site is what hardcoded only two builds on its
+# builds page and caused the "I only see 2 builds" confusion.
+#
+# The automatic push trigger is removed so it never republishes the stale site.
+# It is left as workflow_dispatch-only so history is preserved and it can be run
+# by hand if ever needed.
+#
+# To take the old site fully offline, disable Pages in the repo:
+#   GitHub → Settings → Pages → Source: None.
+# (That is a repo-settings action; it cannot be done from a workflow file.)
+
+name: Deploy Biz Builder to GitHub Pages (RETIRED)
 
 on:
-  push:
-    branches: [main, master]
-    paths:
-      - 'biz-builder-platform/**'
   workflow_dispatch:
 
 permissions:
