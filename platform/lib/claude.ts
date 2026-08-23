@@ -68,6 +68,8 @@ export interface GenerateOptions<T extends z.ZodType> {
   brief: string;
   maxTokens?: number;
   effort?: "low" | "medium" | "high" | "xhigh" | "max";
+  /** Override the model — lets the factory route cheap work to a cheap tier. */
+  model?: string;
 }
 
 export async function generate<T extends z.ZodType>({
@@ -76,11 +78,12 @@ export async function generate<T extends z.ZodType>({
   brief,
   maxTokens = 16000,
   effort = "high",
+  model = MODEL,
 }: GenerateOptions<T>): Promise<z.infer<T>> {
   const client = getClient();
 
   const response = await client.messages.parse({
-    model: MODEL,
+    model,
     max_tokens: maxTokens,
     // Cache breakpoint on the doctrine: identical on every call, so every
     // generation after the first reads it at ~0.1x instead of full price.
@@ -121,11 +124,15 @@ export async function generate<T extends z.ZodType>({
    in real signal rather than the model's recall.
    ============================================================ */
 
-export async function research(query: string, maxTokens = 16000): Promise<string> {
+export async function research(
+  query: string,
+  maxTokens = 16000,
+  model: string = MODEL
+): Promise<string> {
   const client = getClient();
 
   const response = await client.messages.create({
-    model: MODEL,
+    model,
     max_tokens: maxTokens,
     system: [
       {
@@ -152,7 +159,7 @@ export async function research(query: string, maxTokens = 16000): Promise<string
   while (current.stop_reason === "pause_turn" && guard < 4) {
     history.push({ role: "assistant", content: current.content });
     current = await client.messages.create({
-      model: MODEL,
+      model,
       max_tokens: maxTokens,
       system: [
         { type: "text", text: DOCTRINE, cache_control: { type: "ephemeral" } },
