@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { Opportunity, OpportunityScan } from "@/lib/schemas";
 
@@ -25,6 +25,54 @@ const SECTOR_SUGGESTIONS = [
   "food and beverage",
   "professional services",
 ];
+
+/* ---------- Scope ---------- */
+
+type Scope = "local" | "general" | "both";
+
+interface ScopeOption {
+  value: Scope;
+  label: string;
+}
+
+const SCOPE_OPTIONS: ScopeOption[] = [
+  { value: "local", label: "Local" },
+  { value: "general", label: "General" },
+  { value: "both", label: "Both" },
+];
+
+const DEFAULT_SCOPE: Scope = "both";
+
+/** The bias sentence we prepend to constraints so the scan endpoint reacts
+ *  even though it does not read an unknown `scope` field. */
+const SCOPE_BIAS: Record<Scope, string> = {
+  local: "Focus on local, place-specific openings. ",
+  general: "Focus on general patterns that work in many markets. ",
+  both: "",
+};
+
+/** Explicit lookup — never interpolate Tailwind class names. */
+const SCOPE_CHIP_CLASS: Record<Scope, string> = {
+  local: "border-line bg-raised text-ion",
+  general: "border-line bg-raised text-violet",
+  both: "border-line bg-raised text-muted",
+};
+
+/* ---------- Watchlist ---------- */
+
+interface WatchEntry {
+  id: string;
+  sector: string;
+  region: string;
+  constraints: string;
+  scope: Scope;
+  note: string;
+  active: boolean;
+  createdAt: string;
+  lastScannedAt?: string;
+  lastTopScore?: number;
+  lastCount?: number;
+}
 
 /* ---------- Score bars ---------- */
 
@@ -71,6 +119,31 @@ function scoreBandClass(value: number): string {
   return "text-faint";
 }
 
+/** Compact "how long ago" for a watchlist timestamp. Never throws on junk input. */
+function formatRelative(iso: string): string {
+  const then = Date.parse(iso);
+  if (!Number.isFinite(then)) return "unknown";
+  const seconds = Math.round((Date.now() - then) / 1000);
+  if (seconds < 45) return "just now";
+  const minutes = Math.round(seconds / 60);
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.round(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.round(hours / 24);
+  if (days < 30) return `${days}d ago`;
+  const months = Math.round(days / 30);
+  if (months < 12) return `${months}mo ago`;
+  const years = Math.round(months / 12);
+  return `${years}y ago`;
+}
+
+/** Normalize an unknown scope value from the API into our union. */
+function toScope(value: unknown): Scope {
+  return value === "local" || value === "general" || value === "both"
+    ? value
+    : "both";
+}
+
 /* ------------------------------------------------------------------ */
 /* Page                                                                */
 /* ------------------------------------------------------------------ */
@@ -79,10 +152,20 @@ export default function OpportunitiesPage() {
   const [sector, setSector] = useState("");
   const [region, setRegion] = useState(DEFAULT_REGION);
   const [constraints, setConstraints] = useState("");
+  const [scope, setScope] = useState<Scope>(DEFAULT_SCOPE);
   const [count, setCount] = useState<number>(DEFAULT_COUNT);
   const [loading, setLoading] = useState(false);
   const [scan, setScan] = useState<OpportunityScan | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  /* ---- Watchlist ---- */
+  const [watchEntries, setWatchEntries] = useState<WatchEntry[]>([]);
+  const [watchWritable, setWatchWritable] = useState(true);
+  const [watchLoading, setWatchLoading] = useState(true);
+  const [watchError, setWatchError] = useState<string | null>(null);
+  const [watchAdding, setWatchAdding] = useState(false);
+  /** ids of rows with an in-flight pause/resume/remove. */
+  const [rowBusy, setRowBusy] = useState<Record<string, boolean>>({});
 
   /** Highest composite first, so the rank number means something. */
   const ranked = useMemo<Opportunity[]>(() => {
@@ -99,13 +182,20 @@ export default function OpportunitiesPage() {
     setError(null);
 
     try {
+      // Bias the scan toward the chosen scope. We prepend a sentence to the
+      // constraints string (which the endpoint definitely reads) AND pass a
+      // dedicated `scope` field, so it works whether or not the endpoint
+      // learns to read `scope`.
+      const biasedConstraints = `${SCOPE_BIAS[scope]}${constraints.trim()}`.trim();
+
       const response = await fetch("/api/scan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           sector: sector.trim(),
           region: region.trim(),
-          constraints: constraints.trim(),
+          constraints: biasedConstraints,
+          scope,
           count,
         }),
       });
@@ -139,7 +229,175 @@ export default function OpportunitiesPage() {
     } finally {
       setLoading(false);
     }
-  }, [loading, sector, region, constraints, count]);
+  }, [loading, sector, region, constraints, scope, count]);
+
+  /* ---------------- Watchlist wiring ---------------- */
+
+  const loadWatchlist = useCallback(async () => {
+    setWatchLoading(true);
+    setWatchError(null);
+    try {
+      const response = await fetch("/api/watchlist", { cache: "no-store" });
+      let data: unknown = null;
+      try {
+        data = await response.json();
+      } catch {
+        data = null;
+      }
+      if (!response.ok) {
+        const serverError = (data as { error?: unknown } | null)?.error;
+        throw new Error(
+          typeof serverError === "string" && serverError.trim().length > 0
+            ? serverError
+            : `Could not load the watchlist (${response.status} ${response.statusText}).`,
+        );
+      }
+      const rawEntries = (data as { entries?: unknown } | null)?.entries;
+      const entries = Array.isArray(rawEntries)
+        ? rawEntries.map((raw): WatchEntry => {
+            const e = raw as Record<string, unknown>;
+            return {
+              id: String(e.id ?? ""),
+              sector: typeof e.sector === "string" ? e.sector : "",
+              region: typeof e.region === "string" ? e.region : "",
+              constraints: typeof e.constraints === "string" ? e.constraints : "",
+              scope: toScope(e.scope),
+              note: typeof e.note === "string" ? e.note : "",
+              active: e.active !== false,
+              createdAt: typeof e.createdAt === "string" ? e.createdAt : "",
+              lastScannedAt:
+                typeof e.lastScannedAt === "string" ? e.lastScannedAt : undefined,
+              lastTopScore:
+                typeof e.lastTopScore === "number" ? e.lastTopScore : undefined,
+              lastCount: typeof e.lastCount === "number" ? e.lastCount : undefined,
+            };
+          })
+        : [];
+      setWatchEntries(entries);
+      const writable = (data as { writable?: unknown } | null)?.writable;
+      setWatchWritable(writable !== false);
+    } catch (err) {
+      setWatchError(messageOf(err));
+    } finally {
+      setWatchLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void loadWatchlist();
+  }, [loadWatchlist]);
+
+  const canWatch = sector.trim().length > 0 || region.trim().length > 0;
+
+  const watchThisSearch = useCallback(async () => {
+    if (watchAdding || !canWatch) return;
+    setWatchAdding(true);
+    setWatchError(null);
+    try {
+      const response = await fetch("/api/watchlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sector: sector.trim(),
+          region: region.trim(),
+          constraints: constraints.trim(),
+          scope,
+        }),
+      });
+      let data: unknown = null;
+      try {
+        data = await response.json();
+      } catch {
+        data = null;
+      }
+      if (!response.ok) {
+        const serverError = (data as { error?: unknown } | null)?.error;
+        throw new Error(
+          typeof serverError === "string" && serverError.trim().length > 0
+            ? serverError
+            : `Could not add the watch (${response.status} ${response.statusText}).`,
+        );
+      }
+      await loadWatchlist();
+    } catch (err) {
+      setWatchError(messageOf(err));
+    } finally {
+      setWatchAdding(false);
+    }
+  }, [watchAdding, canWatch, sector, region, constraints, scope, loadWatchlist]);
+
+  const setRowBusyFor = useCallback((id: string, busy: boolean) => {
+    setRowBusy((prev) => ({ ...prev, [id]: busy }));
+  }, []);
+
+  const toggleWatchActive = useCallback(
+    async (entry: WatchEntry) => {
+      if (rowBusy[entry.id]) return;
+      setRowBusyFor(entry.id, true);
+      setWatchError(null);
+      try {
+        const response = await fetch("/api/watchlist", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: entry.id, active: !entry.active }),
+        });
+        let data: unknown = null;
+        try {
+          data = await response.json();
+        } catch {
+          data = null;
+        }
+        if (!response.ok) {
+          const serverError = (data as { error?: unknown } | null)?.error;
+          throw new Error(
+            typeof serverError === "string" && serverError.trim().length > 0
+              ? serverError
+              : `Could not update the watch (${response.status} ${response.statusText}).`,
+          );
+        }
+        await loadWatchlist();
+      } catch (err) {
+        setWatchError(messageOf(err));
+      } finally {
+        setRowBusyFor(entry.id, false);
+      }
+    },
+    [rowBusy, setRowBusyFor, loadWatchlist],
+  );
+
+  const removeWatch = useCallback(
+    async (id: string) => {
+      if (rowBusy[id]) return;
+      setRowBusyFor(id, true);
+      setWatchError(null);
+      try {
+        const response = await fetch(
+          `/api/watchlist?id=${encodeURIComponent(id)}`,
+          { method: "DELETE" },
+        );
+        let data: unknown = null;
+        try {
+          data = await response.json();
+        } catch {
+          data = null;
+        }
+        if (!response.ok) {
+          const serverError = (data as { error?: unknown } | null)?.error;
+          throw new Error(
+            typeof serverError === "string" && serverError.trim().length > 0
+              ? serverError
+              : `Could not remove the watch (${response.status} ${response.statusText}).`,
+          );
+        }
+        await loadWatchlist();
+      } catch (err) {
+        setWatchError(messageOf(err));
+      } finally {
+        setRowBusyFor(id, false);
+      }
+    },
+    [rowBusy, setRowBusyFor, loadWatchlist],
+  );
 
   const showEmptyState = !loading && !scan && !error;
 
@@ -150,7 +408,7 @@ export default function OpportunitiesPage() {
         <div className="mx-auto max-w-5xl px-5">
           <p className="label">Signal</p>
           <h1 className="mt-3 font-sans text-4xl font-semibold tracking-tight md:text-5xl">
-            Opportunity Scanner
+            Opportunity Engine
           </h1>
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted">
             Searches live sources for market gaps that have evidence behind them
@@ -227,23 +485,60 @@ export default function OpportunitiesPage() {
           </div>
 
           <div className="mt-5 flex flex-col gap-4 border-t border-line pt-5 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <label htmlFor="count" className="label block">
-                Return
-              </label>
-              <select
-                id="count"
-                name="count"
-                value={count}
-                onChange={(event) => setCount(Number(event.target.value))}
-                className="mt-2 w-28 rounded-md border border-line bg-ink px-3 py-2 font-mono text-[13px] leading-tight text-chalk transition-colors hover:border-line-bright focus:border-line-bright"
-              >
-                {COUNT_OPTIONS.map((option) => (
-                  <option key={option} value={option}>
-                    {option} leads
-                  </option>
-                ))}
-              </select>
+            <div className="flex flex-wrap items-end gap-6">
+              <div>
+                <span className="label block" id="scope-label">
+                  Scope
+                </span>
+                <div
+                  role="radiogroup"
+                  aria-labelledby="scope-label"
+                  className="mt-2 inline-flex rounded-md bg-elevated p-1"
+                >
+                  {SCOPE_OPTIONS.map((option) => {
+                    const selected = scope === option.value;
+                    return (
+                      <button
+                        key={option.value}
+                        type="button"
+                        role="radio"
+                        aria-checked={selected}
+                        onClick={() => setScope(option.value)}
+                        className={[
+                          "relative rounded px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest transition-colors",
+                          selected
+                            ? "bg-raised text-chalk"
+                            : "text-muted hover:text-chalk",
+                        ].join(" ")}
+                      >
+                        {option.label}
+                        {selected ? (
+                          <span className="absolute inset-x-2 -bottom-px h-px bg-ion" />
+                        ) : null}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="count" className="label block">
+                  Return
+                </label>
+                <select
+                  id="count"
+                  name="count"
+                  value={count}
+                  onChange={(event) => setCount(Number(event.target.value))}
+                  className="mt-2 w-28 rounded-md border border-line bg-ink px-3 py-2 font-mono text-[13px] leading-tight text-chalk transition-colors hover:border-line-bright focus:border-line-bright"
+                >
+                  {COUNT_OPTIONS.map((option) => (
+                    <option key={option} value={option}>
+                      {option} leads
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
 
             <button
@@ -256,6 +551,20 @@ export default function OpportunitiesPage() {
             </button>
           </div>
         </form>
+
+        {/* ---------- Watchlist ---------- */}
+        <WatchlistPanel
+          entries={watchEntries}
+          writable={watchWritable}
+          loading={watchLoading}
+          error={watchError}
+          canWatch={canWatch}
+          adding={watchAdding}
+          rowBusy={rowBusy}
+          onWatch={watchThisSearch}
+          onToggle={toggleWatchActive}
+          onRemove={removeWatch}
+        />
 
         {/* ---------- Error ---------- */}
         {error ? (
@@ -327,6 +636,170 @@ export default function OpportunitiesPage() {
         ) : null}
       </div>
     </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Watchlist panel                                                     */
+/* ------------------------------------------------------------------ */
+
+function WatchlistPanel({
+  entries,
+  writable,
+  loading,
+  error,
+  canWatch,
+  adding,
+  rowBusy,
+  onWatch,
+  onToggle,
+  onRemove,
+}: {
+  entries: WatchEntry[];
+  writable: boolean;
+  loading: boolean;
+  error: string | null;
+  canWatch: boolean;
+  adding: boolean;
+  rowBusy: Record<string, boolean>;
+  onWatch: () => void;
+  onToggle: (entry: WatchEntry) => void;
+  onRemove: (id: string) => void;
+}) {
+  return (
+    <section className="card mt-8 p-5" aria-label="Watchlist">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="label">Watchlist</span>
+          <span className="font-mono text-[11px] tabular-nums text-faint">
+            {entries.length}
+          </span>
+          {!writable ? (
+            <span className="chip border-amber/40 bg-amber/10 text-amber">
+              read-only — set FACTORY_GITHUB_TOKEN to persist
+            </span>
+          ) : null}
+        </div>
+
+        <button
+          type="button"
+          onClick={onWatch}
+          disabled={!canWatch || adding}
+          aria-busy={adding}
+          className="rounded-md border border-line bg-raised px-4 py-2 font-mono text-[11px] uppercase tracking-widest text-muted transition-colors hover:border-line-bright hover:text-chalk disabled:cursor-not-allowed disabled:border-line disabled:text-faint disabled:hover:text-faint"
+        >
+          {adding ? "watching…" : "Watch this search"}
+        </button>
+      </div>
+
+      <p className="mt-3 max-w-3xl text-xs leading-relaxed text-muted">
+        {canWatch
+          ? "Save the current sector or region. Auto mode keeps re-scanning watched entries on a schedule and records what surfaces."
+          : "Enter a sector or region above, then watch it. Auto mode keeps re-scanning watched entries on a schedule and records what surfaces."}
+      </p>
+
+      {error ? (
+        <p className="mt-4 font-mono text-xs leading-relaxed text-rose">{error}</p>
+      ) : null}
+
+      {loading ? (
+        <p className="mt-5 font-mono text-xs text-faint">Loading watchlist…</p>
+      ) : entries.length === 0 ? (
+        <p className="mt-5 max-w-2xl text-sm leading-relaxed text-muted">
+          Nothing watched yet — run a search and watch the sectors you care
+          about. Auto mode re-scans them on a schedule.
+        </p>
+      ) : (
+        <ul className="mt-5 divide-y divide-line border-t border-line">
+          {entries.map((entry) => (
+            <WatchRow
+              key={entry.id}
+              entry={entry}
+              busy={Boolean(rowBusy[entry.id])}
+              onToggle={onToggle}
+              onRemove={onRemove}
+            />
+          ))}
+        </ul>
+      )}
+    </section>
+  );
+}
+
+function WatchRow({
+  entry,
+  busy,
+  onToggle,
+  onRemove,
+}: {
+  entry: WatchEntry;
+  busy: boolean;
+  onToggle: (entry: WatchEntry) => void;
+  onRemove: (id: string) => void;
+}) {
+  const sectorLabel = entry.sector.trim() || "any sector";
+  const regionLabel = entry.region.trim() || "any region";
+
+  return (
+    <li className="flex flex-wrap items-start justify-between gap-4 py-4">
+      <div className="min-w-0">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <span
+            className={[
+              "font-mono text-[13px] leading-tight",
+              entry.active ? "text-chalk" : "text-faint",
+            ].join(" ")}
+          >
+            {sectorLabel}
+            <span className="text-faint"> · </span>
+            {regionLabel}
+          </span>
+          <span className={["chip", SCOPE_CHIP_CLASS[entry.scope]].join(" ")}>
+            {entry.scope}
+          </span>
+          {!entry.active ? (
+            <span className="chip border-line bg-elevated text-faint">paused</span>
+          ) : null}
+        </div>
+
+        {entry.lastScannedAt ? (
+          <p className="mt-1.5 font-mono text-[11px] leading-relaxed text-faint">
+            last scanned {formatRelative(entry.lastScannedAt)}
+            {typeof entry.lastTopScore === "number"
+              ? ` · top ${formatScore(entry.lastTopScore)}`
+              : ""}
+            {typeof entry.lastCount === "number"
+              ? ` · ${entry.lastCount} found`
+              : ""}
+          </p>
+        ) : (
+          <p className="mt-1.5 font-mono text-[11px] leading-relaxed text-faint">
+            not scanned yet
+          </p>
+        )}
+      </div>
+
+      <div className="flex shrink-0 items-center gap-2">
+        <button
+          type="button"
+          onClick={() => onToggle(entry)}
+          disabled={busy}
+          aria-busy={busy}
+          className="rounded-md border border-line bg-raised px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-muted transition-colors hover:border-line-bright hover:text-chalk disabled:cursor-not-allowed disabled:text-faint disabled:hover:text-faint"
+        >
+          {entry.active ? "Pause" : "Resume"}
+        </button>
+        <button
+          type="button"
+          onClick={() => onRemove(entry.id)}
+          disabled={busy}
+          aria-label={`Remove watch for ${sectorLabel} in ${regionLabel}`}
+          className="rounded-md border border-line bg-raised px-3 py-1.5 font-mono text-sm leading-none text-muted transition-colors hover:border-rose/50 hover:text-rose disabled:cursor-not-allowed disabled:text-faint disabled:hover:text-faint"
+        >
+          &times;
+        </button>
+      </div>
+    </li>
   );
 }
 

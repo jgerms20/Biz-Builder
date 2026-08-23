@@ -13,7 +13,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/", label: "Portfolio" },
   { href: "/factory", label: "Factory" },
   { href: "/new", label: "New Build" },
-  { href: "/opportunities", label: "Opportunities" },
+  { href: "/opportunities", label: "Opportunity Engine" },
   { href: "/review", label: "Review" },
   { href: "/settings", label: "Autonomy" },
 ];
